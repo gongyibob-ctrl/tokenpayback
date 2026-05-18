@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T16:46:46.428291+00:00",
+  "generatedAt": "2026-05-18T16:50:46.553306+00:00",
   "isDemo": true,
   "config": {
     "github_username": "demo-user",
@@ -262,8 +262,8 @@
       "session_id": "demo-0000",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-18T11:46:46.428226+00:00",
-      "last_event": "2026-05-18T11:46:46.428226+00:00",
+      "first_event": "2026-05-18T11:50:46.553147+00:00",
+      "last_event": "2026-05-18T11:50:46.553147+00:00",
       "user_messages": 15,
       "tool_counts": {
         "Bash": 63,
@@ -295,8 +295,8 @@
       "session_id": "demo-0001",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-16T16:46:46.428226+00:00",
-      "last_event": "2026-05-16T16:46:46.428226+00:00",
+      "first_event": "2026-05-16T16:50:46.553147+00:00",
+      "last_event": "2026-05-16T16:50:46.553147+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 27,
@@ -328,8 +328,8 @@
       "session_id": "demo-0002",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-14T15:46:46.428226+00:00",
-      "last_event": "2026-05-14T15:46:46.428226+00:00",
+      "first_event": "2026-05-14T15:50:46.553147+00:00",
+      "last_event": "2026-05-14T15:50:46.553147+00:00",
       "user_messages": 22,
       "tool_counts": {
         "Bash": 8,
@@ -361,8 +361,8 @@
       "session_id": "demo-0003",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-12T15:46:46.428226+00:00",
-      "last_event": "2026-05-12T15:46:46.428226+00:00",
+      "first_event": "2026-05-12T15:50:46.553147+00:00",
+      "last_event": "2026-05-12T15:50:46.553147+00:00",
       "user_messages": 14,
       "tool_counts": {
         "Bash": 45,
@@ -394,8 +394,8 @@
       "session_id": "demo-0004",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-10T11:46:46.428226+00:00",
-      "last_event": "2026-05-10T11:46:46.428226+00:00",
+      "first_event": "2026-05-10T11:50:46.553147+00:00",
+      "last_event": "2026-05-10T11:50:46.553147+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 12,
@@ -427,8 +427,8 @@
       "session_id": "demo-0005",
       "project": "competitive-scan",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-08T12:46:46.428226+00:00",
-      "last_event": "2026-05-08T12:46:46.428226+00:00",
+      "first_event": "2026-05-08T12:50:46.553147+00:00",
+      "last_event": "2026-05-08T12:50:46.553147+00:00",
       "user_messages": 35,
       "tool_counts": {
         "Bash": 6,
@@ -460,8 +460,8 @@
       "session_id": "demo-0006",
       "project": "v2-roadmap",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-06T16:46:46.428226+00:00",
-      "last_event": "2026-05-06T16:46:46.428226+00:00",
+      "first_event": "2026-05-06T16:50:46.553147+00:00",
+      "last_event": "2026-05-06T16:50:46.553147+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 2,
@@ -493,8 +493,8 @@
       "session_id": "demo-0007",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-04T16:46:46.428226+00:00",
-      "last_event": "2026-05-04T16:46:46.428226+00:00",
+      "first_event": "2026-05-04T16:50:46.553147+00:00",
+      "last_event": "2026-05-04T16:50:46.553147+00:00",
       "user_messages": 21,
       "tool_counts": {
         "Bash": 19,
@@ -526,8 +526,8 @@
       "session_id": "demo-0008",
       "project": "weekly-review",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-02T15:46:46.428226+00:00",
-      "last_event": "2026-05-02T15:46:46.428226+00:00",
+      "first_event": "2026-05-02T15:50:46.553147+00:00",
+      "last_event": "2026-05-02T15:50:46.553147+00:00",
       "user_messages": 40,
       "tool_counts": {
         "Bash": 4,
@@ -559,8 +559,8 @@
       "session_id": "demo-0009",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-30T12:46:46.428226+00:00",
-      "last_event": "2026-04-30T12:46:46.428226+00:00",
+      "first_event": "2026-04-30T12:50:46.553147+00:00",
+      "last_event": "2026-04-30T12:50:46.553147+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 39,
@@ -592,8 +592,8 @@
       "session_id": "demo-0010",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-28T12:46:46.428226+00:00",
-      "last_event": "2026-04-28T12:46:46.428226+00:00",
+      "first_event": "2026-04-28T12:50:46.553147+00:00",
+      "last_event": "2026-04-28T12:50:46.553147+00:00",
       "user_messages": 20,
       "tool_counts": {
         "Bash": 23,
@@ -625,8 +625,8 @@
       "session_id": "demo-0011",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-26T11:46:46.428226+00:00",
-      "last_event": "2026-04-26T11:46:46.428226+00:00",
+      "first_event": "2026-04-26T11:50:46.553147+00:00",
+      "last_event": "2026-04-26T11:50:46.553147+00:00",
       "user_messages": 34,
       "tool_counts": {
         "Bash": 13,
