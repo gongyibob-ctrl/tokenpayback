@@ -1,0 +1,56 @@
+name: publish-to-pypi
+
+# Auto-publishes to PyPI when you push a version tag like `v0.2.0`.
+# Workflow:
+#   1. Bump version in pyproject.toml
+#   2. git commit -am "release: 0.2.0"
+#   3. git tag v0.2.0
+#   4. git push && git push --tags
+# That's it — this workflow takes over from there.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Verify pyproject version matches tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PYV=$(python -c "import tomllib; print(tomllib.loads(open('pyproject.toml','rb').read().decode())['project']['version'])")
+          if [ "$TAG" != "$PYV" ]; then
+            echo "::error::tag $TAG != pyproject.toml version $PYV"
+            exit 1
+          fi
+          echo "✓ tag $TAG matches pyproject.toml"
+
+      - name: Install build tooling
+        run: pip install --upgrade build twine
+
+      - name: Build sdist + wheel
+        run: python -m build
+
+      - name: Verify metadata
+        run: python -m twine check dist/*
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: python -m twine upload --non-interactive dist/*
