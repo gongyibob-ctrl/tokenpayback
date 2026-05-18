@@ -1,0 +1,2 @@
+# This directory holds your weekly ROI reports as you run tokenpayback.
+# Reports are auto-generated when you run `tokenpayback` or the GitHub Actions cron.

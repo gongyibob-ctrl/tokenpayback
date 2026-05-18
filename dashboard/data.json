@@ -1,0 +1,750 @@
+{
+  "generatedAt": "2026-05-18T16:46:46.428291+00:00",
+  "isDemo": true,
+  "config": {
+    "github_username": "demo-user",
+    "hourly_rate_usd": 150,
+    "value_per_pr_usd": 600,
+    "value_per_line_committed_usd": 0.3
+  },
+  "weeks": [
+    {
+      "week": "2026-W18",
+      "cost": {
+        "anthropic_usd": 142.3,
+        "openai_usd": 18.4,
+        "fixed_subscriptions_usd": 32.08,
+        "total_usd": 192.78
+      },
+      "output": {
+        "prs_merged": 8,
+        "additions": 1830,
+        "deletions": 720,
+        "commits": 47,
+        "reverts": 1,
+        "repos_touched": [
+          "your-org/your-app"
+        ],
+        "prs": [
+          {
+            "title": "feat(auth): add magic-link login flow",
+            "url": "https://github.com/your-org/your-app/pull/100",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-04-27"
+          },
+          {
+            "title": "fix(billing): handle stripe webhook idempotency",
+            "url": "https://github.com/your-org/your-app/pull/101",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-04-28"
+          },
+          {
+            "title": "refactor(api): split monolith routes into modules",
+            "url": "https://github.com/your-org/your-app/pull/102",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-04-29"
+          },
+          {
+            "title": "feat(dashboard): live KPI cards with optimistic updates",
+            "url": "https://github.com/your-org/your-app/pull/103",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-04-30"
+          },
+          {
+            "title": "fix(db): null pointer in subscription expiry check",
+            "url": "https://github.com/your-org/your-app/pull/104",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-01"
+          }
+        ],
+        "changed_files": 47
+      },
+      "value_breakdown": {
+        "pr_value_usd": 4800,
+        "line_value_usd": 274.5,
+        "revert_penalty_usd": 600,
+        "gross_value_usd": 5074.5,
+        "net_value_usd": 4474.5
+      },
+      "cost_usd": 192.78,
+      "value_usd": 4474.5,
+      "roi": 23.21
+    },
+    {
+      "week": "2026-W19",
+      "cost": {
+        "anthropic_usd": 218.75,
+        "openai_usd": 22.1,
+        "fixed_subscriptions_usd": 32.08,
+        "total_usd": 272.93
+      },
+      "output": {
+        "prs_merged": 14,
+        "additions": 3120,
+        "deletions": 1480,
+        "commits": 71,
+        "reverts": 0,
+        "repos_touched": [
+          "your-org/your-app"
+        ],
+        "prs": [
+          {
+            "title": "fix(db): null pointer in subscription expiry check",
+            "url": "https://github.com/your-org/your-app/pull/200",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-04"
+          },
+          {
+            "title": "feat(notifications): batch digest emails",
+            "url": "https://github.com/your-org/your-app/pull/201",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-05"
+          },
+          {
+            "title": "test(api): contract tests for v2 endpoints",
+            "url": "https://github.com/your-org/your-app/pull/202",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-06"
+          },
+          {
+            "title": "feat(import): CSV ingestion with progress events",
+            "url": "https://github.com/your-org/your-app/pull/203",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-07"
+          },
+          {
+            "title": "fix(perf): cache user lookups, -340ms p95",
+            "url": "https://github.com/your-org/your-app/pull/204",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-08"
+          }
+        ],
+        "changed_files": 47
+      },
+      "value_breakdown": {
+        "pr_value_usd": 8400,
+        "line_value_usd": 468.0,
+        "revert_penalty_usd": 0,
+        "gross_value_usd": 8868.0,
+        "net_value_usd": 8868.0
+      },
+      "cost_usd": 272.93,
+      "value_usd": 8868.0,
+      "roi": 32.49
+    },
+    {
+      "week": "2026-W20",
+      "cost": {
+        "anthropic_usd": 89.5,
+        "openai_usd": 12.3,
+        "fixed_subscriptions_usd": 32.08,
+        "total_usd": 133.88
+      },
+      "output": {
+        "prs_merged": 5,
+        "additions": 980,
+        "deletions": 410,
+        "commits": 32,
+        "reverts": 2,
+        "repos_touched": [
+          "your-org/your-app"
+        ],
+        "prs": [
+          {
+            "title": "fix(perf): cache user lookups, -340ms p95",
+            "url": "https://github.com/your-org/your-app/pull/300",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-11"
+          },
+          {
+            "title": "feat(export): CSV + JSON download endpoints",
+            "url": "https://github.com/your-org/your-app/pull/301",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-12"
+          },
+          {
+            "title": "fix(ui): mobile dropdown z-index regression",
+            "url": "https://github.com/your-org/your-app/pull/302",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-13"
+          },
+          {
+            "title": "feat(onboarding): 3-step wizard with progress save",
+            "url": "https://github.com/your-org/your-app/pull/303",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-14"
+          },
+          {
+            "title": "chore(deps): bump react / vite / tailwind",
+            "url": "https://github.com/your-org/your-app/pull/304",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-15"
+          }
+        ],
+        "changed_files": 47
+      },
+      "value_breakdown": {
+        "pr_value_usd": 3000,
+        "line_value_usd": 147.0,
+        "revert_penalty_usd": 1200,
+        "gross_value_usd": 3147.0,
+        "net_value_usd": 1947.0
+      },
+      "cost_usd": 133.88,
+      "value_usd": 1947.0,
+      "roi": 14.54
+    },
+    {
+      "week": "2026-W21",
+      "cost": {
+        "anthropic_usd": 264.2,
+        "openai_usd": 31.5,
+        "fixed_subscriptions_usd": 32.08,
+        "total_usd": 327.78
+      },
+      "output": {
+        "prs_merged": 17,
+        "additions": 4250,
+        "deletions": 1670,
+        "commits": 89,
+        "reverts": 1,
+        "repos_touched": [
+          "your-org/your-app"
+        ],
+        "prs": [
+          {
+            "title": "chore(deps): bump react / vite / tailwind",
+            "url": "https://github.com/your-org/your-app/pull/400",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-18"
+          },
+          {
+            "title": "feat(search): typeahead with debounce",
+            "url": "https://github.com/your-org/your-app/pull/401",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-19"
+          },
+          {
+            "title": "fix(a11y): focus trap in modal",
+            "url": "https://github.com/your-org/your-app/pull/402",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-20"
+          },
+          {
+            "title": "feat(auth): add magic-link login flow",
+            "url": "https://github.com/your-org/your-app/pull/403",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-21"
+          },
+          {
+            "title": "fix(billing): handle stripe webhook idempotency",
+            "url": "https://github.com/your-org/your-app/pull/404",
+            "repo": "your-org/your-app",
+            "merged_at": "2026-05-22"
+          }
+        ],
+        "changed_files": 47
+      },
+      "value_breakdown": {
+        "pr_value_usd": 10200,
+        "line_value_usd": 637.5,
+        "revert_penalty_usd": 600,
+        "gross_value_usd": 10837.5,
+        "net_value_usd": 10237.5
+      },
+      "cost_usd": 327.78,
+      "value_usd": 10237.5,
+      "roi": 31.23
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "demo-0000",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-18T11:46:46.428226+00:00",
+      "last_event": "2026-05-18T11:46:46.428226+00:00",
+      "user_messages": 15,
+      "tool_counts": {
+        "Bash": 63,
+        "Edit": 28,
+        "Read": 21,
+        "Write": 14,
+        "TaskCreate": 7,
+        "TaskUpdate": 7
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 15766666,
+      "token_out": 3153333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 47.3,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "new-feature",
+        "project": "your-app",
+        "summary": "Built magic-link auth with email service + cooldown.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0001",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-16T16:46:46.428226+00:00",
+      "last_event": "2026-05-16T16:46:46.428226+00:00",
+      "user_messages": 25,
+      "tool_counts": {
+        "Bash": 27,
+        "Edit": 12,
+        "Read": 9,
+        "Write": 6,
+        "TaskCreate": 3,
+        "TaskUpdate": 3
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 2800000,
+      "token_out": 560000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 8.4,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "extend-feature",
+        "project": "your-app",
+        "summary": "Added typeahead search to nav with debouncer.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0002",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-14T15:46:46.428226+00:00",
+      "last_event": "2026-05-14T15:46:46.428226+00:00",
+      "user_messages": 22,
+      "tool_counts": {
+        "Bash": 8,
+        "Edit": 3,
+        "Read": 2,
+        "Write": 1,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 400000,
+      "token_out": 80000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 1.2,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "bug-fix",
+        "project": "your-app",
+        "summary": "Fixed mobile dropdown z-index regression in modal.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0003",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-12T15:46:46.428226+00:00",
+      "last_event": "2026-05-12T15:46:46.428226+00:00",
+      "user_messages": 14,
+      "tool_counts": {
+        "Bash": 45,
+        "Edit": 20,
+        "Read": 15,
+        "Write": 10,
+        "TaskCreate": 5,
+        "TaskUpdate": 5
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 7933333,
+      "token_out": 1586666,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 23.8,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "refactor",
+        "project": "your-app",
+        "summary": "Split monolith into 5 route modules, kept all tests green.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0004",
+      "project": "infra",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-10T11:46:46.428226+00:00",
+      "last_event": "2026-05-10T11:46:46.428226+00:00",
+      "user_messages": 13,
+      "tool_counts": {
+        "Bash": 12,
+        "Edit": 5,
+        "Read": 4,
+        "Write": 2,
+        "TaskCreate": 1,
+        "TaskUpdate": 1
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 1133333,
+      "token_out": 226666,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 3.4,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "config-ops",
+        "project": "infra",
+        "summary": "Wired GitHub Actions cron + Vercel preview deploys.",
+        "value_signal": "shipped-code",
+        "main_artifact": "infra",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0005",
+      "project": "competitive-scan",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-08T12:46:46.428226+00:00",
+      "last_event": "2026-05-08T12:46:46.428226+00:00",
+      "user_messages": 35,
+      "tool_counts": {
+        "Bash": 6,
+        "Edit": 2,
+        "Read": 2,
+        "Write": 1,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 700000,
+      "token_out": 140000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 2.1,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "research",
+        "project": "competitive-scan",
+        "summary": "Surveyed 5 dashboards in the space, wrote diff matrix.",
+        "value_signal": "researched",
+        "main_artifact": "competitive-scan",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0006",
+      "project": "v2-roadmap",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-06T16:46:46.428226+00:00",
+      "last_event": "2026-05-06T16:46:46.428226+00:00",
+      "user_messages": 9,
+      "tool_counts": {
+        "Bash": 2,
+        "Edit": 1,
+        "Read": 0,
+        "Write": 0,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 266666,
+      "token_out": 53333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 0.8,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "brainstorm",
+        "project": "v2-roadmap",
+        "summary": "Talked through v2 multi-tenant data model tradeoffs.",
+        "value_signal": "info-gathered",
+        "main_artifact": "v2-roadmap",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0007",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-04T16:46:46.428226+00:00",
+      "last_event": "2026-05-04T16:46:46.428226+00:00",
+      "user_messages": 21,
+      "tool_counts": {
+        "Bash": 19,
+        "Edit": 8,
+        "Read": 6,
+        "Write": 4,
+        "TaskCreate": 2,
+        "TaskUpdate": 2
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 1866666,
+      "token_out": 373333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 5.6,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "debug",
+        "project": "your-app",
+        "summary": "Tracked down stripe webhook race condition — repro'd in test.",
+        "value_signal": "info-gathered",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0008",
+      "project": "weekly-review",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-02T15:46:46.428226+00:00",
+      "last_event": "2026-05-02T15:46:46.428226+00:00",
+      "user_messages": 40,
+      "tool_counts": {
+        "Bash": 4,
+        "Edit": 2,
+        "Read": 1,
+        "Write": 1,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 466666,
+      "token_out": 93333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 1.4,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "personal-task",
+        "project": "weekly-review",
+        "summary": "Drafted board update from this week's metrics.",
+        "value_signal": "shipped-code",
+        "main_artifact": "weekly-review",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0009",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-30T12:46:46.428226+00:00",
+      "last_event": "2026-04-30T12:46:46.428226+00:00",
+      "user_messages": 9,
+      "tool_counts": {
+        "Bash": 39,
+        "Edit": 17,
+        "Read": 13,
+        "Write": 8,
+        "TaskCreate": 4,
+        "TaskUpdate": 4
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 6400000,
+      "token_out": 1280000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 19.2,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "new-feature",
+        "project": "your-app",
+        "summary": "Implemented CSV import pipeline w/ progress events.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0010",
+      "project": "your-app",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-28T12:46:46.428226+00:00",
+      "last_event": "2026-04-28T12:46:46.428226+00:00",
+      "user_messages": 20,
+      "tool_counts": {
+        "Bash": 23,
+        "Edit": 10,
+        "Read": 7,
+        "Write": 5,
+        "TaskCreate": 2,
+        "TaskUpdate": 2
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 2366666,
+      "token_out": 473333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 7.1,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "extend-feature",
+        "project": "your-app",
+        "summary": "Added export endpoints (CSV + JSON) with rate limiting.",
+        "value_signal": "shipped-code",
+        "main_artifact": "your-app",
+        "model": "demo"
+      }
+    },
+    {
+      "session_id": "demo-0011",
+      "project": "infra",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-26T11:46:46.428226+00:00",
+      "last_event": "2026-04-26T11:46:46.428226+00:00",
+      "user_messages": 34,
+      "tool_counts": {
+        "Bash": 13,
+        "Edit": 5,
+        "Read": 4,
+        "Write": 2,
+        "TaskCreate": 1,
+        "TaskUpdate": 1
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 1400000,
+      "token_out": 280000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 4.2,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "config-ops",
+        "project": "infra",
+        "summary": "Set up Sentry + Datadog tracing on the API.",
+        "value_signal": "shipped-code",
+        "main_artifact": "infra",
+        "model": "demo"
+      }
+    }
+  ],
+  "sessionsTotals": {
+    "totalCostUsd": 124.5,
+    "sessionCount": 12,
+    "byCategory": [
+      {
+        "key": "new-feature",
+        "cost": 66.5,
+        "count": 2
+      },
+      {
+        "key": "refactor",
+        "cost": 23.8,
+        "count": 1
+      },
+      {
+        "key": "extend-feature",
+        "cost": 15.5,
+        "count": 2
+      },
+      {
+        "key": "config-ops",
+        "cost": 7.6,
+        "count": 2
+      },
+      {
+        "key": "debug",
+        "cost": 5.6,
+        "count": 1
+      },
+      {
+        "key": "research",
+        "cost": 2.1,
+        "count": 1
+      },
+      {
+        "key": "personal-task",
+        "cost": 1.4,
+        "count": 1
+      },
+      {
+        "key": "bug-fix",
+        "cost": 1.2,
+        "count": 1
+      },
+      {
+        "key": "brainstorm",
+        "cost": 0.8,
+        "count": 1
+      }
+    ],
+    "byProject": [
+      {
+        "key": "your-app",
+        "cost": 112.6,
+        "count": 7
+      },
+      {
+        "key": "infra",
+        "cost": 7.6,
+        "count": 2
+      },
+      {
+        "key": "competitive-scan",
+        "cost": 2.1,
+        "count": 1
+      },
+      {
+        "key": "weekly-review",
+        "cost": 1.4,
+        "count": 1
+      },
+      {
+        "key": "v2-roadmap",
+        "cost": 0.8,
+        "count": 1
+      }
+    ],
+    "byValueSignal": [
+      {
+        "key": "shipped-code",
+        "cost": 116.0
+      },
+      {
+        "key": "info-gathered",
+        "cost": 6.4
+      },
+      {
+        "key": "researched",
+        "cost": 2.1
+      }
+    ]
+  }
+}

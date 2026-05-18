@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tokenpayback"
+version = "0.1.0"
+description = "Are your AI tokens paying off? CLI that classifies your Claude Code sessions and shows ROI."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "Yibo Gong", email = "gongyibob@gmail.com" }]
+keywords = ["claude-code", "ai", "agent", "roi", "observability", "developer-tools"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development",
+]
+dependencies = [
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/gongyibob-ctrl/tokenpayback"
+Repository = "https://github.com/gongyibob-ctrl/tokenpayback"
+Issues = "https://github.com/gongyibob-ctrl/tokenpayback/issues"
+
+[project.scripts]
+tokenpayback = "tokenpayback.cli:main"
+
+[tool.setuptools]
+packages = ["tokenpayback"]
+
+[tool.setuptools.package-data]
+tokenpayback = ["dashboard/*"]

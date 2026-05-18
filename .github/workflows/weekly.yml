@@ -1,0 +1,43 @@
+name: weekly-roi
+
+on:
+  schedule:
+    - cron: "0 1 * * 1"   # Mondays 09:00 Asia/Shanghai (last week complete)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  roi:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_ADMIN_KEY: ${{ secrets.ANTHROPIC_ADMIN_KEY }}
+      OPENAI_ADMIN_KEY: ${{ secrets.OPENAI_ADMIN_KEY }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - run: python -u -m tokenpayback.roi
+      - name: Commit & push
+        run: |
+          git config user.name "tokenpayback-bot"
+          git config user.email "bot@tokenpayback"
+          git add reports/ dashboard/data.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: weekly roi $(date -u +%Y-W%V)"
+          git push
+      - name: Deploy to Vercel
+        if: ${{ env.VERCEL_TOKEN != '' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        working-directory: dashboard
+        run: |
+          npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN"

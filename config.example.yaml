@@ -1,0 +1,42 @@
+# Copy to config.local.yaml and fill in.
+# config.local.yaml is gitignored.
+
+# Your hourly cost in USD — used to estimate $ value of engineering output.
+# Be honest: fully-loaded cost (salary + benefits + overhead).
+# Default: $150/hr (a reasonable US senior dev fully-loaded).
+hourly_rate_usd: 150
+
+# Engineering output value heuristics
+# Average $ value of a merged PR (varies wildly by company stage — rough proxy).
+# Default: 4 hours of dev time at hourly_rate.
+value_per_pr_usd: 600
+value_per_line_committed_usd: 0.30  # rough; tune to your context
+
+# GitHub username for output attribution
+github_username: your-github-username
+
+# Repos to count. Leave empty to count all public + private repos under github_username.
+github_repos: []
+  # - owner/repo
+  # - owner/repo2
+
+# Fixed monthly subscriptions (added flat to cost).
+fixed_monthly_subscriptions_usd:
+  cursor: 20
+  github_copilot: 19
+  claude_max: 100   # if you have Claude.ai subscription
+  # add others
+
+# LLM API providers — read usage from their APIs
+providers:
+  anthropic:
+    enabled: true
+    # API key for Anthropic Admin API to read org usage
+    # If not set, will fall back to env var ANTHROPIC_ADMIN_KEY
+  openai:
+    enabled: false
+    # Same — uses OPENAI_ADMIN_KEY env var
+
+# Output
+report_dir: reports
+dashboard_data: dashboard/data.json

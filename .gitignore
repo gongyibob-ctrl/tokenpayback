@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.local
+db.sqlite-journal
+db.sqlite-wal
+db.sqlite-shm
+.DS_Store
+.vercel/
+dashboard/node_modules/
+config.local.yaml
+tokenpayback.egg-info/
+dashboard/sessions.json
