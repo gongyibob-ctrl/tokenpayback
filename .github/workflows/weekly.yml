@@ -1,20 +1,20 @@
-name: weekly-roi
+name: refresh-demo
+
+# Refreshes the public dashboard's demo data weekly.
+# This workflow does NOT run real user analytics — that's what `tokenpayback` does locally.
+# The Vercel-deployed dashboard at tokenpayback.vercel.app shows synthetic example data only.
 
 on:
   schedule:
-    - cron: "0 1 * * 1"   # Mondays 09:00 Asia/Shanghai (last week complete)
+    - cron: "0 1 * * 1"   # Monday 09:00 Asia/Shanghai
   workflow_dispatch: {}
 
 permissions:
   contents: write
 
 jobs:
-  roi:
+  refresh-demo:
     runs-on: ubuntu-latest
-    env:
-      ANTHROPIC_ADMIN_KEY: ${{ secrets.ANTHROPIC_ADMIN_KEY }}
-      OPENAI_ADMIN_KEY: ${{ secrets.OPENAI_ADMIN_KEY }}
-      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,16 +22,17 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -e .
-      - run: python -u -m tokenpayback.roi
-      - name: Commit & push
+      - name: Regenerate demo data
+        run: python -m tokenpayback.demo_data > dashboard/data.json
+      - name: Commit if changed
         run: |
           git config user.name "tokenpayback-bot"
           git config user.email "bot@tokenpayback"
-          git add reports/ dashboard/data.json
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "chore: weekly roi $(date -u +%Y-W%V)"
+          git add dashboard/data.json
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "chore: refresh demo data $(date -u +%Y-W%V)"
           git push
-      - name: Deploy to Vercel
+      - name: Redeploy Vercel
         if: ${{ env.VERCEL_TOKEN != '' }}
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
