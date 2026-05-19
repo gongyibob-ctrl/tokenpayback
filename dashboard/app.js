@@ -166,8 +166,11 @@ function renderActivityHero(data) {
   const cats = data.byCategory || [];
   const grid = document.getElementById("activity-grid");
   if (!cats.length) { grid.innerHTML = "<div class=\"muted\">no sessions yet — run <code>tokenpayback</code> first</div>"; return; }
-  grid.innerHTML = cats.map((c) => `
-    <div class="activity-cell">
+  grid.innerHTML = cats.map((c) => {
+    const rangeTitle = `value range: ${fmtMoney(c.value_low_usd)} — ${fmtMoney(c.value_high_usd)} · ROI range: ${fmtROI(c.roi_low)} — ${fmtROI(c.roi_high)}`;
+    const hrs = c.human_minutes_total != null ? (c.human_minutes_total / 60).toFixed(1) : null;
+    return `
+    <div class="activity-cell" title="${escapeHtml(rangeTitle)}">
       <div class="a-icon">${c.icon || "•"}</div>
       <div class="a-label">${escapeHtml(c.label || c.category)}</div>
       <div class="a-count">${c.count} <span class="muted" style="font-size:13px">session${c.count===1?"":"s"}</span></div>
@@ -176,8 +179,9 @@ function renderActivityHero(data) {
         <span>value <b>${fmtMoney(c.value_usd)}</b></span>
         <span class="a-roi ${roiClass(c.roi)}">${c.roi != null ? c.roi.toFixed(1) + "×" : "—"}</span>
       </div>
+      ${hrs ? `<div class="muted" style="font-size:11px;margin-top:4px">${hrs}h human time · range ${fmtMoney(c.value_low_usd)} — ${fmtMoney(c.value_high_usd)}</div>` : ""}
     </div>
-  `).join("");
+  `;}).join("");
 }
 
 function renderAgents(data) {
@@ -228,26 +232,42 @@ function renderSessions(data) {
     if (m < 60) return `${Math.round(m)}m`;
     return `${(m/60).toFixed(1)}h`;
   };
+  const QM = {"full-replacement":1.0,"with-edits":0.7,"draft-only":0.4,"failed":0};
   document.getElementById("sessions-tbody").innerHTML = sessions.slice(0, 60).map((s) => {
     const c = s.classification || {};
     const date = (s.last_event || "").slice(0, 10);
     const lbls = sourceLabel(s);
     const role = c.equivalent_role || "—";
-    const mLow = c.human_minutes_low;
-    const mMid = c.human_minutes_mid;
-    const mHigh = c.human_minutes_high;
+    const mLow = c.human_minutes_low, mMid = c.human_minutes_mid, mHigh = c.human_minutes_high;
+    const rLow = c.hourly_rate_usd_low, rMid = c.hourly_rate_usd_mid, rHigh = c.hourly_rate_usd_high;
     const timeCell = (mMid != null)
-      ? `<b>${fmtMinutes(mMid)}</b><span class="muted"> (${fmtMinutes(mLow)}–${fmtMinutes(mHigh)})</span>`
+      ? `<span class="muted">${fmtMinutes(mLow)}</span> · <b>${fmtMinutes(mMid)}</b> · <span class="muted">${fmtMinutes(mHigh)}</span>`
+      : "—";
+    const rateCell = (rMid != null)
+      ? `<span class="muted">$${rLow}</span> · <b>$${rMid}</b> · <span class="muted">$${rHigh}</span><span class="muted"> /hr</span>`
       : "—";
     const quality = c.replacement_quality || "—";
+    const qm = QM[quality];
+    const qmStr = qm != null ? qm.toFixed(qm === 1 ? 1 : 1) : "—";
+    const qualityCell = `<span class="cat-tag">${escapeHtml(quality)}</span> <span class="muted">×${qmStr}</span>`;
     const cost = s.est_cost_usd || 0;
-    // Compute human-equivalent value if fields present
-    let humanValue = null, roi = null;
-    const qm = ({"full-replacement":1.0,"with-edits":0.7,"draft-only":0.4,"failed":0}[quality]);
-    if (mMid != null && c.hourly_rate_usd_mid != null && qm != null) {
-      humanValue = (mMid/60) * c.hourly_rate_usd_mid * qm;
-      if (cost > 0) roi = humanValue / cost;
+    let vLow = null, vMid = null, vHigh = null, roiLow = null, roiMid = null, roiHigh = null;
+    if (mMid != null && rMid != null && qm != null) {
+      vLow  = (mLow  / 60) * rLow  * qm;
+      vMid  = (mMid  / 60) * rMid  * qm;
+      vHigh = (mHigh / 60) * rHigh * qm;
+      if (cost > 0) {
+        roiLow  = vLow  / cost;
+        roiMid  = vMid  / cost;
+        roiHigh = vHigh / cost;
+      }
     }
+    const valueCell = vMid != null
+      ? `<span class="muted">${fmtMoney(vLow)}</span> · <b>${fmtMoney(vMid)}</b> · <span class="muted">${fmtMoney(vHigh)}</span>`
+      : "—";
+    const roiCell = roiMid != null
+      ? `<span class="muted">${fmtROI(roiLow)}</span> · <strong class="${roiClass(roiMid)}">${fmtROI(roiMid)}</strong> · <span class="muted">${fmtROI(roiHigh)}</span>`
+      : "—";
     return `
       <tr>
         <td>${date}</td>
@@ -257,10 +277,11 @@ function renderSessions(data) {
         <td>${escapeHtml(c.project || "?")}</td>
         <td>${escapeHtml(role)}</td>
         <td class="num">${timeCell}</td>
-        <td><span class="cat-tag">${escapeHtml(quality)}</span></td>
+        <td class="num">${rateCell}</td>
+        <td>${qualityCell}</td>
         <td class="num">${fmtMoney(cost)}</td>
-        <td class="num">${humanValue != null ? fmtMoney(humanValue) : "—"}</td>
-        <td class="num ${roiClass(roi)}"><strong>${fmtROI(roi)}</strong></td>
+        <td class="num">${valueCell}</td>
+        <td class="num">${roiCell}</td>
       </tr>
     `;
   }).join("");

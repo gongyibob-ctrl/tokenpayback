@@ -41,7 +41,11 @@
 
   <section class="card hero-activity" id="hero-activity">
     <h2>What your AI did this period</h2>
-    <p class="subhead">Every session is categorized. Asking questions counts. Personal tasks count. Code shipped is just one of many ways your tokens turned into something.</p>
+    <p class="subhead">
+      Every session is categorized. Each row shows total cost, total human-equivalent value, and ROI — using
+      <b>mid</b> estimates of human time and market rate, multiplied by the <b>quality factor</b>.
+      Hover the columns for low/high ranges.
+    </p>
     <div class="activity-grid" id="activity-grid"></div>
   </section>
 
@@ -69,13 +73,18 @@
 
   <section class="card" id="sessions-section" hidden>
     <h2>Recent sessions — with human-equivalent valuation</h2>
-    <p class="subhead">Each session lists the closest professional role that would normally do this work, the estimated human time, and the value at that role's market rate. Quality factor reflects how usable the AI output was. Nothing leaves your machine.</p>
+    <p class="subhead">Every row shows the closest professional role, a <b>time range</b> (low — mid — high) for that human, the <b>market rate range</b> for that role, and the <b>quality factor</b> reflecting whether the AI output was directly usable. Final value = <code>mid_hours × mid_rate × quality_factor</code>; the range comes from combining the low/high estimates. Nothing leaves your machine.</p>
     <table class="sessions-table">
       <thead>
         <tr>
           <th>Date</th><th>Agent</th><th>Via</th><th>Category</th><th>Project</th>
-          <th>Equivalent role</th><th class="num">Human time</th><th>Quality</th>
-          <th class="num">$ AI cost</th><th class="num">$ Human-equiv</th><th class="num">ROI</th>
+          <th>Equivalent role</th>
+          <th class="num">Human time<br><span class="muted" style="font-weight:400">low → mid → high</span></th>
+          <th class="num">Hourly rate<br><span class="muted" style="font-weight:400">low → mid → high</span></th>
+          <th>Quality<br><span class="muted" style="font-weight:400">×factor</span></th>
+          <th class="num">$ AI cost</th>
+          <th class="num">$ Human-equiv<br><span class="muted" style="font-weight:400">low — mid — high</span></th>
+          <th class="num">ROI<br><span class="muted" style="font-weight:400">low — mid — high</span></th>
         </tr>
       </thead>
       <tbody id="sessions-tbody"></tbody>
