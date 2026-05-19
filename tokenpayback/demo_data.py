@@ -178,6 +178,19 @@ def build_demo() -> dict:
         ("claude-code", "ship-feature",     "Pitchstack",
          "Added typeahead search to nav with debouncer.",                       8.40,  61,
          "Mid frontend engineer",   (30,  60, 120), (100, 140, 180), "full-replacement"),
+        # --- loss-makers: real-life negative ROI examples ---
+        ("claude-code", "bug-investigation","Pitchstack",
+         "Asked agent to refactor auth — it broke session expiry, took 3h to revert.", 12.40, 87,
+         "Senior backend engineer", (90, 180, 360), (180, 220, 280), "harmful"),
+        ("codex",       "ship-feature",     "Pitchstack",
+         "Spent 40 min in loops trying to fix a flaky test; gave up, fixed manually.",   8.20, 54,
+         "Mid backend engineer",    (10,  20,  40), (100, 140, 180), "failed"),
+        ("hermes",      "market-research",  "Funding tracker",
+         "Asked for VC list — got hallucinated names, had to redo by hand.",      3.10, 12,
+         "Research analyst",        (30,  60, 120), ( 80, 120, 180), "failed"),
+        ("claude-code", "design-and-deck",  "Investor deck v3",
+         "Tried 5 prompts for chart redesign; output worse than original each time.",1.80, 24,
+         "Pitch design consultant", (45,  90, 180), (120, 180, 280), "draft-only"),
     ]
     base = datetime.now(timezone.utc)
     sessions = []

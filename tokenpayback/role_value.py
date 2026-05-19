@@ -17,10 +17,12 @@ from __future__ import annotations
 
 
 QUALITY_MULTIPLIER = {
-    "full-replacement": 1.0,
-    "with-edits": 0.7,
-    "draft-only": 0.4,
-    "failed": 0.0,
+    "full-replacement": 1.0,    # AI output directly usable as-is
+    "with-edits": 0.7,          # mostly right, user touched it up
+    "draft-only": 0.4,          # AI gave a starting point, user wrote most of it
+    "failed": 0.0,              # AI produced nothing usable; cost wasted
+    "harmful": -0.5,            # AI made things worse — introduced bugs, took user
+                                # MORE time to clean up than original task would've
 }
 
 

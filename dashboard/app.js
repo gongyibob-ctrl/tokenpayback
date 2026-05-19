@@ -162,6 +162,51 @@ function renderHeuristics(config) {
   `;
 }
 
+function renderLosers(data) {
+  const sessions = data.sessions || [];
+  const QM = {"full-replacement":1.0,"with-edits":0.7,"draft-only":0.4,"failed":0,"harmful":-0.5};
+  const losers = sessions.filter((s) => {
+    const c = s.classification || {};
+    const q = c.replacement_quality;
+    const mMid = c.human_minutes_mid, rMid = c.hourly_rate_usd_mid;
+    const qm = QM[q];
+    if (qm == null) return false;
+    if (q === "failed" || q === "harmful") return true;
+    if (mMid != null && rMid != null && (s.est_cost_usd || 0) > 0) {
+      const v = (mMid/60) * rMid * qm;
+      return v / (s.est_cost_usd || 1) < 1;
+    }
+    return false;
+  });
+  if (!losers.length) return;
+  document.getElementById("losers-section").hidden = false;
+  document.getElementById("losers-tbody").innerHTML = losers.slice(0, 20).map((s) => {
+    const c = s.classification || {};
+    const q = c.replacement_quality || "—";
+    const qm = QM[q] ?? null;
+    const mMid = c.human_minutes_mid, rMid = c.hourly_rate_usd_mid;
+    const cost = s.est_cost_usd || 0;
+    let v = null, roi = null;
+    if (mMid != null && rMid != null && qm != null) {
+      v = (mMid/60) * rMid * qm;
+      if (cost > 0) roi = v / cost;
+    }
+    const date = (s.last_event || "").slice(0, 10);
+    return `
+      <tr>
+        <td>${date}</td>
+        <td><span class="cat-tag">${escapeHtml(s.agent || "?")}</span></td>
+        <td>${escapeHtml(c.project || "?")}</td>
+        <td><span class="cat-tag cat-${escapeHtml(c.category || "")}">${escapeHtml(c.category || "?")}</span></td>
+        <td>${escapeHtml(c.summary || "")}</td>
+        <td><span class="cat-tag" style="color:#ff6b6b;border-color:#ff6b6b">${escapeHtml(q)} ${qm != null ? "×" + qm : ""}</span></td>
+        <td class="num">${fmtMoney(cost)}</td>
+        <td class="num">${v != null ? fmtMoney(v) : "—"}</td>
+        <td class="num roi-bad"><strong>${fmtROI(roi)}</strong></td>
+      </tr>`;
+  }).join("");
+}
+
 function renderActivityHero(data) {
   const cats = data.byCategory || [];
   const grid = document.getElementById("activity-grid");
@@ -315,6 +360,7 @@ async function main() {
     renderOverall(data);
     renderHero(latest);
     renderActivityHero(data);
+    renderLosers(data);
     renderAgents(data);
     renderChart(weeks);
     renderTable(weeks);

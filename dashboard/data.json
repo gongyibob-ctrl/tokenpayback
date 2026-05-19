@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-19T04:44:47.191618+00:00",
+  "generatedAt": "2026-05-19T04:51:32.359486+00:00",
   "isDemo": true,
   "config": {
     "github_username": "demo-user",
@@ -357,8 +357,8 @@
       "session_id": "demo-0000",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-18T23:44:47.191101+00:00",
-      "last_event": "2026-05-18T23:44:47.191101+00:00",
+      "first_event": "2026-05-18T23:51:32.358232+00:00",
+      "last_event": "2026-05-18T23:51:32.358232+00:00",
       "user_messages": 8,
       "tool_counts": {
         "Bash": 63,
@@ -399,8 +399,8 @@
       "session_id": "demo-0001",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-18T04:44:47.191101+00:00",
-      "last_event": "2026-05-18T04:44:47.191101+00:00",
+      "first_event": "2026-05-18T04:51:32.358232+00:00",
+      "last_event": "2026-05-18T04:51:32.358232+00:00",
       "user_messages": 28,
       "tool_counts": {
         "Bash": 39,
@@ -441,8 +441,8 @@
       "session_id": "demo-0002",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-17T02:44:47.191101+00:00",
-      "last_event": "2026-05-17T02:44:47.191101+00:00",
+      "first_event": "2026-05-17T02:51:32.358232+00:00",
+      "last_event": "2026-05-17T02:51:32.358232+00:00",
       "user_messages": 12,
       "tool_counts": {
         "Bash": 19,
@@ -483,8 +483,8 @@
       "session_id": "demo-0003",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-16T03:44:47.191101+00:00",
-      "last_event": "2026-05-16T03:44:47.191101+00:00",
+      "first_event": "2026-05-16T03:51:32.358232+00:00",
+      "last_event": "2026-05-16T03:51:32.358232+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 12,
@@ -525,8 +525,8 @@
       "session_id": "demo-0004",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-14T23:44:47.191101+00:00",
-      "last_event": "2026-05-14T23:44:47.191101+00:00",
+      "first_event": "2026-05-14T23:51:32.358232+00:00",
+      "last_event": "2026-05-14T23:51:32.358232+00:00",
       "user_messages": 8,
       "tool_counts": {
         "Bash": 13,
@@ -567,8 +567,8 @@
       "session_id": "demo-0005",
       "project": "Competitive scan",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-13T23:44:47.191101+00:00",
-      "last_event": "2026-05-13T23:44:47.191101+00:00",
+      "first_event": "2026-05-13T23:51:32.358232+00:00",
+      "last_event": "2026-05-13T23:51:32.358232+00:00",
       "user_messages": 28,
       "tool_counts": {
         "Bash": 6,
@@ -609,8 +609,8 @@
       "session_id": "demo-0006",
       "project": "v2 roadmap",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-13T00:44:47.191101+00:00",
-      "last_event": "2026-05-13T00:44:47.191101+00:00",
+      "first_event": "2026-05-13T00:51:32.358232+00:00",
+      "last_event": "2026-05-13T00:51:32.358232+00:00",
       "user_messages": 7,
       "tool_counts": {
         "Bash": 2,
@@ -651,8 +651,8 @@
       "session_id": "demo-0007",
       "project": "Investor deck v3",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-12T00:44:47.191101+00:00",
-      "last_event": "2026-05-12T00:44:47.191101+00:00",
+      "first_event": "2026-05-12T00:51:32.358232+00:00",
+      "last_event": "2026-05-12T00:51:32.358232+00:00",
       "user_messages": 18,
       "tool_counts": {
         "Bash": 8,
@@ -693,8 +693,8 @@
       "session_id": "demo-0008",
       "project": "Board update slides",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-11T04:44:47.191101+00:00",
-      "last_event": "2026-05-11T04:44:47.191101+00:00",
+      "first_event": "2026-05-11T04:51:32.358232+00:00",
+      "last_event": "2026-05-11T04:51:32.358232+00:00",
       "user_messages": 5,
       "tool_counts": {
         "Bash": 4,
@@ -735,8 +735,8 @@
       "session_id": "demo-0009",
       "project": "TikTok founder vlog",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-10T04:44:47.191101+00:00",
-      "last_event": "2026-05-10T04:44:47.191101+00:00",
+      "first_event": "2026-05-10T04:51:32.358232+00:00",
+      "last_event": "2026-05-10T04:51:32.358232+00:00",
       "user_messages": 11,
       "tool_counts": {
         "Bash": 9,
@@ -777,8 +777,8 @@
       "session_id": "demo-0010",
       "project": "Demo screencap",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-09T03:44:47.191101+00:00",
-      "last_event": "2026-05-09T03:44:47.191101+00:00",
+      "first_event": "2026-05-09T03:51:32.358232+00:00",
+      "last_event": "2026-05-09T03:51:32.358232+00:00",
       "user_messages": 21,
       "tool_counts": {
         "Bash": 5,
@@ -819,8 +819,8 @@
       "session_id": "demo-0011",
       "project": "Launch email",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-08T00:44:47.191101+00:00",
-      "last_event": "2026-05-08T00:44:47.191101+00:00",
+      "first_event": "2026-05-08T00:51:32.358232+00:00",
+      "last_event": "2026-05-08T00:51:32.358232+00:00",
       "user_messages": 5,
       "tool_counts": {
         "Bash": 3,
@@ -861,8 +861,8 @@
       "session_id": "demo-0012",
       "project": "Landing page hero",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-07T00:44:47.191101+00:00",
-      "last_event": "2026-05-07T00:44:47.191101+00:00",
+      "first_event": "2026-05-07T00:51:32.358232+00:00",
+      "last_event": "2026-05-07T00:51:32.358232+00:00",
       "user_messages": 11,
       "tool_counts": {
         "Bash": 3,
@@ -903,8 +903,8 @@
       "session_id": "demo-0013",
       "project": "Resume tailor for Series A pitch",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-05T23:44:47.191101+00:00",
-      "last_event": "2026-05-05T23:44:47.191101+00:00",
+      "first_event": "2026-05-05T23:51:32.358232+00:00",
+      "last_event": "2026-05-05T23:51:32.358232+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 4,
@@ -945,8 +945,8 @@
       "session_id": "demo-0014",
       "project": "Board email",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-04T23:44:47.191101+00:00",
-      "last_event": "2026-05-04T23:44:47.191101+00:00",
+      "first_event": "2026-05-04T23:51:32.358232+00:00",
+      "last_event": "2026-05-04T23:51:32.358232+00:00",
       "user_messages": 22,
       "tool_counts": {
         "Bash": 2,
@@ -987,8 +987,8 @@
       "session_id": "demo-0015",
       "project": "Tokyo trip planning",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-04T01:44:47.191101+00:00",
-      "last_event": "2026-05-04T01:44:47.191101+00:00",
+      "first_event": "2026-05-04T01:51:32.358232+00:00",
+      "last_event": "2026-05-04T01:51:32.358232+00:00",
       "user_messages": 12,
       "tool_counts": {
         "Bash": 5,
@@ -1029,8 +1029,8 @@
       "session_id": "demo-0016",
       "project": "Weekly meal prep",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-03T01:44:47.191101+00:00",
-      "last_event": "2026-05-03T01:44:47.191101+00:00",
+      "first_event": "2026-05-03T01:51:32.358232+00:00",
+      "last_event": "2026-05-03T01:51:32.358232+00:00",
       "user_messages": 23,
       "tool_counts": {
         "Bash": 2,
@@ -1071,8 +1071,8 @@
       "session_id": "demo-0017",
       "project": "General",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-02T02:44:47.191101+00:00",
-      "last_event": "2026-05-02T02:44:47.191101+00:00",
+      "first_event": "2026-05-02T02:51:32.358232+00:00",
+      "last_event": "2026-05-02T02:51:32.358232+00:00",
       "user_messages": 30,
       "tool_counts": {
         "Bash": 1,
@@ -1113,8 +1113,8 @@
       "session_id": "demo-0018",
       "project": "General",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-30T22:44:47.191101+00:00",
-      "last_event": "2026-04-30T22:44:47.191101+00:00",
+      "first_event": "2026-04-30T22:51:32.358232+00:00",
+      "last_event": "2026-04-30T22:51:32.358232+00:00",
       "user_messages": 5,
       "tool_counts": {
         "Bash": 0,
@@ -1155,8 +1155,8 @@
       "session_id": "demo-0019",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-29T22:44:47.191101+00:00",
-      "last_event": "2026-04-29T22:44:47.191101+00:00",
+      "first_event": "2026-04-29T22:51:32.358232+00:00",
+      "last_event": "2026-04-29T22:51:32.358232+00:00",
       "user_messages": 30,
       "tool_counts": {
         "Bash": 27,
@@ -1191,26 +1191,208 @@
         "hourly_rate_usd_high": 180,
         "replacement_quality": "full-replacement"
       }
+    },
+    {
+      "agent": "claude-code",
+      "session_id": "demo-0020",
+      "project": "Pitchstack",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-29T03:51:32.358232+00:00",
+      "last_event": "2026-04-29T03:51:32.358232+00:00",
+      "user_messages": 27,
+      "tool_counts": {
+        "Bash": 39,
+        "Edit": 17,
+        "Read": 13,
+        "Write": 8,
+        "TaskCreate": 4,
+        "TaskUpdate": 4
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 4133333,
+      "token_out": 826666,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 12.4,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "bug-investigation",
+        "project": "Pitchstack",
+        "summary": "Asked agent to refactor auth — it broke session expiry, took 3h to revert.",
+        "value_signal": "shipped-code",
+        "main_artifact": "Pitchstack",
+        "model": "demo",
+        "equivalent_role": "Senior backend engineer",
+        "human_minutes_low": 90,
+        "human_minutes_mid": 180,
+        "human_minutes_high": 360,
+        "hourly_rate_usd_low": 180,
+        "hourly_rate_usd_mid": 220,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "harmful"
+      }
+    },
+    {
+      "agent": "codex",
+      "session_id": "demo-0021",
+      "project": "Pitchstack",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-28T01:51:32.358232+00:00",
+      "last_event": "2026-04-28T01:51:32.358232+00:00",
+      "user_messages": 15,
+      "tool_counts": {
+        "Bash": 24,
+        "Edit": 10,
+        "Read": 8,
+        "Write": 5,
+        "TaskCreate": 2,
+        "TaskUpdate": 2
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 2733333,
+      "token_out": 546666,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 8.2,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "ship-feature",
+        "project": "Pitchstack",
+        "summary": "Spent 40 min in loops trying to fix a flaky test; gave up, fixed manually.",
+        "value_signal": "shipped-code",
+        "main_artifact": "Pitchstack",
+        "model": "demo",
+        "equivalent_role": "Mid backend engineer",
+        "human_minutes_low": 10,
+        "human_minutes_mid": 20,
+        "human_minutes_high": 40,
+        "hourly_rate_usd_low": 100,
+        "hourly_rate_usd_mid": 140,
+        "hourly_rate_usd_high": 180,
+        "replacement_quality": "failed"
+      }
+    },
+    {
+      "agent": "hermes",
+      "session_id": "demo-0022",
+      "project": "Funding tracker",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-27T02:51:32.358232+00:00",
+      "last_event": "2026-04-27T02:51:32.358232+00:00",
+      "user_messages": 9,
+      "tool_counts": {
+        "Bash": 5,
+        "Edit": 2,
+        "Read": 1,
+        "Write": 1,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 1033333,
+      "token_out": 206666,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 3.1,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "market-research",
+        "project": "Funding tracker",
+        "summary": "Asked for VC list — got hallucinated names, had to redo by hand.",
+        "value_signal": "shipped-artifact",
+        "main_artifact": "Funding tracker",
+        "model": "demo",
+        "equivalent_role": "Research analyst",
+        "human_minutes_low": 30,
+        "human_minutes_mid": 60,
+        "human_minutes_high": 120,
+        "hourly_rate_usd_low": 80,
+        "hourly_rate_usd_mid": 120,
+        "hourly_rate_usd_high": 180,
+        "replacement_quality": "failed"
+      }
+    },
+    {
+      "agent": "claude-code",
+      "session_id": "demo-0023",
+      "project": "Investor deck v3",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-26T03:51:32.358232+00:00",
+      "last_event": "2026-04-26T03:51:32.358232+00:00",
+      "user_messages": 29,
+      "tool_counts": {
+        "Bash": 10,
+        "Edit": 4,
+        "Read": 3,
+        "Write": 2,
+        "TaskCreate": 1,
+        "TaskUpdate": 1
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 600000,
+      "token_out": 120000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 1.8,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "design-and-deck",
+        "project": "Investor deck v3",
+        "summary": "Tried 5 prompts for chart redesign; output worse than original each time.",
+        "value_signal": "shipped-artifact",
+        "main_artifact": "Investor deck v3",
+        "model": "demo",
+        "equivalent_role": "Pitch design consultant",
+        "human_minutes_low": 45,
+        "human_minutes_mid": 90,
+        "human_minutes_high": 180,
+        "hourly_rate_usd_low": 120,
+        "hourly_rate_usd_mid": 180,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "draft-only"
+      }
     }
   ],
   "sessionsTotals": {
-    "totalCostUsd": 104.0,
-    "sessionCount": 20
+    "totalCostUsd": 129.5,
+    "sessionCount": 24
   },
   "byCategory": [
     {
       "category": "ship-feature",
       "label": "Ship feature",
       "icon": "🚢",
-      "count": 3,
-      "cost_usd": 74.9,
+      "count": 4,
+      "cost_usd": 83.1,
       "value_low_usd": 357.5,
       "value_usd": 960.0,
       "value_high_usd": 2460.0,
-      "human_minutes_total": 360.0,
-      "roi": 12.82,
-      "roi_low": 4.77,
-      "roi_high": 32.84
+      "human_minutes_total": 380.0,
+      "roi": 11.55,
+      "roi_low": 4.3,
+      "roi_high": 29.6
+    },
+    {
+      "category": "bug-investigation",
+      "label": "Bug fix",
+      "icon": "🐛",
+      "count": 2,
+      "cost_usd": 18.0,
+      "value_low_usd": -9.0,
+      "value_usd": -22.0,
+      "value_high_usd": -56.0,
+      "human_minutes_total": 300.0,
+      "roi": -1.22,
+      "roi_low": -0.5,
+      "roi_high": -3.11
     },
     {
       "category": "ops-and-deploy",
@@ -1227,32 +1409,32 @@
       "roi_high": 113.68
     },
     {
-      "category": "bug-investigation",
-      "label": "Bug fix",
-      "icon": "🐛",
-      "count": 1,
-      "cost_usd": 5.6,
-      "value_low_usd": 126.0,
-      "value_usd": 308.0,
-      "value_high_usd": 784.0,
-      "human_minutes_total": 120.0,
-      "roi": 55.0,
-      "roi_low": 22.5,
-      "roi_high": 140.0
-    },
-    {
       "category": "design-and-deck",
       "label": "Design & decks",
       "icon": "🎨",
+      "count": 3,
+      "cost_usd": 6.8,
+      "value_low_usd": 214.5,
+      "value_usd": 643.5,
+      "value_high_usd": 1974.0,
+      "human_minutes_total": 360.0,
+      "roi": 94.63,
+      "roi_low": 31.54,
+      "roi_high": 290.29
+    },
+    {
+      "category": "market-research",
+      "label": "Market research",
+      "icon": "🔍",
       "count": 2,
-      "cost_usd": 5.0,
-      "value_low_usd": 178.5,
-      "value_usd": 535.5,
-      "value_high_usd": 1638.0,
-      "human_minutes_total": 270.0,
-      "roi": 107.1,
-      "roi_low": 35.7,
-      "roi_high": 327.6
+      "cost_usd": 5.2,
+      "value_low_usd": 56.0,
+      "value_usd": 168.0,
+      "value_high_usd": 504.0,
+      "human_minutes_total": 180.0,
+      "roi": 32.31,
+      "roi_low": 10.77,
+      "roi_high": 96.92
     },
     {
       "category": "video-and-clip",
@@ -1267,20 +1449,6 @@
       "roi": 37.71,
       "roi_low": 12.0,
       "roi_high": 105.43
-    },
-    {
-      "category": "market-research",
-      "label": "Market research",
-      "icon": "🔍",
-      "count": 1,
-      "cost_usd": 2.1,
-      "value_low_usd": 56.0,
-      "value_usd": 168.0,
-      "value_high_usd": 504.0,
-      "human_minutes_total": 120.0,
-      "roi": 80.0,
-      "roi_low": 26.67,
-      "roi_high": 240.0
     },
     {
       "category": "resume-and-comms",
@@ -1356,15 +1524,39 @@
   "byAgent": [
     {
       "agent": "claude-code",
-      "count": 6,
-      "cost_usd": 84.0,
-      "value_low_usd": 525.5,
-      "value_usd": 1400.0,
-      "value_high_usd": 3613.0,
-      "human_minutes_total": 660.0,
-      "roi": 16.67,
-      "roi_low": 6.26,
-      "roi_high": 43.01
+      "count": 8,
+      "cost_usd": 98.2,
+      "value_low_usd": 426.5,
+      "value_usd": 1178.0,
+      "value_high_usd": 3109.0,
+      "human_minutes_total": 930.0,
+      "roi": 12.0,
+      "roi_low": 4.34,
+      "roi_high": 31.66
+    },
+    {
+      "agent": "codex",
+      "count": 3,
+      "cost_usd": 15.8,
+      "value_low_usd": 112.0,
+      "value_usd": 324.0,
+      "value_high_usd": 864.0,
+      "human_minutes_total": 155.0,
+      "roi": 20.51,
+      "roi_low": 7.09,
+      "roi_high": 54.68
+    },
+    {
+      "agent": "hermes",
+      "count": 7,
+      "cost_usd": 7.75,
+      "value_low_usd": 167.0,
+      "value_usd": 537.17,
+      "value_high_usd": 1628.0,
+      "human_minutes_total": 405.0,
+      "roi": 69.31,
+      "roi_low": 21.55,
+      "roi_high": 210.06
     },
     {
       "agent": "openclaw",
@@ -1377,49 +1569,29 @@
       "roi": 125.55,
       "roi_low": 40.85,
       "roi_high": 386.19
-    },
-    {
-      "agent": "codex",
-      "count": 2,
-      "cost_usd": 7.6,
-      "value_low_usd": 112.0,
-      "value_usd": 324.0,
-      "value_high_usd": 864.0,
-      "human_minutes_total": 135.0,
-      "roi": 42.63,
-      "roi_low": 14.74,
-      "roi_high": 113.68
-    },
-    {
-      "agent": "hermes",
-      "count": 6,
-      "cost_usd": 4.65,
-      "value_low_usd": 167.0,
-      "value_usd": 537.17,
-      "value_high_usd": 1628.0,
-      "human_minutes_total": 345.0,
-      "roi": 115.52,
-      "roi_low": 35.91,
-      "roi_high": 350.11
     }
   ],
   "overall": {
-    "totalCostUsd": 104.0,
-    "totalValueLowUsd": 1121.08,
-    "totalValueUsd": 3234.17,
-    "totalValueHighUsd": 9098.0,
-    "humanHoursSaved": 28.2,
-    "humanDaysSaved": 3.5,
-    "roiMid": 31.1,
-    "roiLow": 10.78,
-    "roiHigh": 87.48,
+    "totalCostUsd": 129.5,
+    "totalValueLowUsd": 1022.08,
+    "totalValueUsd": 3012.17,
+    "totalValueHighUsd": 8594.0,
+    "humanHoursSaved": 34.1,
+    "humanDaysSaved": 4.3,
+    "roiMid": 23.26,
+    "roiLow": 7.89,
+    "roiHigh": 66.36,
     "topRoles": [
       [
         "Senior backend engineer",
-        3
+        4
       ],
       [
         "DevOps engineer",
+        2
+      ],
+      [
+        "Pitch design consultant",
         2
       ],
       [
@@ -1429,16 +1601,14 @@
       [
         "Product / staff eng",
         1
-      ],
-      [
-        "Pitch design consultant",
-        1
       ]
     ],
     "qualityMix": {
       "with-edits": 10,
       "full-replacement": 9,
-      "draft-only": 1
+      "draft-only": 2,
+      "harmful": 1,
+      "failed": 2
     }
   }
 }

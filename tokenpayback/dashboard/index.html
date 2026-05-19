@@ -71,6 +71,26 @@
     </table>
   </section>
 
+  <section class="card" id="losers-section" hidden style="border-color: #ff6b6b;">
+    <h2>🚨 Loss-makers — sessions where AI didn't pay off</h2>
+    <p class="subhead">
+      Sessions with ROI &lt; 1× (AI cost more than the human time it saved) or with
+      <code>failed</code> / <code>harmful</code> quality. <b>Look at these before declaring victory.</b>
+      A negative-ROI session burned tokens AND added cleanup work for you — those are the cases that
+      should make you change your prompt, your tool choice, or your task framing.
+    </p>
+    <table class="sessions-table">
+      <thead>
+        <tr>
+          <th>Date</th><th>Agent</th><th>Project</th><th>Category</th>
+          <th>What happened</th><th>Quality</th>
+          <th class="num">$ AI cost</th><th class="num">$ Value</th><th class="num">ROI</th>
+        </tr>
+      </thead>
+      <tbody id="losers-tbody"></tbody>
+    </table>
+  </section>
+
   <section class="card" id="sessions-section" hidden>
     <h2>Recent sessions — with human-equivalent valuation</h2>
     <p class="subhead">Every row shows the closest professional role, a <b>time range</b> (low — mid — high) for that human, the <b>market rate range</b> for that role, and the <b>quality factor</b> reflecting whether the AI output was directly usable. Final value = <code>mid_hours × mid_rate × quality_factor</code>; the range comes from combining the low/high estimates. Nothing leaves your machine.</p>
