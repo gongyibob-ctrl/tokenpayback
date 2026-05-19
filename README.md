@@ -110,25 +110,43 @@ First run takes ~60 seconds (LLM classifies each session). Subsequent runs use c
 
 ---
 
-## The value model
+## Categories are personalized — not hardcoded
 
-Every session category has its own value heuristic. **None are $0 by default.**
+The first time you run `tokenpayback`, the LLM looks at a sample of your real sessions
+and **induces categories that fit how YOU use AI**. An engineer's taxonomy will look
+very different from a creator's, a founder's, or a data scientist's.
 
-| Category | Baseline | Bonus signals |
-|---|---|---|
-| 🚢 Code shipped (new-feature) | $50 | + $600 / merged PR, + $0.30 / line |
-| ➕ Code extended | $30 | + $400 / PR |
-| 🐛 Bug fixed | $80 | + $700 / PR (high stakes) |
-| 🔍 Bug understood | $40 | — (root cause is value even without a fix) |
-| 🧹 Code cleaned (refactor) | $30 | + $300 / PR |
-| ⚙️ Infra changed | $60 | + $200 / PR |
-| 📚 Info gathered (research) | $25 | + $0.05 / line written to notes |
-| 💡 Ideas explored | $20 | — |
-| 🎯 Life shipped (personal-task) | $30 | + $0.20 / file modified |
-| ❓ Question answered (chat-misc) | $5 | — |
+```bash
+tokenpayback                    # first run auto-generates ~/.tokenpayback/taxonomy.yaml
+tokenpayback taxonomy show      # see what it came up with
+tokenpayback taxonomy edit      # rename categories, change baselines, add new ones
+tokenpayback taxonomy regen     # re-discover from scratch
+```
 
-All multipliers live in `~/.tokenpayback/config.yaml`. Edit them. The point is to make
-the assumptions **visible**, not to hide them behind a SaaS pricing model.
+Example: an engineer might end up with something like:
+
+```yaml
+categories:
+  - id: ship-feature
+    icon: 🚢
+    label: Ship feature
+    description: Completing a new product feature end-to-end with commits
+    baseline_usd: 80
+    per_pr_usd: 700
+    per_line_usd: 0.30
+  - id: cf-worker-debug
+    icon: 🛠
+    label: CF Worker debugging
+    description: Diagnosing issues in Cloudflare Worker deploys
+    baseline_usd: 60
+  ...
+```
+
+A content creator might end up with `tiktok-edit`, `research`, `voiceover-prep`, etc.
+Everyone's dashboard speaks their own language.
+
+**No baseline is $0 by default.** Asking a question and getting an answer IS value.
+The point is to make the assumptions **visible**, not to hide them behind a SaaS pricing model.
 
 ---
 

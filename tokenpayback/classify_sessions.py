@@ -17,27 +17,32 @@ import requests
 from .parse_claude import collect_all
 
 
-SYSTEM = """You categorize a developer's Claude Code coding session based on its content.
+def _build_system_prompt(taxonomy: dict) -> str:
+    """Compose the SYSTEM prompt from a user-specific taxonomy."""
+    cats = taxonomy.get("categories") or []
+    lines = ['You categorize ONE session of AI agent activity using THIS user\'s personal taxonomy.']
+    lines.append('')
+    lines.append('Available categories (pick exactly one):')
+    for c in cats:
+        lines.append(f"  - {c['id']:<22} {c.get('icon','•')}  {c.get('label','?')} — {c.get('description','')}")
+    lines.append('')
+    lines.append('Return JSON exactly:')
+    lines.append('{')
+    lines.append('  "category": "<one of the ids above>",')
+    lines.append('  "project": "<short phrase, prefer the user\'s naming, <=30 chars>",')
+    lines.append('  "summary": "<one sentence, <=120 chars, what actually happened>",')
+    lines.append('  "value_signal": "<shipped-code|shipped-artifact|info-gathered|decided|answered|no-progress>",')
+    lines.append('  "main_artifact": "<short phrase describing the most concrete output, or (none)>"')
+    lines.append('}')
+    lines.append('')
+    lines.append('Be decisive. Even ambiguous sessions get a closest-fit category — never invent new ids.')
+    return '\n'.join(lines)
 
-Return JSON with these fields:
-- category: ONE of [
-    "new-feature",         // building something new from scratch
-    "extend-feature",      // adding to an existing feature
-    "bug-fix",             // fixing a known bug
-    "debug",               // investigating / figuring out a problem (not yet fixing)
-    "refactor",            // reorganizing existing code without changing behavior
-    "config-ops",          // deploy/cron/git/CI/auth/env/install — configuration, no real code
-    "research",            // exploring a topic, reading docs, market scan, competitor analysis
-    "brainstorm",          // product/strategy/idea discussion, no code change
-    "personal-task",       // non-engineering: organize files, write docs, video drafts, etc.
-    "chat-misc"            // small talk, status check, or unclassifiable
-  ]
-- project: ONE-PHRASE name of the project / topic (<=30 chars, prefer the user's own naming)
-- summary: ONE SENTENCE (<=120 chars) of what actually happened
-- value_signal: ONE of ["shipped-code", "researched", "no-progress", "info-gathered"]
-- main_artifact: ONE phrase describing the most concrete output (e.g. "lark-radar-bot CF Worker", "weekly digest script", "(none)")
 
-Be decisive — pick the closest category even if imperfect. Look at the first user prompt + tool usage pattern + project path."""
+# Kept for back-compat — generic fallback if no taxonomy supplied
+SYSTEM = """You categorize one AI agent session. Return JSON: {category, project, summary, value_signal, main_artifact}.
+Use these category ids: code-shipped, bug-fixed, infra-changed, info-gathered, ideas-explored, life-shipped, question-answered.
+Pick the closest fit."""
 
 
 def _load_paigod_credentials_file() -> None:
@@ -121,28 +126,37 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-def classify_session(s: dict) -> dict:
+def classify_session(s: dict, taxonomy: dict | None = None) -> dict:
     provider, base_url, api_key, model = _detect_provider()
+    system_prompt = _build_system_prompt(taxonomy) if taxonomy else SYSTEM
     blob = (
-        f"Project path: {s['project']}\n"
-        f"First user prompt: {s['first_prompt']}\n"
-        f"User messages in session: {s['user_messages']}\n"
-        f"Tool calls: {s['tool_counts']}\n"
-        f"Files touched (sample): {s['files_touched'][:10]}\n"
-        f"Bash commands (sample): {s['bash_sample'][:8]}\n"
-        f"Estimated cost: ${s['est_cost_usd']}"
+        f"Agent: {s.get('agent','?')}\n"
+        f"Project path: {s.get('project','')}\n"
+        f"First user prompt: {s.get('first_prompt','')[:600]}\n"
+        f"User messages in session: {s.get('user_messages',0)}\n"
+        f"Tool calls: {s.get('tool_counts',{})}\n"
+        f"Files touched (sample): {(s.get('files_touched') or [])[:10]}\n"
+        f"Bash commands (sample): {(s.get('bash_sample') or [])[:8]}\n"
+        f"Estimated cost: ${s.get('est_cost_usd', 0)}"
     )
+    valid_ids = {c["id"] for c in (taxonomy.get("categories") or [])} if taxonomy else set()
+    fallback_id = next(iter(valid_ids), "chat-misc")
     try:
         if provider == "anthropic":
-            result = _classify_anthropic(SYSTEM, blob, base_url, api_key, model)
+            result = _classify_anthropic(system_prompt, blob, base_url, api_key, model)
         else:
-            result = _classify_openai_compatible(SYSTEM, blob, base_url, api_key, model)
+            result = _classify_openai_compatible(system_prompt, blob, base_url, api_key, model)
     except Exception as e:
-        print(f"  ! classify {s['session_id'][:8]} failed: {e}", file=sys.stderr)
-        return {"category": "chat-misc", "project": s["project"][:30], "summary": "(failed to classify)",
+        print(f"  ! classify {s.get('session_id','')[:8]} failed: {e}", file=sys.stderr)
+        return {"category": fallback_id, "project": (s.get("project") or "")[:30],
+                "summary": "(failed to classify)",
                 "value_signal": "no-progress", "main_artifact": "(none)"}
+    category = result.get("category", "")
+    # Coerce to a valid id if taxonomy is provided and the LLM made one up
+    if valid_ids and category not in valid_ids:
+        category = fallback_id
     return {
-        "category": result.get("category", "chat-misc"),
+        "category": category or fallback_id,
         "project": (result.get("project") or "")[:30],
         "summary": (result.get("summary") or "")[:140],
         "value_signal": result.get("value_signal", "info-gathered"),

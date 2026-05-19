@@ -1,120 +1,56 @@
-"""Per-category value model.
+"""Per-category value model — backed by a user-specific taxonomy.
 
-Old model: only PRs merged count as value → research/brainstorm/chat-misc = $0.
-That's wrong. Asking the agent a question and getting an answer IS value. Writing
-a draft IS value. Sketching out an idea IS value.
+The taxonomy itself is generated/edited by the user (see `taxonomy.py`). This
+module just looks up baselines for each category and aggregates sessions.
 
-New model: every category has its own value signal. None of them are "$0 wasted"
-by default — they all produce *something*. Whether that *something* is worth the
-token cost is your judgment, not ours.
-
-Each entry below maps a category → (signal_name, baseline_value_usd, multiplier_factor).
-- signal_name describes what came out
-- baseline_value_usd is the floor (just doing this had some value)
-- multiplier_factor amplifies based on session intensity (tool calls, file outputs)
+Old behavior (hardcoded 10 categories) is retained as a fallback when no
+taxonomy is supplied.
 """
 from __future__ import annotations
 
-CATEGORY_VALUE: dict[str, dict] = {
-    "new-feature": {
-        "label": "Code shipped",
-        "icon": "🚢",
-        "baseline_usd": 50,           # even an unfinished new-feature session has scaffolding value
-        "per_pr_usd": 600,
-        "per_line_usd": 0.30,
-    },
-    "extend-feature": {
-        "label": "Code extended",
-        "icon": "➕",
-        "baseline_usd": 30,
-        "per_pr_usd": 400,
-        "per_line_usd": 0.25,
-    },
-    "bug-fix": {
-        "label": "Bug fixed",
-        "icon": "🐛",
-        "baseline_usd": 80,           # bugs have outsized value when fixed
-        "per_pr_usd": 700,
-        "per_line_usd": 0.40,
-    },
-    "debug": {
-        "label": "Bug understood",
-        "icon": "🔍",
-        "baseline_usd": 40,           # even non-fixed debugging usually surfaces the root cause
-        "per_pr_usd": 0,
-        "per_line_usd": 0,
-    },
-    "refactor": {
-        "label": "Code cleaned",
-        "icon": "🧹",
-        "baseline_usd": 30,
-        "per_pr_usd": 300,
-        "per_line_usd": 0.15,
-    },
-    "config-ops": {
-        "label": "Infra changed",
-        "icon": "⚙️",
-        "baseline_usd": 60,           # "the deploy works now" is concrete value
-        "per_pr_usd": 200,
-        "per_line_usd": 0.10,
-    },
-    "research": {
-        "label": "Info gathered",
-        "icon": "📚",
-        "baseline_usd": 25,           # an answered question is value, even if no artifact
-        "per_pr_usd": 0,
-        "per_line_usd": 0.05,         # if research wrote markdown, count that
-    },
-    "brainstorm": {
-        "label": "Ideas explored",
-        "icon": "💡",
-        "baseline_usd": 20,
-        "per_pr_usd": 0,
-        "per_line_usd": 0,
-    },
-    "personal-task": {
-        "label": "Life shipped",
-        "icon": "🎯",
-        "baseline_usd": 30,           # editing a resume, making a video, organizing files all have value
-        "per_pr_usd": 0,
-        "per_line_usd": 0.20,         # if produced files counts
-    },
-    "chat-misc": {
-        "label": "Question answered",
-        "icon": "❓",
-        "baseline_usd": 5,            # even a quick lookup got you something
-        "per_pr_usd": 0,
-        "per_line_usd": 0,
-    },
+
+# Fallback (hardcoded) — used only when no taxonomy is passed.
+FALLBACK_VALUES: dict[str, dict] = {
+    "code-shipped":      {"label": "Code shipped",       "icon": "🚢", "baseline_usd": 60, "per_pr_usd": 600, "per_line_usd": 0.30},
+    "bug-fixed":         {"label": "Bug fixed",          "icon": "🐛", "baseline_usd": 80, "per_pr_usd": 700, "per_line_usd": 0.40},
+    "infra-changed":     {"label": "Infra changed",      "icon": "⚙️",  "baseline_usd": 50, "per_pr_usd": 200, "per_line_usd": 0.10},
+    "info-gathered":     {"label": "Info gathered",      "icon": "📚", "baseline_usd": 25, "per_pr_usd": 0,   "per_line_usd": 0.05},
+    "ideas-explored":    {"label": "Ideas explored",     "icon": "💡", "baseline_usd": 20, "per_pr_usd": 0,   "per_line_usd": 0},
+    "life-shipped":      {"label": "Life shipped",       "icon": "🎯", "baseline_usd": 30, "per_pr_usd": 0,   "per_line_usd": 0.20},
+    "question-answered": {"label": "Question answered",  "icon": "❓", "baseline_usd": 5,  "per_pr_usd": 0,   "per_line_usd": 0},
 }
 
 
-def estimate_session_value(session: dict, github_signal: dict | None = None) -> dict:
-    """Estimate $ value for one session based on its category.
+def _category_config(cat_id: str, taxonomy: dict | None) -> dict:
+    if taxonomy:
+        for c in taxonomy.get("categories") or []:
+            if c.get("id") == cat_id:
+                return c
+    return FALLBACK_VALUES.get(cat_id) or FALLBACK_VALUES.get("question-answered")
 
-    `github_signal` is optional: {"pr_merged": True, "lines": 234, "reverted": False}
-    """
-    cat = (session.get("classification", {}) or {}).get("category", "chat-misc")
-    cfg = CATEGORY_VALUE.get(cat, CATEGORY_VALUE["chat-misc"])
-    value = float(cfg["baseline_usd"])
-    breakdown = {"baseline_usd": cfg["baseline_usd"]}
+
+def estimate_session_value(session: dict, taxonomy: dict | None = None,
+                           github_signal: dict | None = None) -> dict:
+    cat = (session.get("classification") or {}).get("category", "question-answered")
+    cfg = _category_config(cat, taxonomy)
+    value = float(cfg.get("baseline_usd", 0))
+    breakdown = {"baseline_usd": cfg.get("baseline_usd", 0)}
 
     if github_signal:
-        if github_signal.get("pr_merged"):
-            pv = cfg["per_pr_usd"]
-            if pv > 0:
-                value += pv
-                breakdown["pr_value_usd"] = pv
+        pr_v = float(cfg.get("per_pr_usd", 0))
+        line_v = float(cfg.get("per_line_usd", 0))
+        if github_signal.get("pr_merged") and pr_v > 0:
+            value += pr_v
+            breakdown["pr_value_usd"] = pr_v
             if github_signal.get("reverted"):
-                value = max(0, value - cfg["per_pr_usd"])
-                breakdown["revert_penalty_usd"] = -cfg["per_pr_usd"]
+                value = max(0, value - pr_v)
+                breakdown["revert_penalty_usd"] = -pr_v
         lines = github_signal.get("lines", 0)
-        if lines > 0 and cfg["per_line_usd"] > 0:
-            lv = lines * cfg["per_line_usd"] * 0.5
+        if lines > 0 and line_v > 0:
+            lv = lines * line_v * 0.5
             value += lv
             breakdown["line_value_usd"] = round(lv, 2)
 
-    # Tool-intensity bump: heavy session probably did more
     tool_total = sum((session.get("tool_counts") or {}).values())
     if tool_total > 50:
         bump = min(50, tool_total * 0.5)
@@ -124,19 +60,18 @@ def estimate_session_value(session: dict, github_signal: dict | None = None) -> 
     return {
         "value_usd": round(value, 2),
         "category": cat,
-        "label": cfg["label"],
-        "icon": cfg["icon"],
+        "label": cfg.get("label", cat),
+        "icon": cfg.get("icon", "•"),
         "breakdown": breakdown,
     }
 
 
-def summarize_by_category(sessions: list[dict]) -> list[dict]:
-    """Per-category aggregation: count, total cost, total value, ROI."""
+def summarize_by_category(sessions: list[dict], taxonomy: dict | None = None) -> list[dict]:
     by_cat: dict[str, dict] = {}
     for s in sessions:
-        cat = (s.get("classification", {}) or {}).get("category", "chat-misc")
+        cat = (s.get("classification") or {}).get("category", "question-answered")
         cost = float(s.get("est_cost_usd", 0))
-        v = estimate_session_value(s)
+        v = estimate_session_value(s, taxonomy)
         d = by_cat.setdefault(cat, {
             "category": cat,
             "label": v["label"],
@@ -155,12 +90,12 @@ def summarize_by_category(sessions: list[dict]) -> list[dict]:
     return sorted(by_cat.values(), key=lambda x: x["cost_usd"], reverse=True)
 
 
-def summarize_by_agent(sessions: list[dict]) -> list[dict]:
+def summarize_by_agent(sessions: list[dict], taxonomy: dict | None = None) -> list[dict]:
     by_agent: dict[str, dict] = {}
     for s in sessions:
         agent = s.get("agent", "unknown")
         cost = float(s.get("est_cost_usd", 0))
-        v = estimate_session_value(s)
+        v = estimate_session_value(s, taxonomy)
         d = by_agent.setdefault(agent, {"agent": agent, "count": 0, "cost_usd": 0, "value_usd": 0})
         d["count"] += 1
         d["cost_usd"] += cost
