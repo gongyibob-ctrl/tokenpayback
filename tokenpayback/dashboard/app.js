@@ -165,10 +165,17 @@ function renderAgents(data) {
     "openclaw": "OpenClaw 🦞",
     "openhuman": "OpenHuman",
     "cursor": "Cursor",
+    "proxy": "Local Proxy",
+  };
+  const expand = (a) => {
+    if ((a || "").startsWith("proxy:")) {
+      return "Proxy / via " + a.slice("proxy:".length);
+    }
+    return labels[a] || a;
   };
   document.getElementById("agents-tbody").innerHTML = agents.map((a) => `
     <tr>
-      <td>${escapeHtml(labels[a.agent] || a.agent)}</td>
+      <td>${escapeHtml(expand(a.agent))}</td>
       <td class="num">${a.count}</td>
       <td class="num">${fmtMoney(a.cost_usd)}</td>
       <td class="num">${fmtMoney(a.value_usd)}</td>
@@ -181,14 +188,24 @@ function renderSessions(data) {
   const sessions = data.sessions || [];
   if (!sessions.length) return;
   document.getElementById("sessions-section").hidden = false;
-  const agentLabel = {"claude-code": "Claude", "codex": "Codex", "hermes": "Hermes", "openclaw": "OpenClaw", "openhuman": "OpenHuman", "cursor": "Cursor"};
-  document.getElementById("sessions-tbody").innerHTML = sessions.slice(0, 50).map((s) => {
+  const agentLabel = {"claude-code": "Claude Code", "codex": "Codex", "hermes": "Hermes", "openclaw": "OpenClaw 🦞", "openhuman": "OpenHuman", "cursor": "Cursor", "proxy": "Proxy"};
+  const sourceLabel = (s) => {
+    if ((s.agent || "").startsWith("proxy:")) {
+      const tool = s.agent.slice("proxy:".length);
+      const upstream = (s.raw && s.raw.upstreams) ? Object.keys(s.raw.upstreams)[0] : "?";
+      return { agent: "Proxy", via: tool + " → " + upstream };
+    }
+    return { agent: agentLabel[s.agent] || s.agent || "?", via: "—" };
+  };
+  document.getElementById("sessions-tbody").innerHTML = sessions.slice(0, 60).map((s) => {
     const c = s.classification || {};
     const date = (s.last_event || "").slice(0, 10);
+    const lbls = sourceLabel(s);
     return `
       <tr>
         <td>${date}</td>
-        <td><span class="cat-tag">${escapeHtml(agentLabel[s.agent] || s.agent || "?")}</span></td>
+        <td><span class="cat-tag">${escapeHtml(lbls.agent)}</span></td>
+        <td><span class="cat-tag">${escapeHtml(lbls.via)}</span></td>
         <td><span class="cat-tag cat-${escapeHtml(c.category || "")}">${escapeHtml(c.category || "?")}</span></td>
         <td>${escapeHtml(c.project || "?")}</td>
         <td class="num">${fmtMoney(s.est_cost_usd)}</td>

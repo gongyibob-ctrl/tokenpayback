@@ -210,21 +210,51 @@ def parse_openai_response(content: bytes) -> dict:
 
 
 def parse_request_body(body: bytes, auth_style: str) -> dict:
-    """Extract the user's prompt for logging (first 600 chars of system+user content)."""
+    """Extract a fingerprintable summary of the request."""
     try:
         d = json.loads(body)
     except (json.JSONDecodeError, UnicodeDecodeError):
-        return {"model": "", "prompt_summary": "", "streaming": False, "tools_declared": 0}
+        return {"model": "", "prompt_summary": "", "system_prompt_head": "",
+                "streaming": False, "tools_declared": 0, "tools_declared_names": []}
     model = d.get("model", "")
     streaming = bool(d.get("stream", False))
-    tools_declared = len(d.get("tools") or [])
-    parts: list[str] = []
+    declared = d.get("tools") or []
+    declared_names: list[str] = []
+    for t in declared:
+        if isinstance(t, dict):
+            name = t.get("name") or (t.get("function") or {}).get("name") or ""
+            if name:
+                declared_names.append(name)
+    # system prompt head — strong fingerprint for many tools
+    system_head = ""
     if "system" in d and isinstance(d["system"], str):
-        parts.append("[system] " + d["system"][:200])
+        system_head = d["system"][:400]
+    elif "system" in d and isinstance(d["system"], list):
+        for c in d["system"]:
+            if isinstance(c, dict) and c.get("type") == "text":
+                system_head = c.get("text", "")[:400]; break
+    # If no system field, check first message role=system
+    if not system_head:
+        for m in (d.get("messages") or []):
+            if isinstance(m, dict) and m.get("role") == "system":
+                c = m.get("content")
+                if isinstance(c, str):
+                    system_head = c[:400]
+                elif isinstance(c, list):
+                    for cc in c:
+                        if isinstance(cc, dict) and cc.get("type") == "text":
+                            system_head = cc.get("text", "")[:400]; break
+                break
+
+    parts: list[str] = []
+    if system_head:
+        parts.append("[system] " + system_head[:200])
     for m in (d.get("messages") or []):
         if not isinstance(m, dict):
             continue
         role = m.get("role", "")
+        if role == "system":
+            continue
         content = m.get("content", "")
         if isinstance(content, list):
             for c in content:
@@ -235,7 +265,14 @@ def parse_request_body(body: bytes, auth_style: str) -> dict:
         if sum(len(p) for p in parts) > 600:
             break
     summary = " | ".join(parts)[:600]
-    return {"model": model, "prompt_summary": summary, "streaming": streaming, "tools_declared": tools_declared}
+    return {
+        "model": model,
+        "prompt_summary": summary,
+        "system_prompt_head": system_head,
+        "streaming": streaming,
+        "tools_declared": len(declared),
+        "tools_declared_names": declared_names[:30],
+    }
 
 
 # --- handler --------------------------------------------------------------------
@@ -352,6 +389,12 @@ class ProxyHandler(http.server.BaseHTTPRequestHandler):
             "model": req_meta.get("model"),
             "streaming": req_meta.get("streaming"),
             "tools_declared": req_meta.get("tools_declared"),
+            "tools_declared_names": req_meta.get("tools_declared_names") or [],
+            "user_agent": self.headers.get("User-Agent", ""),
+            "x_client": (self.headers.get("X-Stainless-Lang", "")
+                         or self.headers.get("X-Client-Name", "")
+                         or self.headers.get("X-Custom-Client", "")),
+            "system_prompt_head": _redact(req_meta.get("system_prompt_head") or ""),
             "prompt_summary": _redact(req_meta.get("prompt_summary") or ""),
         }
         if is_llm_path and 200 <= r.status_code < 300:
