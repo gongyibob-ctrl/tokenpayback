@@ -88,6 +88,21 @@ tbody tr.latest { background: rgba(255, 214, 10, 0.05); }
 .cat-bug-fix, .cat-debug { color: var(--cost); }
 .cat-personal-task { color: var(--muted); }
 .cat-config-ops { color: #79c0ff; }
+.hero-activity { background: linear-gradient(135deg, var(--panel) 0%, #181822 100%); }
+.activity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.activity-cell { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.activity-cell .a-icon { font-size: 22px; line-height: 1; }
+.activity-cell .a-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
+.activity-cell .a-count { font-size: 24px; font-weight: 700; margin-top: 4px; }
+.activity-cell .a-foot { display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.activity-cell .a-foot b { color: var(--text); font-weight: 500; }
+.activity-cell .a-roi { font-weight: 600; }
+
+.agents-table th, .agents-table td { padding: 10px; font-size: 13px; }
+.value-model-table { width: 100%; font-size: 12px; margin-top: 10px; }
+.value-model-table td { padding: 5px 8px; border-bottom: 1px dashed var(--border); }
+.value-model-table tr:last-child td { border-bottom: none; }
+.value-model-table .key { color: var(--muted); }
 .caveat { color: var(--muted); font-size: 12px; margin: 12px 0 0; line-height: 1.6; }
 .caveat code { background: var(--panel-2); padding: 2px 6px; border-radius: 4px; }
 

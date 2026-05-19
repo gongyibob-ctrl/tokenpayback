@@ -136,32 +136,59 @@ function renderHeuristics(config) {
   `;
 }
 
+function renderActivityHero(data) {
+  const cats = data.byCategory || [];
+  const grid = document.getElementById("activity-grid");
+  if (!cats.length) { grid.innerHTML = "<div class=\"muted\">no sessions yet — run <code>tokenpayback</code> first</div>"; return; }
+  grid.innerHTML = cats.map((c) => `
+    <div class="activity-cell">
+      <div class="a-icon">${c.icon || "•"}</div>
+      <div class="a-label">${escapeHtml(c.label || c.category)}</div>
+      <div class="a-count">${c.count} <span class="muted" style="font-size:13px">session${c.count===1?"":"s"}</span></div>
+      <div class="a-foot">
+        <span>spent <b>${fmtMoney(c.cost_usd)}</b></span>
+        <span>value <b>${fmtMoney(c.value_usd)}</b></span>
+        <span class="a-roi ${roiClass(c.roi)}">${c.roi != null ? c.roi.toFixed(1) + "×" : "—"}</span>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderAgents(data) {
+  const agents = data.byAgent || [];
+  if (!agents.length) return;
+  document.getElementById("agents-section").hidden = false;
+  const labels = {
+    "claude-code": "Claude Code",
+    "codex": "Codex CLI",
+    "hermes": "Hermes",
+    "openclaw": "OpenClaw 🦞",
+    "openhuman": "OpenHuman",
+    "cursor": "Cursor",
+  };
+  document.getElementById("agents-tbody").innerHTML = agents.map((a) => `
+    <tr>
+      <td>${escapeHtml(labels[a.agent] || a.agent)}</td>
+      <td class="num">${a.count}</td>
+      <td class="num">${fmtMoney(a.cost_usd)}</td>
+      <td class="num">${fmtMoney(a.value_usd)}</td>
+      <td class="num ${roiClass(a.roi)}"><strong>${a.roi != null ? a.roi.toFixed(1) + "×" : "—"}</strong></td>
+    </tr>
+  `).join("");
+}
+
 function renderSessions(data) {
   const sessions = data.sessions || [];
-  const totals = data.sessionsTotals;
-  if (!sessions.length || !totals) return;
+  if (!sessions.length) return;
   document.getElementById("sessions-section").hidden = false;
-
-  const renderBars = (containerId, items, colorClass = "") => {
-    const max = Math.max(...items.map((x) => x.cost), 1);
-    const html = items.map((it) => `
-      <div class="hbar">
-        <div class="lbl">${escapeHtml(it.key)}</div>
-        <div class="meter"><div class="fill ${colorClass}" style="width:${(it.cost / max * 100).toFixed(1)}%"></div></div>
-        <div class="amt">${fmtMoney(it.cost)}<span class="cnt"> · ${it.count}</span></div>
-      </div>
-    `).join("");
-    document.getElementById(containerId).innerHTML = html;
-  };
-  renderBars("bars-category", totals.byCategory, "meter-cost");
-  renderBars("bars-project", totals.byProject.slice(0, 10), "meter-cost");
-
-  const rowHtml = sessions.slice(0, 30).map((s) => {
+  const agentLabel = {"claude-code": "Claude", "codex": "Codex", "hermes": "Hermes", "openclaw": "OpenClaw", "openhuman": "OpenHuman", "cursor": "Cursor"};
+  document.getElementById("sessions-tbody").innerHTML = sessions.slice(0, 50).map((s) => {
     const c = s.classification || {};
     const date = (s.last_event || "").slice(0, 10);
     return `
       <tr>
         <td>${date}</td>
+        <td><span class="cat-tag">${escapeHtml(agentLabel[s.agent] || s.agent || "?")}</span></td>
         <td><span class="cat-tag cat-${escapeHtml(c.category || "")}">${escapeHtml(c.category || "?")}</span></td>
         <td>${escapeHtml(c.project || "?")}</td>
         <td class="num">${fmtMoney(s.est_cost_usd)}</td>
@@ -169,7 +196,24 @@ function renderSessions(data) {
       </tr>
     `;
   }).join("");
-  document.getElementById("sessions-tbody").innerHTML = rowHtml;
+}
+
+function renderValueModelTable() {
+  const tbody = document.getElementById("value-model-tbody");
+  if (!tbody) return;
+  const rows = [
+    ["🚢", "new-feature", "Code shipped — $50 baseline + $600/PR + $0.30/line"],
+    ["➕", "extend-feature", "Code extended — $30 baseline + $400/PR"],
+    ["🐛", "bug-fix", "Bug fixed — $80 baseline + $700/PR (high stakes)"],
+    ["🔍", "debug", "Bug understood — $40 baseline (root cause is value, even without fix)"],
+    ["🧹", "refactor", "Code cleaned — $30 baseline"],
+    ["⚙️", "config-ops", "Infra changed — $60 baseline ('the deploy works now' is real)"],
+    ["📚", "research", "Info gathered — $25 baseline (an answered question IS value)"],
+    ["💡", "brainstorm", "Ideas explored — $20 baseline"],
+    ["🎯", "personal-task", "Life shipped — $30 baseline + $0.20/file modified"],
+    ["❓", "chat-misc", "Question answered — $5 baseline"],
+  ];
+  tbody.innerHTML = rows.map(([i, k, v]) => `<tr><td>${i}</td><td class="key">${k}</td><td>${v}</td></tr>`).join("");
 }
 
 async function main() {
@@ -180,12 +224,12 @@ async function main() {
     const latest = weeks[weeks.length - 1];
     $("#meta").textContent = `generated ${new Date(data.generatedAt).toLocaleString()}`;
     renderHero(latest);
+    renderActivityHero(data);
+    renderAgents(data);
     renderChart(weeks);
     renderTable(weeks);
-    renderBreakdown(latest);
-    renderPRs(latest);
     renderSessions(data);
-    renderHeuristics(data.config);
+    renderValueModelTable();
   } catch (e) {
     document.body.insertAdjacentHTML("beforeend", `<div class="card">error: ${e.message}</div>`);
   }

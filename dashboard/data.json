@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T16:50:46.553306+00:00",
+  "generatedAt": "2026-05-19T00:53:25.381032+00:00",
   "isDemo": true,
   "config": {
     "github_username": "demo-user",
@@ -101,19 +101,19 @@
             "merged_at": "2026-05-05"
           },
           {
-            "title": "test(api): contract tests for v2 endpoints",
+            "title": "feat(auth): add magic-link login flow",
             "url": "https://github.com/your-org/your-app/pull/202",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-06"
           },
           {
-            "title": "feat(import): CSV ingestion with progress events",
+            "title": "fix(billing): handle stripe webhook idempotency",
             "url": "https://github.com/your-org/your-app/pull/203",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-07"
           },
           {
-            "title": "fix(perf): cache user lookups, -340ms p95",
+            "title": "refactor(api): split monolith routes into modules",
             "url": "https://github.com/your-org/your-app/pull/204",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-08"
@@ -151,31 +151,31 @@
         ],
         "prs": [
           {
-            "title": "fix(perf): cache user lookups, -340ms p95",
+            "title": "refactor(api): split monolith routes into modules",
             "url": "https://github.com/your-org/your-app/pull/300",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-11"
           },
           {
-            "title": "feat(export): CSV + JSON download endpoints",
+            "title": "feat(dashboard): live KPI cards with optimistic updates",
             "url": "https://github.com/your-org/your-app/pull/301",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-12"
           },
           {
-            "title": "fix(ui): mobile dropdown z-index regression",
+            "title": "fix(db): null pointer in subscription expiry check",
             "url": "https://github.com/your-org/your-app/pull/302",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-13"
           },
           {
-            "title": "feat(onboarding): 3-step wizard with progress save",
+            "title": "feat(notifications): batch digest emails",
             "url": "https://github.com/your-org/your-app/pull/303",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-14"
           },
           {
-            "title": "chore(deps): bump react / vite / tailwind",
+            "title": "feat(auth): add magic-link login flow",
             "url": "https://github.com/your-org/your-app/pull/304",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-15"
@@ -213,31 +213,31 @@
         ],
         "prs": [
           {
-            "title": "chore(deps): bump react / vite / tailwind",
+            "title": "feat(auth): add magic-link login flow",
             "url": "https://github.com/your-org/your-app/pull/400",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-18"
           },
           {
-            "title": "feat(search): typeahead with debounce",
+            "title": "fix(billing): handle stripe webhook idempotency",
             "url": "https://github.com/your-org/your-app/pull/401",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-19"
           },
           {
-            "title": "fix(a11y): focus trap in modal",
+            "title": "refactor(api): split monolith routes into modules",
             "url": "https://github.com/your-org/your-app/pull/402",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-20"
           },
           {
-            "title": "feat(auth): add magic-link login flow",
+            "title": "feat(dashboard): live KPI cards with optimistic updates",
             "url": "https://github.com/your-org/your-app/pull/403",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-21"
           },
           {
-            "title": "fix(billing): handle stripe webhook idempotency",
+            "title": "fix(db): null pointer in subscription expiry check",
             "url": "https://github.com/your-org/your-app/pull/404",
             "repo": "your-org/your-app",
             "merged_at": "2026-05-22"
@@ -259,11 +259,12 @@
   ],
   "sessions": [
     {
+      "agent": "claude-code",
       "session_id": "demo-0000",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-18T11:50:46.553147+00:00",
-      "last_event": "2026-05-18T11:50:46.553147+00:00",
+      "first_event": "2026-05-18T19:53:25.380261+00:00",
+      "last_event": "2026-05-18T19:53:25.380261+00:00",
       "user_messages": 15,
       "tool_counts": {
         "Bash": 63,
@@ -292,11 +293,12 @@
       }
     },
     {
+      "agent": "claude-code",
       "session_id": "demo-0001",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-16T16:50:46.553147+00:00",
-      "last_event": "2026-05-16T16:50:46.553147+00:00",
+      "first_event": "2026-05-17T00:53:25.380261+00:00",
+      "last_event": "2026-05-17T00:53:25.380261+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 27,
@@ -325,44 +327,46 @@
       }
     },
     {
+      "agent": "claude-code",
       "session_id": "demo-0002",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-14T15:50:46.553147+00:00",
-      "last_event": "2026-05-14T15:50:46.553147+00:00",
+      "first_event": "2026-05-14T23:53:25.380261+00:00",
+      "last_event": "2026-05-14T23:53:25.380261+00:00",
       "user_messages": 22,
       "tool_counts": {
-        "Bash": 8,
-        "Edit": 3,
-        "Read": 2,
-        "Write": 1,
-        "TaskCreate": 0,
-        "TaskUpdate": 0
+        "Bash": 19,
+        "Edit": 8,
+        "Read": 6,
+        "Write": 4,
+        "TaskCreate": 2,
+        "TaskUpdate": 2
       },
       "files_touched": [],
       "bash_sample": [],
-      "token_in": 400000,
-      "token_out": 80000,
+      "token_in": 1866666,
+      "token_out": 373333,
       "cache_create": 0,
       "cache_read": 0,
-      "est_cost_usd": 1.2,
+      "est_cost_usd": 5.6,
       "file_size": 0,
       "file_path": "(demo)",
       "classification": {
         "category": "bug-fix",
         "project": "your-app",
-        "summary": "Fixed mobile dropdown z-index regression in modal.",
+        "summary": "Fixed stripe webhook race that double-charged on retries.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
         "model": "demo"
       }
     },
     {
+      "agent": "claude-code",
       "session_id": "demo-0003",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-12T15:50:46.553147+00:00",
-      "last_event": "2026-05-12T15:50:46.553147+00:00",
+      "first_event": "2026-05-12T23:53:25.380261+00:00",
+      "last_event": "2026-05-12T23:53:25.380261+00:00",
       "user_messages": 14,
       "tool_counts": {
         "Bash": 45,
@@ -391,11 +395,12 @@
       }
     },
     {
+      "agent": "codex",
       "session_id": "demo-0004",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-10T11:50:46.553147+00:00",
-      "last_event": "2026-05-10T11:50:46.553147+00:00",
+      "first_event": "2026-05-10T19:53:25.380261+00:00",
+      "last_event": "2026-05-10T19:53:25.380261+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 12,
@@ -424,78 +429,13 @@
       }
     },
     {
+      "agent": "codex",
       "session_id": "demo-0005",
-      "project": "competitive-scan",
-      "first_prompt": "(demo)",
-      "first_event": "2026-05-08T12:50:46.553147+00:00",
-      "last_event": "2026-05-08T12:50:46.553147+00:00",
-      "user_messages": 35,
-      "tool_counts": {
-        "Bash": 6,
-        "Edit": 2,
-        "Read": 2,
-        "Write": 1,
-        "TaskCreate": 0,
-        "TaskUpdate": 0
-      },
-      "files_touched": [],
-      "bash_sample": [],
-      "token_in": 700000,
-      "token_out": 140000,
-      "cache_create": 0,
-      "cache_read": 0,
-      "est_cost_usd": 2.1,
-      "file_size": 0,
-      "file_path": "(demo)",
-      "classification": {
-        "category": "research",
-        "project": "competitive-scan",
-        "summary": "Surveyed 5 dashboards in the space, wrote diff matrix.",
-        "value_signal": "researched",
-        "main_artifact": "competitive-scan",
-        "model": "demo"
-      }
-    },
-    {
-      "session_id": "demo-0006",
-      "project": "v2-roadmap",
-      "first_prompt": "(demo)",
-      "first_event": "2026-05-06T16:50:46.553147+00:00",
-      "last_event": "2026-05-06T16:50:46.553147+00:00",
-      "user_messages": 9,
-      "tool_counts": {
-        "Bash": 2,
-        "Edit": 1,
-        "Read": 0,
-        "Write": 0,
-        "TaskCreate": 0,
-        "TaskUpdate": 0
-      },
-      "files_touched": [],
-      "bash_sample": [],
-      "token_in": 266666,
-      "token_out": 53333,
-      "cache_create": 0,
-      "cache_read": 0,
-      "est_cost_usd": 0.8,
-      "file_size": 0,
-      "file_path": "(demo)",
-      "classification": {
-        "category": "brainstorm",
-        "project": "v2-roadmap",
-        "summary": "Talked through v2 multi-tenant data model tradeoffs.",
-        "value_signal": "info-gathered",
-        "main_artifact": "v2-roadmap",
-        "model": "demo"
-      }
-    },
-    {
-      "session_id": "demo-0007",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-04T16:50:46.553147+00:00",
-      "last_event": "2026-05-04T16:50:46.553147+00:00",
-      "user_messages": 21,
+      "first_event": "2026-05-08T20:53:25.380261+00:00",
+      "last_event": "2026-05-08T20:53:25.380261+00:00",
+      "user_messages": 35,
       "tool_counts": {
         "Bash": 19,
         "Edit": 8,
@@ -523,11 +463,80 @@
       }
     },
     {
+      "agent": "hermes",
+      "session_id": "demo-0006",
+      "project": "competitive-scan",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-07T00:53:25.380261+00:00",
+      "last_event": "2026-05-07T00:53:25.380261+00:00",
+      "user_messages": 9,
+      "tool_counts": {
+        "Bash": 6,
+        "Edit": 2,
+        "Read": 2,
+        "Write": 1,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 700000,
+      "token_out": 140000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 2.1,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "research",
+        "project": "competitive-scan",
+        "summary": "Surveyed 5 dashboards in the space, wrote diff matrix.",
+        "value_signal": "researched",
+        "main_artifact": "competitive-scan",
+        "model": "demo"
+      }
+    },
+    {
+      "agent": "hermes",
+      "session_id": "demo-0007",
+      "project": "v2-roadmap",
+      "first_prompt": "(demo)",
+      "first_event": "2026-05-05T00:53:25.380261+00:00",
+      "last_event": "2026-05-05T00:53:25.380261+00:00",
+      "user_messages": 21,
+      "tool_counts": {
+        "Bash": 2,
+        "Edit": 1,
+        "Read": 0,
+        "Write": 0,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 266666,
+      "token_out": 53333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 0.8,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "brainstorm",
+        "project": "v2-roadmap",
+        "summary": "Talked through v2 multi-tenant data model tradeoffs.",
+        "value_signal": "info-gathered",
+        "main_artifact": "v2-roadmap",
+        "model": "demo"
+      }
+    },
+    {
+      "agent": "openclaw",
       "session_id": "demo-0008",
       "project": "weekly-review",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-02T15:50:46.553147+00:00",
-      "last_event": "2026-05-02T15:50:46.553147+00:00",
+      "first_event": "2026-05-02T23:53:25.380261+00:00",
+      "last_event": "2026-05-02T23:53:25.380261+00:00",
       "user_messages": 40,
       "tool_counts": {
         "Bash": 4,
@@ -556,12 +565,47 @@
       }
     },
     {
+      "agent": "openclaw",
       "session_id": "demo-0009",
+      "project": "trip-planning",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-30T20:53:25.380261+00:00",
+      "last_event": "2026-04-30T20:53:25.380261+00:00",
+      "user_messages": 9,
+      "tool_counts": {
+        "Bash": 3,
+        "Edit": 1,
+        "Read": 1,
+        "Write": 0,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 200000,
+      "token_out": 40000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 0.6,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "personal-task",
+        "project": "trip-planning",
+        "summary": "Planned weekend route + booked hotel via tool calls.",
+        "value_signal": "shipped-code",
+        "main_artifact": "trip-planning",
+        "model": "demo"
+      }
+    },
+    {
+      "agent": "claude-code",
+      "session_id": "demo-0010",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-30T12:50:46.553147+00:00",
-      "last_event": "2026-04-30T12:50:46.553147+00:00",
-      "user_messages": 9,
+      "first_event": "2026-04-28T20:53:25.380261+00:00",
+      "last_event": "2026-04-28T20:53:25.380261+00:00",
+      "user_messages": 20,
       "tool_counts": {
         "Bash": 39,
         "Edit": 17,
@@ -589,12 +633,13 @@
       }
     },
     {
-      "session_id": "demo-0010",
+      "agent": "claude-code",
+      "session_id": "demo-0011",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-28T12:50:46.553147+00:00",
-      "last_event": "2026-04-28T12:50:46.553147+00:00",
-      "user_messages": 20,
+      "first_event": "2026-04-26T19:53:25.380261+00:00",
+      "last_event": "2026-04-26T19:53:25.380261+00:00",
+      "user_messages": 34,
       "tool_counts": {
         "Bash": 23,
         "Edit": 10,
@@ -622,12 +667,13 @@
       }
     },
     {
-      "session_id": "demo-0011",
+      "agent": "codex",
+      "session_id": "demo-0012",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-26T11:50:46.553147+00:00",
-      "last_event": "2026-04-26T11:50:46.553147+00:00",
-      "user_messages": 34,
+      "first_event": "2026-04-24T23:53:25.380261+00:00",
+      "last_event": "2026-04-24T23:53:25.380261+00:00",
+      "user_messages": 36,
       "tool_counts": {
         "Bash": 13,
         "Edit": 5,
@@ -653,98 +699,200 @@
         "main_artifact": "infra",
         "model": "demo"
       }
+    },
+    {
+      "agent": "hermes",
+      "session_id": "demo-0013",
+      "project": "general",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-22T20:53:25.380261+00:00",
+      "last_event": "2026-04-22T20:53:25.380261+00:00",
+      "user_messages": 25,
+      "tool_counts": {
+        "Bash": 1,
+        "Edit": 0,
+        "Read": 0,
+        "Write": 0,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 66666,
+      "token_out": 13333,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 0.2,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "chat-misc",
+        "project": "general",
+        "summary": "Quick question about postgres index strategy.",
+        "value_signal": "info-gathered",
+        "main_artifact": "general",
+        "model": "demo"
+      }
+    },
+    {
+      "agent": "openclaw",
+      "session_id": "demo-0014",
+      "project": "general",
+      "first_prompt": "(demo)",
+      "first_event": "2026-04-20T18:53:25.380261+00:00",
+      "last_event": "2026-04-20T18:53:25.380261+00:00",
+      "user_messages": 8,
+      "tool_counts": {
+        "Bash": 2,
+        "Edit": 1,
+        "Read": 0,
+        "Write": 0,
+        "TaskCreate": 0,
+        "TaskUpdate": 0
+      },
+      "files_touched": [],
+      "bash_sample": [],
+      "token_in": 50000,
+      "token_out": 10000,
+      "cache_create": 0,
+      "cache_read": 0,
+      "est_cost_usd": 0.15,
+      "file_size": 0,
+      "file_path": "(demo)",
+      "classification": {
+        "category": "chat-misc",
+        "project": "general",
+        "summary": "Recipe lookup + grocery list.",
+        "value_signal": "info-gathered",
+        "main_artifact": "general",
+        "model": "demo"
+      }
     }
   ],
   "sessionsTotals": {
-    "totalCostUsd": 124.5,
-    "sessionCount": 12,
-    "byCategory": [
-      {
-        "key": "new-feature",
-        "cost": 66.5,
-        "count": 2
-      },
-      {
-        "key": "refactor",
-        "cost": 23.8,
-        "count": 1
-      },
-      {
-        "key": "extend-feature",
-        "cost": 15.5,
-        "count": 2
-      },
-      {
-        "key": "config-ops",
-        "cost": 7.6,
-        "count": 2
-      },
-      {
-        "key": "debug",
-        "cost": 5.6,
-        "count": 1
-      },
-      {
-        "key": "research",
-        "cost": 2.1,
-        "count": 1
-      },
-      {
-        "key": "personal-task",
-        "cost": 1.4,
-        "count": 1
-      },
-      {
-        "key": "bug-fix",
-        "cost": 1.2,
-        "count": 1
-      },
-      {
-        "key": "brainstorm",
-        "cost": 0.8,
-        "count": 1
-      }
-    ],
-    "byProject": [
-      {
-        "key": "your-app",
-        "cost": 112.6,
-        "count": 7
-      },
-      {
-        "key": "infra",
-        "cost": 7.6,
-        "count": 2
-      },
-      {
-        "key": "competitive-scan",
-        "cost": 2.1,
-        "count": 1
-      },
-      {
-        "key": "weekly-review",
-        "cost": 1.4,
-        "count": 1
-      },
-      {
-        "key": "v2-roadmap",
-        "cost": 0.8,
-        "count": 1
-      }
-    ],
-    "byValueSignal": [
-      {
-        "key": "shipped-code",
-        "cost": 116.0
-      },
-      {
-        "key": "info-gathered",
-        "cost": 6.4
-      },
-      {
-        "key": "researched",
-        "cost": 2.1
-      }
-    ]
-  }
+    "totalCostUsd": 129.85,
+    "sessionCount": 15
+  },
+  "byCategory": [
+    {
+      "category": "new-feature",
+      "label": "Code shipped",
+      "icon": "🚢",
+      "count": 2,
+      "cost_usd": 66.5,
+      "value_usd": 192.5,
+      "roi": 2.89
+    },
+    {
+      "category": "refactor",
+      "label": "Code cleaned",
+      "icon": "🧹",
+      "count": 1,
+      "cost_usd": 23.8,
+      "value_usd": 80.0,
+      "roi": 3.36
+    },
+    {
+      "category": "extend-feature",
+      "label": "Code extended",
+      "icon": "➕",
+      "count": 2,
+      "cost_usd": 15.5,
+      "value_usd": 90.0,
+      "roi": 5.81
+    },
+    {
+      "category": "config-ops",
+      "label": "Infra changed",
+      "icon": "⚙️",
+      "count": 2,
+      "cost_usd": 7.6,
+      "value_usd": 120.0,
+      "roi": 15.79
+    },
+    {
+      "category": "bug-fix",
+      "label": "Bug fixed",
+      "icon": "🐛",
+      "count": 1,
+      "cost_usd": 5.6,
+      "value_usd": 80.0,
+      "roi": 14.29
+    },
+    {
+      "category": "debug",
+      "label": "Bug understood",
+      "icon": "🔍",
+      "count": 1,
+      "cost_usd": 5.6,
+      "value_usd": 40.0,
+      "roi": 7.14
+    },
+    {
+      "category": "research",
+      "label": "Info gathered",
+      "icon": "📚",
+      "count": 1,
+      "cost_usd": 2.1,
+      "value_usd": 25.0,
+      "roi": 11.9
+    },
+    {
+      "category": "personal-task",
+      "label": "Life shipped",
+      "icon": "🎯",
+      "count": 2,
+      "cost_usd": 2.0,
+      "value_usd": 60.0,
+      "roi": 30.0
+    },
+    {
+      "category": "brainstorm",
+      "label": "Ideas explored",
+      "icon": "💡",
+      "count": 1,
+      "cost_usd": 0.8,
+      "value_usd": 20.0,
+      "roi": 25.0
+    },
+    {
+      "category": "chat-misc",
+      "label": "Question answered",
+      "icon": "❓",
+      "count": 2,
+      "cost_usd": 0.35,
+      "value_usd": 10.0,
+      "roi": 28.57
+    }
+  ],
+  "byAgent": [
+    {
+      "agent": "claude-code",
+      "count": 6,
+      "cost_usd": 111.4,
+      "value_usd": 442.5,
+      "roi": 3.97
+    },
+    {
+      "agent": "codex",
+      "count": 3,
+      "cost_usd": 13.2,
+      "value_usd": 160.0,
+      "roi": 12.12
+    },
+    {
+      "agent": "hermes",
+      "count": 3,
+      "cost_usd": 3.1,
+      "value_usd": 50.0,
+      "roi": 16.13
+    },
+    {
+      "agent": "openclaw",
+      "count": 3,
+      "cost_usd": 2.15,
+      "value_usd": 65.0,
+      "roi": 30.23
+    }
+  ]
 }

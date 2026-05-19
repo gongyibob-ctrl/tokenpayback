@@ -1,7 +1,7 @@
-"""Generate a synthetic demo dataset for the public marketing dashboard.
+"""Synthetic demo dataset for the public marketing dashboard.
 
-Used by the Vercel deployment so visitors see realistic-looking numbers without
-exposing any real user's session data. Run: `python -m tokenpayback.demo_data > dashboard/data.json`
+`tokenpayback.vercel.app` shows this data — no real user info is ever pushed
+to the public repo. Run: `python -m tokenpayback.demo_data > dashboard/data.json`
 """
 from __future__ import annotations
 import json
@@ -20,11 +20,10 @@ def iso_week(d):
 
 
 def build_demo() -> dict:
-    random.seed(42)  # deterministic — same demo every regeneration
+    random.seed(42)
     now = datetime.now(timezone.utc)
     monday_this = (now - timedelta(days=now.weekday())).date()
     weeks_data = []
-    # 4 weeks of data, showing a realistic upward trend with one bad week
     week_outputs = [
         {"prs_merged": 8, "additions": 1830, "deletions": 720, "commits": 47, "reverts": 1},
         {"prs_merged": 14, "additions": 3120, "deletions": 1480, "commits": 71, "reverts": 0},
@@ -46,15 +45,6 @@ def build_demo() -> dict:
         "feat(dashboard): live KPI cards with optimistic updates",
         "fix(db): null pointer in subscription expiry check",
         "feat(notifications): batch digest emails",
-        "test(api): contract tests for v2 endpoints",
-        "feat(import): CSV ingestion with progress events",
-        "fix(perf): cache user lookups, -340ms p95",
-        "feat(export): CSV + JSON download endpoints",
-        "fix(ui): mobile dropdown z-index regression",
-        "feat(onboarding): 3-step wizard with progress save",
-        "chore(deps): bump react / vite / tailwind",
-        "feat(search): typeahead with debounce",
-        "fix(a11y): focus trap in modal",
     ]
     for i in range(4):
         wd = monday_this - timedelta(weeks=3 - i)
@@ -62,14 +52,12 @@ def build_demo() -> dict:
         cost = week_costs[i]
         total_cost = sum(cost.values())
         out = week_outputs[i]
-        prs = [
-            {"title": demo_prs_pool[(i * 4 + j) % len(demo_prs_pool)],
-             "url": f"https://github.com/your-org/your-app/pull/{(i + 1) * 100 + j}",
-             "repo": "your-org/your-app",
-             "merged_at": (wd + timedelta(days=j)).isoformat()}
-            for j in range(min(5, out["prs_merged"]))
-        ]
-        out_dict = {**out, "repos_touched": ["your-org/your-app"], "prs": prs, "changed_files": prs and 47 or 0}
+        prs = [{"title": demo_prs_pool[(i * 4 + j) % len(demo_prs_pool)],
+                "url": f"https://github.com/your-org/your-app/pull/{(i + 1) * 100 + j}",
+                "repo": "your-org/your-app",
+                "merged_at": (wd + timedelta(days=j)).isoformat()}
+               for j in range(min(5, out["prs_merged"]))]
+        out_dict = {**out, "repos_touched": ["your-org/your-app"], "prs": prs, "changed_files": 47}
         pr_value = out["prs_merged"] * value_per_pr
         line_value = out["additions"] * value_per_line * 0.5
         revert_penalty = out["reverts"] * value_per_pr
@@ -91,26 +79,32 @@ def build_demo() -> dict:
             "roi": round(net / total_cost, 2) if total_cost else None,
         })
 
-    # synthetic sessions (deliberately generic — not from any real user)
-    sessions = []
+    # synthetic sessions — multi-agent + multi-category
+    agents = ["claude-code", "codex", "hermes", "openclaw"]
     fake = [
-        ("new-feature", "your-app",         "Built magic-link auth with email service + cooldown.",                    47.30, 142, "shipped-code"),
-        ("extend-feature", "your-app",      "Added typeahead search to nav with debouncer.",                            8.40,  61, "shipped-code"),
-        ("bug-fix", "your-app",             "Fixed mobile dropdown z-index regression in modal.",                       1.20,  18, "shipped-code"),
-        ("refactor", "your-app",            "Split monolith into 5 route modules, kept all tests green.",              23.80, 102, "shipped-code"),
-        ("config-ops", "infra",             "Wired GitHub Actions cron + Vercel preview deploys.",                      3.40,  27, "shipped-code"),
-        ("research", "competitive-scan",    "Surveyed 5 dashboards in the space, wrote diff matrix.",                   2.10,  14, "researched"),
-        ("brainstorm", "v2-roadmap",        "Talked through v2 multi-tenant data model tradeoffs.",                     0.80,   6, "info-gathered"),
-        ("debug", "your-app",               "Tracked down stripe webhook race condition — repro'd in test.",            5.60,  44, "info-gathered"),
-        ("personal-task", "weekly-review",  "Drafted board update from this week's metrics.",                           1.40,  11, "shipped-code"),
-        ("new-feature", "your-app",         "Implemented CSV import pipeline w/ progress events.",                     19.20,  88, "shipped-code"),
-        ("extend-feature", "your-app",      "Added export endpoints (CSV + JSON) with rate limiting.",                  7.10,  53, "shipped-code"),
-        ("config-ops", "infra",             "Set up Sentry + Datadog tracing on the API.",                              4.20,  29, "shipped-code"),
+        # (agent, category, project, summary, cost, tools, value_signal)
+        ("claude-code", "new-feature", "your-app",         "Built magic-link auth with email service + cooldown.",                    47.30, 142, "shipped-code"),
+        ("claude-code", "extend-feature", "your-app",      "Added typeahead search to nav with debouncer.",                            8.40,  61, "shipped-code"),
+        ("claude-code", "bug-fix", "your-app",             "Fixed stripe webhook race that double-charged on retries.",                5.60,  44, "shipped-code"),
+        ("claude-code", "refactor", "your-app",            "Split monolith into 5 route modules, kept all tests green.",              23.80, 102, "shipped-code"),
+        ("codex",       "config-ops", "infra",             "Wired GitHub Actions cron + Vercel preview deploys.",                      3.40,  27, "shipped-code"),
+        ("codex",       "debug", "your-app",               "Tracked down stripe webhook race condition — repro'd in test.",            5.60,  44, "info-gathered"),
+        ("hermes",      "research", "competitive-scan",    "Surveyed 5 dashboards in the space, wrote diff matrix.",                   2.10,  14, "researched"),
+        ("hermes",      "brainstorm", "v2-roadmap",        "Talked through v2 multi-tenant data model tradeoffs.",                     0.80,   6, "info-gathered"),
+        ("openclaw",    "personal-task", "weekly-review",  "Drafted board update from this week's metrics.",                           1.40,  11, "shipped-code"),
+        ("openclaw",    "personal-task", "trip-planning",  "Planned weekend route + booked hotel via tool calls.",                     0.60,   8, "shipped-code"),
+        ("claude-code", "new-feature", "your-app",         "Implemented CSV import pipeline w/ progress events.",                     19.20,  88, "shipped-code"),
+        ("claude-code", "extend-feature", "your-app",      "Added export endpoints (CSV + JSON) with rate limiting.",                  7.10,  53, "shipped-code"),
+        ("codex",       "config-ops", "infra",             "Set up Sentry + Datadog tracing on the API.",                              4.20,  29, "shipped-code"),
+        ("hermes",      "chat-misc", "general",            "Quick question about postgres index strategy.",                            0.20,   3, "info-gathered"),
+        ("openclaw",    "chat-misc", "general",            "Recipe lookup + grocery list.",                                            0.15,   5, "info-gathered"),
     ]
     base = datetime.now(timezone.utc)
-    for idx, (cat, proj, summary, cost, tool_count, value_signal) in enumerate(fake):
+    sessions = []
+    for idx, (agent, cat, proj, summary, cost, tool_count, value_signal) in enumerate(fake):
         d = base - timedelta(days=idx * 2, hours=random.randint(0, 6))
         sessions.append({
+            "agent": agent,
             "session_id": f"demo-{idx:04d}",
             "project": proj,
             "first_prompt": "(demo)",
@@ -138,31 +132,8 @@ def build_demo() -> dict:
             },
         })
 
-    # session totals
-    by_cat: dict[str, dict] = {}
-    by_proj: dict[str, dict] = {}
-    by_val: dict[str, float] = {}
-    total = 0.0
-    for s in sessions:
-        c = s["classification"]
-        cost = float(s["est_cost_usd"])
-        total += cost
-        by_cat.setdefault(c["category"], {"cost": 0, "count": 0})
-        by_cat[c["category"]]["cost"] += cost
-        by_cat[c["category"]]["count"] += 1
-        by_proj.setdefault(c["project"], {"cost": 0, "count": 0})
-        by_proj[c["project"]]["cost"] += cost
-        by_proj[c["project"]]["count"] += 1
-        by_val[c["value_signal"]] = by_val.get(c["value_signal"], 0) + cost
-    sess_totals = {
-        "totalCostUsd": round(total, 2),
-        "sessionCount": len(sessions),
-        "byCategory": [{"key": k, "cost": round(v["cost"], 2), "count": v["count"]}
-                       for k, v in sorted(by_cat.items(), key=lambda x: x[1]["cost"], reverse=True)],
-        "byProject": [{"key": k, "cost": round(v["cost"], 2), "count": v["count"]}
-                      for k, v in sorted(by_proj.items(), key=lambda x: x[1]["cost"], reverse=True)],
-        "byValueSignal": [{"key": k, "cost": round(v, 2)} for k, v in sorted(by_val.items(), key=lambda x: x[1], reverse=True)],
-    }
+    # Reuse the new value model for byCategory + byAgent so the demo matches reality
+    from .value_model import summarize_by_category, summarize_by_agent
 
     return {
         "generatedAt": utc_now(),
@@ -175,7 +146,12 @@ def build_demo() -> dict:
         },
         "weeks": weeks_data,
         "sessions": sessions,
-        "sessionsTotals": sess_totals,
+        "sessionsTotals": {
+            "totalCostUsd": round(sum(s["est_cost_usd"] for s in sessions), 2),
+            "sessionCount": len(sessions),
+        },
+        "byCategory": summarize_by_category(sessions),
+        "byAgent": summarize_by_agent(sessions),
     }
 
 

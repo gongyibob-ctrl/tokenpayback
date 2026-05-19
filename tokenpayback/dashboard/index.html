@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>tokenpayback — Are your AI tokens paying off?</title>
+  <title>tokenpayback — your AI activity ledger</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="brand">
       <h1>tokenpayback</h1>
-      <p class="tag">Are your AI tokens paying off?</p>
+      <p class="tag">Your AI activity ledger — every agent, every activity, 100% local.</p>
     </div>
     <div class="meta" id="meta">loading…</div>
   </header>
@@ -26,18 +26,35 @@
       <div class="value cost" id="latest-cost">—</div>
     </div>
     <div class="hero-cell">
-      <div class="label">Est. value generated</div>
+      <div class="label">Est. value</div>
       <div class="value value-pos" id="latest-value">—</div>
     </div>
     <div class="hero-cell hero-cell-big">
-      <div class="label">ROI</div>
+      <div class="label">Engineering output ROI</div>
       <div class="value roi" id="latest-roi">—</div>
       <div class="roi-verdict" id="roi-verdict"></div>
     </div>
   </section>
 
+  <section class="card hero-activity" id="hero-activity">
+    <h2>What your AI did this period</h2>
+    <p class="subhead">Every session is categorized. Asking questions counts. Personal tasks count. Code shipped is just one of many ways your tokens turned into something.</p>
+    <div class="activity-grid" id="activity-grid"></div>
+  </section>
+
+  <section class="card" id="agents-section" hidden>
+    <h2>Across your AI agents</h2>
+    <p class="subhead">tokenpayback auto-detects Claude Code, Codex CLI, Hermes, OpenClaw, OpenHuman, and Cursor on your machine.</p>
+    <table class="agents-table">
+      <thead>
+        <tr><th>Agent</th><th class="num">Sessions</th><th class="num">$ spent</th><th class="num">est. value</th><th class="num">ROI</th></tr>
+      </thead>
+      <tbody id="agents-tbody"></tbody>
+    </table>
+  </section>
+
   <section class="card">
-    <h2>Last 4 weeks</h2>
+    <h2>Last 4 weeks (engineering output)</h2>
     <div class="chart" id="bar-chart"></div>
     <table class="weeks-table" id="weeks-table">
       <thead>
@@ -47,56 +64,23 @@
     </table>
   </section>
 
-  <section class="card">
-    <h2>Latest week breakdown</h2>
-    <div class="cols">
-      <div class="col">
-        <h3>Cost</h3>
-        <ul id="cost-breakdown" class="kv"></ul>
-      </div>
-      <div class="col">
-        <h3>Value</h3>
-        <ul id="value-breakdown" class="kv"></ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>PRs merged this week</h2>
-    <ul id="prs-list" class="prs-list"></ul>
-  </section>
-
   <section class="card" id="sessions-section" hidden>
-    <h2>Where your tokens went</h2>
-    <p class="subhead">Auto-classified from <code>~/.claude/projects/**/*.jsonl</code>. Each Claude Code session → LLM categorizes it into <em>new-feature / bug-fix / refactor / config-ops / research / brainstorm / personal-task</em>.</p>
-
-    <div class="sessions-grids">
-      <div>
-        <h3>By task category</h3>
-        <div class="hbars" id="bars-category"></div>
-      </div>
-      <div>
-        <h3>By project</h3>
-        <div class="hbars" id="bars-project"></div>
-      </div>
-    </div>
-
-    <h3 style="margin-top:24px">Recent sessions</h3>
+    <h2>Recent sessions</h2>
+    <p class="subhead">Auto-classified from your local agent logs. Click any session for details — nothing leaves your machine.</p>
     <table class="sessions-table">
       <thead>
-        <tr><th>Date</th><th>Category</th><th>Project</th><th class="num">$ Cost</th><th>What happened</th></tr>
+        <tr><th>Date</th><th>Agent</th><th>Category</th><th>Project</th><th class="num">$ Cost</th><th>What happened</th></tr>
       </thead>
       <tbody id="sessions-tbody"></tbody>
     </table>
   </section>
 
   <section class="card faded">
-    <h2>Heuristics in play</h2>
-    <ul class="kv" id="heuristics"></ul>
+    <h2>How we estimate value</h2>
+    <p class="subhead">Every category gets its own value heuristic. None of them are $0 by default. Tune every multiplier in <code>~/.tokenpayback/config.yaml</code> — open source, no opinions baked in.</p>
+    <table class="value-model-table" id="value-model-tbody"></table>
     <p class="caveat">
-      These are <em>estimates</em>. The right number is the one that prompts the next
-      good question, not perfect precision. Tune <code>config.local.yaml</code> to your team's
-      reality (hourly rate, value-per-PR) — open source, no opinions baked in.
+      The right number is the one that prompts the next good question, not perfect precision.
     </p>
   </section>
 

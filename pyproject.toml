@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tokenpayback"
-version = "0.1.0"
-description = "Are your AI tokens paying off? CLI that classifies your Claude Code sessions and shows ROI."
+version = "0.2.0"
+description = "Your AI activity ledger — reads every coding agent's local sessions (Claude Code, Codex, Hermes, OpenClaw, OpenHuman, Cursor) and shows what your tokens did."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
