@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tokenpayback"
-version = "0.2.0"
+version = "0.2.1"
 description = "Your AI activity ledger — reads every coding agent's local sessions (Claude Code, Codex, Hermes, OpenClaw, OpenHuman, Cursor) and shows what your tokens did."
 readme = "README.md"
 license = { text = "MIT" }
@@ -36,8 +36,9 @@ Issues = "https://github.com/gongyibob-ctrl/tokenpayback/issues"
 [project.scripts]
 tokenpayback = "tokenpayback.cli:main"
 
-[tool.setuptools]
-packages = ["tokenpayback"]
+[tool.setuptools.packages.find]
+include = ["tokenpayback*"]
+exclude = ["dashboard*", "tests*"]
 
 [tool.setuptools.package-data]
 tokenpayback = ["dashboard/*"]
