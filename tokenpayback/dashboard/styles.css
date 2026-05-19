@@ -31,6 +31,7 @@ header .tag { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
 .hero-cell .value.cost { color: var(--cost); }
 .hero-cell .value.value-pos { color: var(--value); }
 .hero-cell .value.roi { font-size: 44px; }
+.hero-cell .sub { margin-top: 6px; font-size: 11px; }
 .roi-good { color: var(--roi-good); }
 .roi-mid { color: var(--roi-mid); }
 .roi-bad { color: var(--roi-bad); }

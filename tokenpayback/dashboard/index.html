@@ -16,23 +16,26 @@
     <div class="meta" id="meta">loading…</div>
   </header>
 
-  <section class="hero" id="hero">
+  <section class="hero" id="hero-overall">
     <div class="hero-cell">
-      <div class="label">Latest week</div>
-      <div class="value" id="latest-week">—</div>
+      <div class="label">Spent on AI</div>
+      <div class="value cost" id="overall-cost">—</div>
+      <div class="sub muted" id="overall-window">all sessions</div>
     </div>
     <div class="hero-cell">
-      <div class="label">Spent</div>
-      <div class="value cost" id="latest-cost">—</div>
+      <div class="label">Human-equivalent value</div>
+      <div class="value value-pos" id="overall-value">—</div>
+      <div class="sub muted" id="overall-value-range">low — high</div>
     </div>
     <div class="hero-cell">
-      <div class="label">Est. value</div>
-      <div class="value value-pos" id="latest-value">—</div>
+      <div class="label">Time AI saved</div>
+      <div class="value" id="overall-hours">—</div>
+      <div class="sub muted" id="overall-hours-sub">vs human professionals</div>
     </div>
     <div class="hero-cell hero-cell-big">
-      <div class="label">Engineering output ROI</div>
-      <div class="value roi" id="latest-roi">—</div>
-      <div class="roi-verdict" id="roi-verdict"></div>
+      <div class="label">Overall ROI <span class="muted">(human cost / AI cost)</span></div>
+      <div class="value roi" id="overall-roi">—</div>
+      <div class="roi-verdict" id="overall-roi-verdict"></div>
     </div>
   </section>
 
@@ -65,11 +68,15 @@
   </section>
 
   <section class="card" id="sessions-section" hidden>
-    <h2>Recent sessions</h2>
-    <p class="subhead">Auto-classified from your local agent logs. <b>Via</b> shows which client tool sent each proxy session — Claude Code? Aider? your own script? Nothing leaves your machine.</p>
+    <h2>Recent sessions — with human-equivalent valuation</h2>
+    <p class="subhead">Each session lists the closest professional role that would normally do this work, the estimated human time, and the value at that role's market rate. Quality factor reflects how usable the AI output was. Nothing leaves your machine.</p>
     <table class="sessions-table">
       <thead>
-        <tr><th>Date</th><th>Agent</th><th>Via</th><th>Category</th><th>Project</th><th class="num">$ Cost</th><th>What happened</th></tr>
+        <tr>
+          <th>Date</th><th>Agent</th><th>Via</th><th>Category</th><th>Project</th>
+          <th>Equivalent role</th><th class="num">Human time</th><th>Quality</th>
+          <th class="num">$ AI cost</th><th class="num">$ Human-equiv</th><th class="num">ROI</th>
+        </tr>
       </thead>
       <tbody id="sessions-tbody"></tbody>
     </table>
@@ -77,10 +84,10 @@
 
   <section class="card faded">
     <h2>How we estimate value</h2>
-    <p class="subhead">Every category gets its own value heuristic. None of them are $0 by default. Tune every multiplier in <code>~/.tokenpayback/config.yaml</code> — open source, no opinions baked in.</p>
-    <table class="value-model-table" id="value-model-tbody"></table>
+    <p class="subhead">Per session, the LLM picks the closest professional role that would do this work and estimates hours + market rate (anchored to your benchmark: <code id="benchmark-info">us-west / senior</code>). Value = <code>hours × rate × quality_factor</code>. Quality factor: <code>full-replacement 1.0</code> · <code>with-edits 0.7</code> · <code>draft-only 0.4</code> · <code>failed 0.0</code>.</p>
     <p class="caveat">
-      The right number is the one that prompts the next good question, not perfect precision.
+      Estimates are uncertain by design — that's why every number is a range, not a single value.
+      Tune the benchmark in <code>~/.tokenpayback/config.yaml</code> (region + seniority).
     </p>
   </section>
 

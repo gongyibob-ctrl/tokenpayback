@@ -41,13 +41,39 @@ async function load() {
 }
 
 function renderHero(latest) {
-  $("#latest-week").textContent = latest.week;
-  $("#latest-cost").textContent = fmtMoney(latest.cost_usd);
-  $("#latest-value").textContent = fmtMoney(latest.value_usd);
-  const roiEl = $("#latest-roi");
-  roiEl.textContent = fmtROI(latest.roi);
-  roiEl.className = "value roi " + roiClass(latest.roi);
-  $("#roi-verdict").textContent = roiVerdict(latest.roi, latest.cost_usd);
+  // Legacy engineering-ROI hero kept for the weeks chart; not the main hero anymore.
+  const w = document.getElementById("latest-week"); if (w) w.textContent = latest.week;
+}
+
+function renderOverall(data) {
+  const o = data.overall;
+  if (!o) return;
+  document.getElementById("overall-cost").textContent = fmtMoney(o.totalCostUsd);
+  document.getElementById("overall-value").textContent = fmtMoney(o.totalValueUsd);
+  document.getElementById("overall-value-range").textContent =
+    `${fmtMoney(o.totalValueLowUsd)} — ${fmtMoney(o.totalValueHighUsd)}`;
+  const hrs = o.humanHoursSaved || 0;
+  const days = o.humanDaysSaved || 0;
+  document.getElementById("overall-hours").textContent = hrs >= 16
+    ? `${days.toFixed(1)} days`
+    : `${hrs.toFixed(1)} hrs`;
+  const roiEl = document.getElementById("overall-roi");
+  roiEl.textContent = fmtROI(o.roiMid);
+  roiEl.className = "value roi " + roiClass(o.roiMid);
+  const verdict = roiVerdict(o.roiMid, o.totalCostUsd);
+  const rangeHint = (o.roiLow && o.roiHigh)
+    ? ` · range ${fmtROI(o.roiLow)} — ${fmtROI(o.roiHigh)}`
+    : "";
+  document.getElementById("overall-roi-verdict").textContent = verdict + rangeHint;
+  // Window label
+  const sessionCount = (data.sessions || []).length;
+  document.getElementById("overall-window").textContent = `across ${sessionCount} sessions`;
+  // Benchmark info
+  if (data.benchmark && data.benchmark.region) {
+    const b = data.benchmark;
+    const el = document.getElementById("benchmark-info");
+    if (el) el.textContent = `${b.region} / ${b.seniority}`;
+  }
 }
 
 function renderChart(weeks) {
@@ -197,10 +223,31 @@ function renderSessions(data) {
     }
     return { agent: agentLabel[s.agent] || s.agent || "?", via: "—" };
   };
+  const fmtMinutes = (m) => {
+    if (m == null) return "—";
+    if (m < 60) return `${Math.round(m)}m`;
+    return `${(m/60).toFixed(1)}h`;
+  };
   document.getElementById("sessions-tbody").innerHTML = sessions.slice(0, 60).map((s) => {
     const c = s.classification || {};
     const date = (s.last_event || "").slice(0, 10);
     const lbls = sourceLabel(s);
+    const role = c.equivalent_role || "—";
+    const mLow = c.human_minutes_low;
+    const mMid = c.human_minutes_mid;
+    const mHigh = c.human_minutes_high;
+    const timeCell = (mMid != null)
+      ? `<b>${fmtMinutes(mMid)}</b><span class="muted"> (${fmtMinutes(mLow)}–${fmtMinutes(mHigh)})</span>`
+      : "—";
+    const quality = c.replacement_quality || "—";
+    const cost = s.est_cost_usd || 0;
+    // Compute human-equivalent value if fields present
+    let humanValue = null, roi = null;
+    const qm = ({"full-replacement":1.0,"with-edits":0.7,"draft-only":0.4,"failed":0}[quality]);
+    if (mMid != null && c.hourly_rate_usd_mid != null && qm != null) {
+      humanValue = (mMid/60) * c.hourly_rate_usd_mid * qm;
+      if (cost > 0) roi = humanValue / cost;
+    }
     return `
       <tr>
         <td>${date}</td>
@@ -208,8 +255,12 @@ function renderSessions(data) {
         <td><span class="cat-tag">${escapeHtml(lbls.via)}</span></td>
         <td><span class="cat-tag cat-${escapeHtml(c.category || "")}">${escapeHtml(c.category || "?")}</span></td>
         <td>${escapeHtml(c.project || "?")}</td>
-        <td class="num">${fmtMoney(s.est_cost_usd)}</td>
-        <td>${escapeHtml(c.summary || "")}</td>
+        <td>${escapeHtml(role)}</td>
+        <td class="num">${timeCell}</td>
+        <td><span class="cat-tag">${escapeHtml(quality)}</span></td>
+        <td class="num">${fmtMoney(cost)}</td>
+        <td class="num">${humanValue != null ? fmtMoney(humanValue) : "—"}</td>
+        <td class="num ${roiClass(roi)}"><strong>${fmtROI(roi)}</strong></td>
       </tr>
     `;
   }).join("");
@@ -240,13 +291,13 @@ async function main() {
     if (!weeks.length) throw new Error("no weeks in data.json");
     const latest = weeks[weeks.length - 1];
     $("#meta").textContent = `generated ${new Date(data.generatedAt).toLocaleString()}`;
+    renderOverall(data);
     renderHero(latest);
     renderActivityHero(data);
     renderAgents(data);
     renderChart(weeks);
     renderTable(weeks);
     renderSessions(data);
-    renderValueModelTable();
   } catch (e) {
     document.body.insertAdjacentHTML("beforeend", `<div class="card">error: ${e.message}</div>`);
   }

@@ -51,19 +51,26 @@ def cmd_scan(args: argparse.Namespace) -> int:
             print("[taxonomy] first run — generating personalized categories from your sessions...")
         taxonomy = tx.ensure_taxonomy(sessions, force_regen=force, path=taxonomy_path)
 
+    # Benchmark knobs influence LLM rate estimates
+    cfg_for_bench = load_config_with_fallbacks(args.config)
+    benchmark = cfg_for_bench.get("benchmark") or {"region": "us-west", "seniority": "senior"}
+
     sessions_path = data_dir / "sessions.json"
     if args.no_classify:
         print("  skipping LLM classification (--no-classify)")
         sessions_path.write_text(json.dumps(sessions, ensure_ascii=False, indent=2, default=str))
     else:
-        print(f"classifying {len(sessions)} sessions via LLM (~2s each)...")
+        print(f"classifying {len(sessions)} sessions via LLM (~2s each) — benchmark: {benchmark.get('region')}/{benchmark.get('seniority')}")
         enriched = []
         for i, s in enumerate(sessions, 1):
-            c = classify_mod.classify_session(s, taxonomy=taxonomy)
+            c = classify_mod.classify_session(s, taxonomy=taxonomy, benchmark=benchmark)
             s["classification"] = c
             enriched.append(s)
             if i % 5 == 0 or i == len(sessions):
-                print(f"  [{i}/{len(sessions)}] {c['category']:<22} {c['project'][:30]} ${s['est_cost_usd']:.2f}")
+                role = c.get("equivalent_role", "")
+                mid = c.get("human_minutes_mid")
+                print(f"  [{i}/{len(sessions)}] {c['category']:<22} {c['project'][:24]:<24} ${s['est_cost_usd']:.2f}"
+                      + (f"  ≈ {int(mid)}m of {role}" if mid and role else ""))
         sessions_path.write_text(json.dumps(enriched, ensure_ascii=False, indent=2, default=str))
         print(f"  wrote {sessions_path}")
 
@@ -78,10 +85,12 @@ def cmd_scan(args: argparse.Namespace) -> int:
             try:
                 data["sessions"] = json.loads(sessions_path.read_text())
                 data["sessionsTotals"] = roi_mod._summarize_sessions(data["sessions"])
-                from .value_model import summarize_by_category, summarize_by_agent
+                from .value_model import summarize_by_category, summarize_by_agent, overall_summary
                 data["byCategory"] = summarize_by_category(data["sessions"], taxonomy)
                 data["byAgent"] = summarize_by_agent(data["sessions"], taxonomy)
+                data["overall"] = overall_summary(data["sessions"], taxonomy)
                 data["taxonomy"] = taxonomy
+                data["benchmark"] = benchmark
             except Exception:
                 pass
             (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
@@ -91,17 +100,17 @@ def cmd_scan(args: argparse.Namespace) -> int:
         except Exception as e:
             print(f"  ! GitHub ROI step failed: {e}", file=sys.stderr)
             print(f"  (falling back to sessions-only view)", file=sys.stderr)
-            data = _no_github_data(sessions_path, taxonomy)
+            data = _no_github_data(sessions_path, taxonomy, benchmark)
             (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
     else:
-        data = _no_github_data(sessions_path, taxonomy)
+        data = _no_github_data(sessions_path, taxonomy, benchmark)
         (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
     return 0
 
 
-def _no_github_data(sessions_path: Path, taxonomy: dict) -> dict:
+def _no_github_data(sessions_path: Path, taxonomy: dict, benchmark: dict | None = None) -> dict:
     from .roi import _summarize_sessions
-    from .value_model import summarize_by_category, summarize_by_agent
+    from .value_model import summarize_by_category, summarize_by_agent, overall_summary
     sessions = json.loads(sessions_path.read_text()) if sessions_path.exists() else []
     return {
         "generatedAt": _now_iso(),
@@ -112,7 +121,9 @@ def _no_github_data(sessions_path: Path, taxonomy: dict) -> dict:
         "sessionsTotals": _summarize_sessions(sessions) if sessions else {},
         "byCategory": summarize_by_category(sessions, taxonomy) if sessions else [],
         "byAgent": summarize_by_agent(sessions, taxonomy) if sessions else [],
+        "overall": overall_summary(sessions, taxonomy) if sessions else {},
         "taxonomy": taxonomy,
+        "benchmark": benchmark or {},
     }
 
 

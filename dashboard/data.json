@@ -1,11 +1,16 @@
 {
-  "generatedAt": "2026-05-19T00:53:25.381032+00:00",
+  "generatedAt": "2026-05-19T04:31:10.782559+00:00",
   "isDemo": true,
   "config": {
     "github_username": "demo-user",
     "hourly_rate_usd": 150,
     "value_per_pr_usd": 600,
     "value_per_line_committed_usd": 0.3
+  },
+  "benchmark": {
+    "region": "us-west",
+    "seniority": "senior",
+    "currency": "USD"
   },
   "weeks": [
     {
@@ -263,8 +268,8 @@
       "session_id": "demo-0000",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-18T19:53:25.380261+00:00",
-      "last_event": "2026-05-18T19:53:25.380261+00:00",
+      "first_event": "2026-05-18T23:31:10.780859+00:00",
+      "last_event": "2026-05-18T23:31:10.780859+00:00",
       "user_messages": 15,
       "tool_counts": {
         "Bash": 63,
@@ -289,7 +294,15 @@
         "summary": "Built magic-link auth with email service + cooldown.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Senior backend engineer",
+        "human_minutes_low": 90,
+        "human_minutes_mid": 180,
+        "human_minutes_high": 300,
+        "hourly_rate_usd_low": 150,
+        "hourly_rate_usd_mid": 200,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -297,8 +310,8 @@
       "session_id": "demo-0001",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-17T00:53:25.380261+00:00",
-      "last_event": "2026-05-17T00:53:25.380261+00:00",
+      "first_event": "2026-05-17T04:31:10.780859+00:00",
+      "last_event": "2026-05-17T04:31:10.780859+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 27,
@@ -323,7 +336,15 @@
         "summary": "Added typeahead search to nav with debouncer.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Mid frontend engineer",
+        "human_minutes_low": 30,
+        "human_minutes_mid": 60,
+        "human_minutes_high": 120,
+        "hourly_rate_usd_low": 100,
+        "hourly_rate_usd_mid": 140,
+        "hourly_rate_usd_high": 180,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -331,8 +352,8 @@
       "session_id": "demo-0002",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-14T23:53:25.380261+00:00",
-      "last_event": "2026-05-14T23:53:25.380261+00:00",
+      "first_event": "2026-05-15T03:31:10.780859+00:00",
+      "last_event": "2026-05-15T03:31:10.780859+00:00",
       "user_messages": 22,
       "tool_counts": {
         "Bash": 19,
@@ -357,7 +378,15 @@
         "summary": "Fixed stripe webhook race that double-charged on retries.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Senior backend engineer",
+        "human_minutes_low": 60,
+        "human_minutes_mid": 120,
+        "human_minutes_high": 240,
+        "hourly_rate_usd_low": 180,
+        "hourly_rate_usd_mid": 220,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -365,8 +394,8 @@
       "session_id": "demo-0003",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-12T23:53:25.380261+00:00",
-      "last_event": "2026-05-12T23:53:25.380261+00:00",
+      "first_event": "2026-05-13T03:31:10.780859+00:00",
+      "last_event": "2026-05-13T03:31:10.780859+00:00",
       "user_messages": 14,
       "tool_counts": {
         "Bash": 45,
@@ -391,7 +420,15 @@
         "summary": "Split monolith into 5 route modules, kept all tests green.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Staff engineer",
+        "human_minutes_low": 60,
+        "human_minutes_mid": 150,
+        "human_minutes_high": 240,
+        "hourly_rate_usd_low": 180,
+        "hourly_rate_usd_mid": 240,
+        "hourly_rate_usd_high": 320,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -399,8 +436,8 @@
       "session_id": "demo-0004",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-10T19:53:25.380261+00:00",
-      "last_event": "2026-05-10T19:53:25.380261+00:00",
+      "first_event": "2026-05-10T23:31:10.780859+00:00",
+      "last_event": "2026-05-10T23:31:10.780859+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 12,
@@ -425,7 +462,15 @@
         "summary": "Wired GitHub Actions cron + Vercel preview deploys.",
         "value_signal": "shipped-code",
         "main_artifact": "infra",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "DevOps engineer",
+        "human_minutes_low": 20,
+        "human_minutes_mid": 45,
+        "human_minutes_high": 90,
+        "hourly_rate_usd_low": 140,
+        "hourly_rate_usd_mid": 180,
+        "hourly_rate_usd_high": 240,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -433,8 +478,8 @@
       "session_id": "demo-0005",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-08T20:53:25.380261+00:00",
-      "last_event": "2026-05-08T20:53:25.380261+00:00",
+      "first_event": "2026-05-09T00:31:10.780859+00:00",
+      "last_event": "2026-05-09T00:31:10.780859+00:00",
       "user_messages": 35,
       "tool_counts": {
         "Bash": 19,
@@ -459,7 +504,15 @@
         "summary": "Tracked down stripe webhook race condition — repro'd in test.",
         "value_signal": "info-gathered",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Senior backend engineer",
+        "human_minutes_low": 45,
+        "human_minutes_mid": 90,
+        "human_minutes_high": 180,
+        "hourly_rate_usd_low": 180,
+        "hourly_rate_usd_mid": 220,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "draft-only"
       }
     },
     {
@@ -467,8 +520,8 @@
       "session_id": "demo-0006",
       "project": "competitive-scan",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-07T00:53:25.380261+00:00",
-      "last_event": "2026-05-07T00:53:25.380261+00:00",
+      "first_event": "2026-05-07T04:31:10.780859+00:00",
+      "last_event": "2026-05-07T04:31:10.780859+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 6,
@@ -493,7 +546,15 @@
         "summary": "Surveyed 5 dashboards in the space, wrote diff matrix.",
         "value_signal": "researched",
         "main_artifact": "competitive-scan",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Product analyst",
+        "human_minutes_low": 60,
+        "human_minutes_mid": 120,
+        "human_minutes_high": 240,
+        "hourly_rate_usd_low": 80,
+        "hourly_rate_usd_mid": 120,
+        "hourly_rate_usd_high": 180,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -501,8 +562,8 @@
       "session_id": "demo-0007",
       "project": "v2-roadmap",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-05T00:53:25.380261+00:00",
-      "last_event": "2026-05-05T00:53:25.380261+00:00",
+      "first_event": "2026-05-05T04:31:10.780859+00:00",
+      "last_event": "2026-05-05T04:31:10.780859+00:00",
       "user_messages": 21,
       "tool_counts": {
         "Bash": 2,
@@ -527,7 +588,15 @@
         "summary": "Talked through v2 multi-tenant data model tradeoffs.",
         "value_signal": "info-gathered",
         "main_artifact": "v2-roadmap",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Product / staff eng",
+        "human_minutes_low": 30,
+        "human_minutes_mid": 60,
+        "human_minutes_high": 120,
+        "hourly_rate_usd_low": 180,
+        "hourly_rate_usd_mid": 240,
+        "hourly_rate_usd_high": 320,
+        "replacement_quality": "draft-only"
       }
     },
     {
@@ -535,8 +604,8 @@
       "session_id": "demo-0008",
       "project": "weekly-review",
       "first_prompt": "(demo)",
-      "first_event": "2026-05-02T23:53:25.380261+00:00",
-      "last_event": "2026-05-02T23:53:25.380261+00:00",
+      "first_event": "2026-05-03T03:31:10.780859+00:00",
+      "last_event": "2026-05-03T03:31:10.780859+00:00",
       "user_messages": 40,
       "tool_counts": {
         "Bash": 4,
@@ -561,7 +630,15 @@
         "summary": "Drafted board update from this week's metrics.",
         "value_signal": "shipped-code",
         "main_artifact": "weekly-review",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Executive ghostwriter",
+        "human_minutes_low": 40,
+        "human_minutes_mid": 60,
+        "human_minutes_high": 120,
+        "hourly_rate_usd_low": 80,
+        "hourly_rate_usd_mid": 150,
+        "hourly_rate_usd_high": 250,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -569,8 +646,8 @@
       "session_id": "demo-0009",
       "project": "trip-planning",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-30T20:53:25.380261+00:00",
-      "last_event": "2026-04-30T20:53:25.380261+00:00",
+      "first_event": "2026-05-01T00:31:10.780859+00:00",
+      "last_event": "2026-05-01T00:31:10.780859+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 3,
@@ -595,7 +672,15 @@
         "summary": "Planned weekend route + booked hotel via tool calls.",
         "value_signal": "shipped-code",
         "main_artifact": "trip-planning",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Travel agent",
+        "human_minutes_low": 30,
+        "human_minutes_mid": 45,
+        "human_minutes_high": 90,
+        "hourly_rate_usd_low": 40,
+        "hourly_rate_usd_mid": 60,
+        "hourly_rate_usd_high": 100,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -603,8 +688,8 @@
       "session_id": "demo-0010",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-28T20:53:25.380261+00:00",
-      "last_event": "2026-04-28T20:53:25.380261+00:00",
+      "first_event": "2026-04-29T00:31:10.780859+00:00",
+      "last_event": "2026-04-29T00:31:10.780859+00:00",
       "user_messages": 20,
       "tool_counts": {
         "Bash": 39,
@@ -629,7 +714,15 @@
         "summary": "Implemented CSV import pipeline w/ progress events.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Senior backend engineer",
+        "human_minutes_low": 60,
+        "human_minutes_mid": 120,
+        "human_minutes_high": 240,
+        "hourly_rate_usd_low": 150,
+        "hourly_rate_usd_mid": 200,
+        "hourly_rate_usd_high": 280,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -637,8 +730,8 @@
       "session_id": "demo-0011",
       "project": "your-app",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-26T19:53:25.380261+00:00",
-      "last_event": "2026-04-26T19:53:25.380261+00:00",
+      "first_event": "2026-04-26T23:31:10.780859+00:00",
+      "last_event": "2026-04-26T23:31:10.780859+00:00",
       "user_messages": 34,
       "tool_counts": {
         "Bash": 23,
@@ -663,7 +756,15 @@
         "summary": "Added export endpoints (CSV + JSON) with rate limiting.",
         "value_signal": "shipped-code",
         "main_artifact": "your-app",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Mid backend engineer",
+        "human_minutes_low": 30,
+        "human_minutes_mid": 60,
+        "human_minutes_high": 120,
+        "hourly_rate_usd_low": 100,
+        "hourly_rate_usd_mid": 140,
+        "hourly_rate_usd_high": 180,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -671,8 +772,8 @@
       "session_id": "demo-0012",
       "project": "infra",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-24T23:53:25.380261+00:00",
-      "last_event": "2026-04-24T23:53:25.380261+00:00",
+      "first_event": "2026-04-25T03:31:10.780859+00:00",
+      "last_event": "2026-04-25T03:31:10.780859+00:00",
       "user_messages": 36,
       "tool_counts": {
         "Bash": 13,
@@ -697,7 +798,15 @@
         "summary": "Set up Sentry + Datadog tracing on the API.",
         "value_signal": "shipped-code",
         "main_artifact": "infra",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "DevOps engineer",
+        "human_minutes_low": 40,
+        "human_minutes_mid": 90,
+        "human_minutes_high": 180,
+        "hourly_rate_usd_low": 140,
+        "hourly_rate_usd_mid": 180,
+        "hourly_rate_usd_high": 240,
+        "replacement_quality": "with-edits"
       }
     },
     {
@@ -705,8 +814,8 @@
       "session_id": "demo-0013",
       "project": "general",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-22T20:53:25.380261+00:00",
-      "last_event": "2026-04-22T20:53:25.380261+00:00",
+      "first_event": "2026-04-23T00:31:10.780859+00:00",
+      "last_event": "2026-04-23T00:31:10.780859+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 1,
@@ -731,7 +840,15 @@
         "summary": "Quick question about postgres index strategy.",
         "value_signal": "info-gathered",
         "main_artifact": "general",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Database consultant",
+        "human_minutes_low": 5,
+        "human_minutes_mid": 10,
+        "human_minutes_high": 20,
+        "hourly_rate_usd_low": 150,
+        "hourly_rate_usd_mid": 250,
+        "hourly_rate_usd_high": 350,
+        "replacement_quality": "full-replacement"
       }
     },
     {
@@ -739,8 +856,8 @@
       "session_id": "demo-0014",
       "project": "general",
       "first_prompt": "(demo)",
-      "first_event": "2026-04-20T18:53:25.380261+00:00",
-      "last_event": "2026-04-20T18:53:25.380261+00:00",
+      "first_event": "2026-04-20T22:31:10.780859+00:00",
+      "last_event": "2026-04-20T22:31:10.780859+00:00",
       "user_messages": 8,
       "tool_counts": {
         "Bash": 2,
@@ -765,7 +882,15 @@
         "summary": "Recipe lookup + grocery list.",
         "value_signal": "info-gathered",
         "main_artifact": "general",
-        "model": "demo"
+        "model": "demo",
+        "equivalent_role": "Personal assistant",
+        "human_minutes_low": 5,
+        "human_minutes_mid": 10,
+        "human_minutes_high": 20,
+        "hourly_rate_usd_low": 25,
+        "hourly_rate_usd_mid": 40,
+        "hourly_rate_usd_high": 60,
+        "replacement_quality": "full-replacement"
       }
     }
   ],
@@ -776,84 +901,129 @@
   "byCategory": [
     {
       "category": "new-feature",
-      "label": "Code shipped",
-      "icon": "🚢",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 2,
       "cost_usd": 66.5,
-      "value_usd": 192.5,
-      "roi": 2.89
+      "value_low_usd": 307.5,
+      "value_usd": 820.0,
+      "value_high_usd": 2100.0,
+      "human_minutes_total": 300.0,
+      "roi": 12.33,
+      "roi_low": 4.62,
+      "roi_high": 31.58
     },
     {
       "category": "refactor",
-      "label": "Code cleaned",
-      "icon": "🧹",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 1,
       "cost_usd": 23.8,
-      "value_usd": 80.0,
-      "roi": 3.36
+      "value_low_usd": 126.0,
+      "value_usd": 420.0,
+      "value_high_usd": 896.0,
+      "human_minutes_total": 150.0,
+      "roi": 17.65,
+      "roi_low": 5.29,
+      "roi_high": 37.65
     },
     {
       "category": "extend-feature",
-      "label": "Code extended",
-      "icon": "➕",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 2,
       "cost_usd": 15.5,
-      "value_usd": 90.0,
-      "roi": 5.81
+      "value_low_usd": 100.0,
+      "value_usd": 280.0,
+      "value_high_usd": 720.0,
+      "human_minutes_total": 120.0,
+      "roi": 18.06,
+      "roi_low": 6.45,
+      "roi_high": 46.45
     },
     {
       "category": "config-ops",
-      "label": "Infra changed",
-      "icon": "⚙️",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 2,
       "cost_usd": 7.6,
-      "value_usd": 120.0,
-      "roi": 15.79
+      "value_low_usd": 112.0,
+      "value_usd": 324.0,
+      "value_high_usd": 864.0,
+      "human_minutes_total": 135.0,
+      "roi": 42.63,
+      "roi_low": 14.74,
+      "roi_high": 113.68
     },
     {
       "category": "bug-fix",
-      "label": "Bug fixed",
-      "icon": "🐛",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 1,
       "cost_usd": 5.6,
-      "value_usd": 80.0,
-      "roi": 14.29
+      "value_low_usd": 126.0,
+      "value_usd": 308.0,
+      "value_high_usd": 784.0,
+      "human_minutes_total": 120.0,
+      "roi": 55.0,
+      "roi_low": 22.5,
+      "roi_high": 140.0
     },
     {
       "category": "debug",
-      "label": "Bug understood",
-      "icon": "🔍",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 1,
       "cost_usd": 5.6,
-      "value_usd": 40.0,
-      "roi": 7.14
+      "value_low_usd": 54.0,
+      "value_usd": 132.0,
+      "value_high_usd": 336.0,
+      "human_minutes_total": 90.0,
+      "roi": 23.57,
+      "roi_low": 9.64,
+      "roi_high": 60.0
     },
     {
       "category": "research",
-      "label": "Info gathered",
-      "icon": "📚",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 1,
       "cost_usd": 2.1,
-      "value_usd": 25.0,
-      "roi": 11.9
+      "value_low_usd": 56.0,
+      "value_usd": 168.0,
+      "value_high_usd": 504.0,
+      "human_minutes_total": 120.0,
+      "roi": 80.0,
+      "roi_low": 26.67,
+      "roi_high": 240.0
     },
     {
       "category": "personal-task",
-      "label": "Life shipped",
-      "icon": "🎯",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 2,
       "cost_usd": 2.0,
-      "value_usd": 60.0,
-      "roi": 30.0
+      "value_low_usd": 57.33,
+      "value_usd": 150.0,
+      "value_high_usd": 500.0,
+      "human_minutes_total": 105.0,
+      "roi": 75.0,
+      "roi_low": 28.66,
+      "roi_high": 250.0
     },
     {
       "category": "brainstorm",
-      "label": "Ideas explored",
-      "icon": "💡",
+      "label": "Question answered",
+      "icon": "❓",
       "count": 1,
       "cost_usd": 0.8,
-      "value_usd": 20.0,
-      "roi": 25.0
+      "value_low_usd": 36.0,
+      "value_usd": 96.0,
+      "value_high_usd": 256.0,
+      "human_minutes_total": 60.0,
+      "roi": 120.0,
+      "roi_low": 45.0,
+      "roi_high": 320.0
     },
     {
       "category": "chat-misc",
@@ -861,8 +1031,13 @@
       "icon": "❓",
       "count": 2,
       "cost_usd": 0.35,
-      "value_usd": 10.0,
-      "roi": 28.57
+      "value_low_usd": 14.58,
+      "value_usd": 48.34,
+      "value_high_usd": 136.67,
+      "human_minutes_total": 20.0,
+      "roi": 138.11,
+      "roi_low": 41.66,
+      "roi_high": 390.49
     }
   ],
   "byAgent": [
@@ -870,29 +1045,87 @@
       "agent": "claude-code",
       "count": 6,
       "cost_usd": 111.4,
-      "value_usd": 442.5,
-      "roi": 3.97
+      "value_low_usd": 659.5,
+      "value_usd": 1828.0,
+      "value_high_usd": 4500.0,
+      "human_minutes_total": 690.0,
+      "roi": 16.41,
+      "roi_low": 5.92,
+      "roi_high": 40.39
     },
     {
       "agent": "codex",
       "count": 3,
       "cost_usd": 13.2,
-      "value_usd": 160.0,
-      "roi": 12.12
+      "value_low_usd": 166.0,
+      "value_usd": 456.0,
+      "value_high_usd": 1200.0,
+      "human_minutes_total": 225.0,
+      "roi": 34.55,
+      "roi_low": 12.58,
+      "roi_high": 90.91
     },
     {
       "agent": "hermes",
       "count": 3,
       "cost_usd": 3.1,
-      "value_usd": 50.0,
-      "roi": 16.13
+      "value_low_usd": 104.5,
+      "value_usd": 305.67,
+      "value_high_usd": 876.67,
+      "human_minutes_total": 190.0,
+      "roi": 98.6,
+      "roi_low": 33.71,
+      "roi_high": 282.8
     },
     {
       "agent": "openclaw",
       "count": 3,
       "cost_usd": 2.15,
-      "value_usd": 65.0,
-      "roi": 30.23
+      "value_low_usd": 59.41,
+      "value_usd": 156.67,
+      "value_high_usd": 520.0,
+      "human_minutes_total": 115.0,
+      "roi": 72.87,
+      "roi_low": 27.63,
+      "roi_high": 241.86
     }
-  ]
+  ],
+  "overall": {
+    "totalCostUsd": 129.85,
+    "totalValueLowUsd": 989.41,
+    "totalValueUsd": 2746.34,
+    "totalValueHighUsd": 7096.67,
+    "humanHoursSaved": 20.3,
+    "humanDaysSaved": 2.5,
+    "roiMid": 21.15,
+    "roiLow": 7.62,
+    "roiHigh": 54.65,
+    "topRoles": [
+      [
+        "Senior backend engineer",
+        4
+      ],
+      [
+        "DevOps engineer",
+        2
+      ],
+      [
+        "Mid frontend engineer",
+        1
+      ],
+      [
+        "Staff engineer",
+        1
+      ],
+      [
+        "Product analyst",
+        1
+      ]
+    ],
+    "qualityMix": {
+      "with-edits": 6,
+      "full-replacement": 7,
+      "draft-only": 2
+    }
+  }
 }

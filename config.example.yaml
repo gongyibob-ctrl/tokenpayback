@@ -1,16 +1,23 @@
 # Copy to config.local.yaml and fill in.
 # config.local.yaml is gitignored.
 
-# Your hourly cost in USD — used to estimate $ value of engineering output.
-# Be honest: fully-loaded cost (salary + benefits + overhead).
-# Default: $150/hr (a reasonable US senior dev fully-loaded).
+# Legacy fields (still used by the category-baseline fallback when role-based
+# valuation isn't available)
 hourly_rate_usd: 150
-
-# Engineering output value heuristics
-# Average $ value of a merged PR (varies wildly by company stage — rough proxy).
-# Default: 4 hours of dev time at hourly_rate.
 value_per_pr_usd: 600
-value_per_line_committed_usd: 0.30  # rough; tune to your context
+value_per_line_committed_usd: 0.30
+
+# v0.6+: human-labor-market benchmark. The LLM uses these as anchors when
+# estimating hourly rates for the equivalent professional role on each session.
+# Examples:
+#   region=us-west, seniority=senior     → senior eng ≈ $200/hr
+#   region=eu,      seniority=mid        → mid eng    ≈ €60/hr
+#   region=china,   seniority=junior     → junior eng ≈ ¥80/hr
+#   region=global-avg, seniority=senior  → freelancer-mix anchor
+benchmark:
+  region: us-west             # us-west | us-east | eu | china | sea | latam | global-avg
+  seniority: senior           # junior | mid | senior | staff | consultant
+  currency: USD
 
 # GitHub username for output attribution
 github_username: your-github-username

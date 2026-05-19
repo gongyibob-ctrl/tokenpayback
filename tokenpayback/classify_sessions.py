@@ -17,14 +17,19 @@ import requests
 from .parse_claude import collect_all
 
 
-def _build_system_prompt(taxonomy: dict) -> str:
-    """Compose the SYSTEM prompt from a user-specific taxonomy."""
+def _build_system_prompt(taxonomy: dict, benchmark: dict | None = None) -> str:
+    """Compose the SYSTEM prompt from a user-specific taxonomy + benchmark."""
     cats = taxonomy.get("categories") or []
-    lines = ['You categorize ONE session of AI agent activity using THIS user\'s personal taxonomy.']
+    region = (benchmark or {}).get("region", "us-west")
+    seniority = (benchmark or {}).get("seniority", "senior")
+    lines = ['You categorize ONE session of AI agent activity using THIS user\'s personal taxonomy AND estimate its real-world dollar value by comparing to professional labor rates.']
     lines.append('')
     lines.append('Available categories (pick exactly one):')
     for c in cats:
         lines.append(f"  - {c['id']:<22} {c.get('icon','•')}  {c.get('label','?')} — {c.get('description','')}")
+    lines.append('')
+    lines.append(f"User benchmark: region={region}, seniority={seniority}")
+    lines.append("Use these to anchor your hourly rate estimate to a real market (US senior eng ≈ $200/hr, EU mid ≈ €70/hr, etc.).")
     lines.append('')
     lines.append('Return JSON exactly:')
     lines.append('{')
@@ -32,10 +37,23 @@ def _build_system_prompt(taxonomy: dict) -> str:
     lines.append('  "project": "<short phrase, prefer the user\'s naming, <=30 chars>",')
     lines.append('  "summary": "<one sentence, <=120 chars, what actually happened>",')
     lines.append('  "value_signal": "<shipped-code|shipped-artifact|info-gathered|decided|answered|no-progress>",')
-    lines.append('  "main_artifact": "<short phrase describing the most concrete output, or (none)>"')
+    lines.append('  "main_artifact": "<short phrase, or (none)>",')
+    lines.append('  "equivalent_role": "<closest professional role that would normally do this work, e.g. \'senior backend engineer\', \'UX designer\', \'video editor\', \'research analyst\'>",')
+    lines.append('  "human_minutes_low": <int>,')
+    lines.append('  "human_minutes_mid": <int>,')
+    lines.append('  "human_minutes_high": <int>,')
+    lines.append('  "hourly_rate_usd_low": <int>,')
+    lines.append('  "hourly_rate_usd_mid": <int>,')
+    lines.append('  "hourly_rate_usd_high": <int>,')
+    lines.append('  "replacement_quality": "<full-replacement|with-edits|draft-only|failed>"')
     lines.append('}')
     lines.append('')
-    lines.append('Be decisive. Even ambiguous sessions get a closest-fit category — never invent new ids.')
+    lines.append('Definitions:')
+    lines.append('  human_minutes_*: how long a competent professional would need (3 estimates: optimistic, realistic, pessimistic).')
+    lines.append('  hourly_rate_usd_*: market USD rate for that role given the user benchmark (3 estimates).')
+    lines.append('  replacement_quality: full-replacement=AI output is production-ready; with-edits=mostly right user touched up; draft-only=AI gave a starting point; failed=did not produce usable output.')
+    lines.append('')
+    lines.append('Be decisive. Never invent new category ids. Ground rates in real labor markets.')
     return '\n'.join(lines)
 
 
@@ -126,9 +144,9 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-def classify_session(s: dict, taxonomy: dict | None = None) -> dict:
+def classify_session(s: dict, taxonomy: dict | None = None, benchmark: dict | None = None) -> dict:
     provider, base_url, api_key, model = _detect_provider()
-    system_prompt = _build_system_prompt(taxonomy) if taxonomy else SYSTEM
+    system_prompt = _build_system_prompt(taxonomy, benchmark) if taxonomy else SYSTEM
     blob = (
         f"Agent: {s.get('agent','?')}\n"
         f"Project path: {s.get('project','')}\n"
@@ -155,13 +173,27 @@ def classify_session(s: dict, taxonomy: dict | None = None) -> dict:
     # Coerce to a valid id if taxonomy is provided and the LLM made one up
     if valid_ids and category not in valid_ids:
         category = fallback_id
-    return {
+    out = {
         "category": category or fallback_id,
         "project": (result.get("project") or "")[:30],
         "summary": (result.get("summary") or "")[:140],
         "value_signal": result.get("value_signal", "info-gathered"),
         "main_artifact": (result.get("main_artifact") or "")[:60],
     }
+    # Optional role-based valuation fields
+    for k in ("equivalent_role", "replacement_quality"):
+        v = result.get(k)
+        if v:
+            out[k] = str(v)[:80]
+    for k in ("human_minutes_low", "human_minutes_mid", "human_minutes_high",
+              "hourly_rate_usd_low", "hourly_rate_usd_mid", "hourly_rate_usd_high"):
+        v = result.get(k)
+        if v is not None:
+            try:
+                out[k] = float(v)
+            except (TypeError, ValueError):
+                continue
+    return out
 
 
 def main(output_path: Path | None = None) -> Path:

@@ -79,29 +79,44 @@ def build_demo() -> dict:
             "roi": round(net / total_cost, 2) if total_cost else None,
         })
 
-    # synthetic sessions — multi-agent + multi-category
-    agents = ["claude-code", "codex", "hermes", "openclaw"]
+    # synthetic sessions — multi-agent + multi-category + role-based valuation
     fake = [
-        # (agent, category, project, summary, cost, tools, value_signal)
-        ("claude-code", "new-feature", "your-app",         "Built magic-link auth with email service + cooldown.",                    47.30, 142, "shipped-code"),
-        ("claude-code", "extend-feature", "your-app",      "Added typeahead search to nav with debouncer.",                            8.40,  61, "shipped-code"),
-        ("claude-code", "bug-fix", "your-app",             "Fixed stripe webhook race that double-charged on retries.",                5.60,  44, "shipped-code"),
-        ("claude-code", "refactor", "your-app",            "Split monolith into 5 route modules, kept all tests green.",              23.80, 102, "shipped-code"),
-        ("codex",       "config-ops", "infra",             "Wired GitHub Actions cron + Vercel preview deploys.",                      3.40,  27, "shipped-code"),
-        ("codex",       "debug", "your-app",               "Tracked down stripe webhook race condition — repro'd in test.",            5.60,  44, "info-gathered"),
-        ("hermes",      "research", "competitive-scan",    "Surveyed 5 dashboards in the space, wrote diff matrix.",                   2.10,  14, "researched"),
-        ("hermes",      "brainstorm", "v2-roadmap",        "Talked through v2 multi-tenant data model tradeoffs.",                     0.80,   6, "info-gathered"),
-        ("openclaw",    "personal-task", "weekly-review",  "Drafted board update from this week's metrics.",                           1.40,  11, "shipped-code"),
-        ("openclaw",    "personal-task", "trip-planning",  "Planned weekend route + booked hotel via tool calls.",                     0.60,   8, "shipped-code"),
-        ("claude-code", "new-feature", "your-app",         "Implemented CSV import pipeline w/ progress events.",                     19.20,  88, "shipped-code"),
-        ("claude-code", "extend-feature", "your-app",      "Added export endpoints (CSV + JSON) with rate limiting.",                  7.10,  53, "shipped-code"),
-        ("codex",       "config-ops", "infra",             "Set up Sentry + Datadog tracing on the API.",                              4.20,  29, "shipped-code"),
-        ("hermes",      "chat-misc", "general",            "Quick question about postgres index strategy.",                            0.20,   3, "info-gathered"),
-        ("openclaw",    "chat-misc", "general",            "Recipe lookup + grocery list.",                                            0.15,   5, "info-gathered"),
+        # (agent, cat, proj, summary, cost, tools, value_signal, role, mins(low,mid,high), rate(low,mid,high), quality)
+        ("claude-code", "new-feature", "your-app",         "Built magic-link auth with email service + cooldown.",                    47.30, 142, "shipped-code",
+         "Senior backend engineer", (90, 180, 300), (150, 200, 280), "with-edits"),
+        ("claude-code", "extend-feature", "your-app",      "Added typeahead search to nav with debouncer.",                            8.40,  61, "shipped-code",
+         "Mid frontend engineer",   (30,  60, 120), (100, 140, 180), "full-replacement"),
+        ("claude-code", "bug-fix", "your-app",             "Fixed stripe webhook race that double-charged on retries.",                5.60,  44, "shipped-code",
+         "Senior backend engineer", (60, 120, 240), (180, 220, 280), "with-edits"),
+        ("claude-code", "refactor", "your-app",            "Split monolith into 5 route modules, kept all tests green.",              23.80, 102, "shipped-code",
+         "Staff engineer",          (60, 150, 240), (180, 240, 320), "with-edits"),
+        ("codex",       "config-ops", "infra",             "Wired GitHub Actions cron + Vercel preview deploys.",                      3.40,  27, "shipped-code",
+         "DevOps engineer",         (20,  45,  90), (140, 180, 240), "full-replacement"),
+        ("codex",       "debug", "your-app",               "Tracked down stripe webhook race condition — repro'd in test.",            5.60,  44, "info-gathered",
+         "Senior backend engineer", (45,  90, 180), (180, 220, 280), "draft-only"),
+        ("hermes",      "research", "competitive-scan",    "Surveyed 5 dashboards in the space, wrote diff matrix.",                   2.10,  14, "researched",
+         "Product analyst",         (60, 120, 240), ( 80, 120, 180), "with-edits"),
+        ("hermes",      "brainstorm", "v2-roadmap",        "Talked through v2 multi-tenant data model tradeoffs.",                     0.80,   6, "info-gathered",
+         "Product / staff eng",     (30,  60, 120), (180, 240, 320), "draft-only"),
+        ("openclaw",    "personal-task", "weekly-review",  "Drafted board update from this week's metrics.",                           1.40,  11, "shipped-code",
+         "Executive ghostwriter",   (40,  60, 120), ( 80, 150, 250), "with-edits"),
+        ("openclaw",    "personal-task", "trip-planning",  "Planned weekend route + booked hotel via tool calls.",                     0.60,   8, "shipped-code",
+         "Travel agent",            (30,  45,  90), ( 40,  60, 100), "full-replacement"),
+        ("claude-code", "new-feature", "your-app",         "Implemented CSV import pipeline w/ progress events.",                     19.20,  88, "shipped-code",
+         "Senior backend engineer", (60, 120, 240), (150, 200, 280), "full-replacement"),
+        ("claude-code", "extend-feature", "your-app",      "Added export endpoints (CSV + JSON) with rate limiting.",                  7.10,  53, "shipped-code",
+         "Mid backend engineer",    (30,  60, 120), (100, 140, 180), "full-replacement"),
+        ("codex",       "config-ops", "infra",             "Set up Sentry + Datadog tracing on the API.",                              4.20,  29, "shipped-code",
+         "DevOps engineer",         (40,  90, 180), (140, 180, 240), "with-edits"),
+        ("hermes",      "chat-misc", "general",            "Quick question about postgres index strategy.",                            0.20,   3, "info-gathered",
+         "Database consultant",     ( 5,  10,  20), (150, 250, 350), "full-replacement"),
+        ("openclaw",    "chat-misc", "general",            "Recipe lookup + grocery list.",                                            0.15,   5, "info-gathered",
+         "Personal assistant",      ( 5,  10,  20), ( 25,  40,  60), "full-replacement"),
     ]
     base = datetime.now(timezone.utc)
     sessions = []
-    for idx, (agent, cat, proj, summary, cost, tool_count, value_signal) in enumerate(fake):
+    for idx, row in enumerate(fake):
+        agent, cat, proj, summary, cost, tool_count, value_signal, role, mins, rates, quality = row
         d = base - timedelta(days=idx * 2, hours=random.randint(0, 6))
         sessions.append({
             "agent": agent,
@@ -129,11 +144,18 @@ def build_demo() -> dict:
                 "value_signal": value_signal,
                 "main_artifact": proj,
                 "model": "demo",
+                "equivalent_role": role,
+                "human_minutes_low": mins[0],
+                "human_minutes_mid": mins[1],
+                "human_minutes_high": mins[2],
+                "hourly_rate_usd_low": rates[0],
+                "hourly_rate_usd_mid": rates[1],
+                "hourly_rate_usd_high": rates[2],
+                "replacement_quality": quality,
             },
         })
 
-    # Reuse the new value model for byCategory + byAgent so the demo matches reality
-    from .value_model import summarize_by_category, summarize_by_agent
+    from .value_model import summarize_by_category, summarize_by_agent, overall_summary
 
     return {
         "generatedAt": utc_now(),
@@ -144,6 +166,7 @@ def build_demo() -> dict:
             "value_per_pr_usd": 600,
             "value_per_line_committed_usd": 0.30,
         },
+        "benchmark": {"region": "us-west", "seniority": "senior", "currency": "USD"},
         "weeks": weeks_data,
         "sessions": sessions,
         "sessionsTotals": {
@@ -152,6 +175,7 @@ def build_demo() -> dict:
         },
         "byCategory": summarize_by_category(sessions),
         "byAgent": summarize_by_agent(sessions),
+        "overall": overall_summary(sessions),
     }
 
 
