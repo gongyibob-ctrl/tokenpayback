@@ -2,4 +2,4 @@
 
 Open-source CLI that classifies your Claude Code sessions and shows ROI per category.
 """
-__version__ = "0.3.0"
+__version__ = "0.4.0"

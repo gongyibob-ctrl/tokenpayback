@@ -116,6 +116,32 @@ def _no_github_data(sessions_path: Path, taxonomy: dict) -> dict:
     }
 
 
+def cmd_proxy(args: argparse.Namespace) -> int:
+    """Start / stop / status the local LLM proxy."""
+    from . import proxy as proxy_mod
+    sub = getattr(args, "proxy_cmd", "start")
+    if sub == "start":
+        proxy_mod.serve(args.upstream, port=args.port or 4000)
+        return 0
+    if sub == "status":
+        proxy_mod.status()
+        return 0
+    if sub == "stop":
+        proxy_mod.stop()
+        return 0
+    if sub == "log":
+        # print tail of proxy log
+        from .proxy import PROXY_LOG
+        if not PROXY_LOG.exists():
+            print(f"no proxy log at {PROXY_LOG}")
+            return 1
+        import subprocess
+        subprocess.run(["tail", "-n", "30", str(PROXY_LOG)])
+        return 0
+    print(f"unknown proxy subcommand: {sub}")
+    return 1
+
+
 def cmd_taxonomy(args: argparse.Namespace) -> int:
     """Show or regenerate the user's category taxonomy."""
     from . import taxonomy as tx
@@ -268,6 +294,14 @@ def build_parser() -> argparse.ArgumentParser:
     s_taxo = sub.add_parser("taxonomy", parents=[common], help="Inspect or regenerate your personal category taxonomy")
     s_taxo.add_argument("tax_cmd", nargs="?", default="show", choices=["show", "regen", "edit"])
     s_taxo.set_defaults(func=cmd_taxonomy)
+
+    s_proxy = sub.add_parser("proxy", parents=[common],
+                             help="Run a local LLM proxy that logs all traffic from any tool")
+    s_proxy.add_argument("proxy_cmd", nargs="?", default="start", choices=["start", "stop", "status", "log"])
+    s_proxy.add_argument("--upstream", default="anthropic",
+                         help="anthropic | openai | openrouter | groq | mistral | deepseek | huggingface | paigod")
+    s_proxy.add_argument("--port", type=int, default=4000)
+    s_proxy.set_defaults(func=cmd_proxy)
 
     # default: full run
     p.add_argument("--no-classify", action="store_true", help="(default cmd) skip LLM classification")

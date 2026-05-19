@@ -70,9 +70,43 @@ Sketching out an idea **is** value. Code is just one shape of value.
 | **OpenClaw** 🦞 | `~/.openclaw/` or `~/Library/Application Support/OpenClaw/` | 🟡 Beta — auto-detect |
 | **OpenHuman** (tinyhumans.ai) | `~/.openhuman/` | 🟡 Beta — SQLite reader |
 | **Cursor** | `~/Library/Application Support/Cursor/User/` | 🟡 Beta — composer data |
+| **Local proxy** (anything that hits an LLM API) | `~/.tokenpayback/proxy_log.jsonl` | ✅ Universal capture |
 
 Each agent has its own parser file in `tokenpayback/parsers/`. **Adding a new agent =
 one file.** PRs welcome.
+
+### Universal capture: the local proxy
+
+For tools that don't keep local logs (your own scripts, OpenRouter clients,
+HuggingFace API calls, anything OpenAI-compatible), run `tokenpayback proxy` and
+point your tool at it:
+
+```bash
+# in one shell
+tokenpayback proxy start --upstream openrouter --port 4000
+# Reads OPENROUTER_API_KEY from env, forwards traffic, logs locally
+
+# in another shell — point any tool at the proxy
+export OPENAI_BASE_URL=http://localhost:4000/v1
+export OPENAI_API_KEY=anything   # replaced by the proxy with your real key
+# now run your script / aider / langchain / curl — all calls are captured
+
+# anthropic-style tools
+tokenpayback proxy start --upstream anthropic --port 4001
+export ANTHROPIC_BASE_URL=http://localhost:4001
+```
+
+Supported upstreams out of the box: `anthropic`, `openai`, `openrouter`, `groq`,
+`mistral`, `deepseek`, `huggingface`, `paigod`. Add your own in
+`~/.tokenpayback/proxy.yaml`. Set `TOKENPAYBACK_PROXY_REDACT=1` to hash prompts
+before logging if you want extra paranoia.
+
+```bash
+tokenpayback proxy start    # default: anthropic on :4000
+tokenpayback proxy status   # is it running?
+tokenpayback proxy stop
+tokenpayback proxy log      # tail of the captured traffic
+```
 
 ---
 

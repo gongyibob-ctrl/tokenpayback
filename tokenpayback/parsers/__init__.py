@@ -19,6 +19,7 @@ from .hermes import HermesParser
 from .openclaw import OpenClawParser
 from .openhuman import OpenHumanParser
 from .cursor import CursorParser
+from .proxy_log import ProxyLogParser
 
 
 ALL_PARSERS: list[type[BaseParser]] = [
@@ -28,6 +29,7 @@ ALL_PARSERS: list[type[BaseParser]] = [
     OpenClawParser,
     OpenHumanParser,
     CursorParser,
+    ProxyLogParser,
 ]
 
 
