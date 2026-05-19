@@ -43,6 +43,9 @@ jobs:
       - name: Install build tooling
         run: pip install --upgrade build twine
 
+      - name: Clean any stale dist artifacts (defensive)
+        run: rm -rf dist build *.egg-info
+
       - name: Build sdist + wheel
         run: python -m build
 

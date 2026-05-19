@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tokenpayback"
-version = "0.5.0"
+version = "0.5.1"
 description = "Your AI activity ledger — reads every coding agent's local sessions (Claude Code, Codex, Hermes, OpenClaw, OpenHuman, Cursor) and shows what your tokens did."
 readme = "README.md"
 license = { text = "MIT" }
