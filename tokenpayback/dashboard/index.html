@@ -23,9 +23,9 @@
       <div class="sub muted" id="overall-window">all sessions</div>
     </div>
     <div class="hero-cell">
-      <div class="label">Human-equivalent value</div>
-      <div class="value value-pos" id="overall-value">—</div>
-      <div class="sub muted" id="overall-value-range">low — high</div>
+      <div class="label">Saved vs hiring it out</div>
+      <div class="value value-pos" id="overall-saved">—</div>
+      <div class="sub muted" id="overall-saved-sub">= human-equiv $value − AI cost</div>
     </div>
     <div class="hero-cell">
       <div class="label">Time AI saved</div>
@@ -37,6 +37,89 @@
       <div class="value roi" id="overall-roi">—</div>
       <div class="roi-verdict" id="overall-roi-verdict"></div>
     </div>
+  </section>
+
+  <section class="card waste-card" id="waste-section" hidden>
+    <div class="card-head">
+      <h2>Where the waste hides — <span class="vc-tag vc-NVA">NVA</span> share</h2>
+      <span class="health-pill" id="nva-health"></span>
+    </div>
+    <p class="subhead">
+      Every session is also tagged as <b>Value-Added</b> (you'd pay for it),
+      <b>Non-Value-Added</b> (retry / failed / harmful — pure waste), or
+      <b>Business-Value-Added</b> (necessary overhead like research). Borrowed from
+      <a href="https://www.accaglobal.com/gb/en/student/exam-support-resources/professional-exams-study-resources/p5/technical-articles/activity-based-management.html" target="_blank" rel="noopener">Cooper &amp; Kaplan's ABM (1991)</a> —
+      most of the easy money to save lives in NVA.
+    </p>
+    <div class="vc-bar" id="vc-bar"></div>
+    <div class="vc-breakdown" id="vc-breakdown"></div>
+    <div class="failure-box" id="failure-box" hidden></div>
+  </section>
+
+  <section class="card drift-card" id="drift-section" hidden>
+    <div class="card-head">
+      <h2>Drift detector — week over week</h2>
+      <span class="subhead" id="drift-period"></span>
+    </div>
+    <p class="subhead">
+      Latest week vs trailing 3-week baseline. From
+      <a href="https://www.accaglobal.com/gb/en/student/exam-support-resources/fundamentals-exams-study-resources/f5/technical-articles/mat-yield.html" target="_blank" rel="noopener">ACCA's variance analysis</a> —
+      the same machinery factories use to catch silent quality regressions.
+    </p>
+    <div class="signals" id="drift-signals"></div>
+  </section>
+
+  <section class="card costsplit-card" id="costsplit-section" hidden>
+    <h2>Cost split — proportional vs fixed</h2>
+    <p class="subhead">
+      Per <a href="http://www.rcainstitute.org/rcai-3-WhatIsRCA.php" target="_blank" rel="noopener">Resource Consumption Accounting</a>,
+      pricing decisions belong to <b>proportional</b> cost (per-call API spend).
+      Cancel/keep decisions belong to <b>fixed</b> cost (subscriptions).
+      Most dashboards mash these together. We don't.
+    </p>
+    <div class="split-grid">
+      <div>
+        <div class="split-stat"><span class="label">Proportional (this period)</span><span class="value" id="split-prop">—</span></div>
+        <div class="split-stat"><span class="label">Fixed (weekly avg)</span><span class="value" id="split-fixed">—</span></div>
+        <div class="split-stat"><span class="label">Causality score</span><span class="value" id="split-causality">—</span></div>
+        <div class="muted" id="split-causality-hint" style="font-size:11px"></div>
+      </div>
+      <div>
+        <div class="subhead" style="margin:0 0 10px 0">Subscription utilization (last 30 days)</div>
+        <table class="subs-table">
+          <tbody id="subs-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card vs-card" id="vs-section" hidden>
+    <h2>Per project — value stream cost</h2>
+    <p class="subhead">
+      Each project = one <a href="https://maskell.com/the-fundamentals-of-value-stream-costing-part-1-of-3/" target="_blank" rel="noopener">value stream</a>:
+      end-to-end cost of one workflow you actually care about. NVA% column shows how much was waste.
+    </p>
+    <table class="vs-table">
+      <thead>
+        <tr><th>Project</th><th class="num">Sessions</th><th>Agents</th><th class="num">Cost</th><th class="num">Est. value</th><th class="num">ROI</th><th class="num">NVA %</th></tr>
+      </thead>
+      <tbody id="vs-tbody"></tbody>
+    </table>
+  </section>
+
+  <section class="card redundancy-card" id="redundancy-section" hidden>
+    <h2>Tool overlap — <span class="warn-amount" id="red-amount">$—</span> potentially recoverable</h2>
+    <p class="subhead">
+      Projects where two or more agents touched the same work. The smaller-spend agent
+      is usually the cancel candidate. Each row shows the primary agent (the one you'd
+      keep) and the secondary spend you might be able to drop.
+    </p>
+    <table class="red-table">
+      <thead>
+        <tr><th>Project</th><th>Primary agent</th><th class="num">Primary $</th><th>Also used</th><th class="num">Recoverable $</th></tr>
+      </thead>
+      <tbody id="red-tbody"></tbody>
+    </table>
   </section>
 
   <section class="card hero-activity" id="hero-activity">
@@ -121,8 +204,11 @@
   </section>
 
   <footer>
-    <a href="https://github.com/gongyibob-ctrl/tokenpayback" target="_blank" rel="noopener">repo</a>
-    · self-hosted · open source · no analytics on this page
+    <div class="footer-meta" id="footer-meta"></div>
+    <div>
+      <a href="https://github.com/gongyibob-ctrl/tokenpayback" target="_blank" rel="noopener">repo</a>
+      · self-hosted · open source · no analytics on this page
+    </div>
   </footer>
 
   <script src="app.js" type="module"></script>

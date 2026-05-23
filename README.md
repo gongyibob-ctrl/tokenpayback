@@ -247,14 +247,44 @@ Skip it entirely with `--no-classify`.
 
 ---
 
+## The CFO lens — five frameworks you can borrow
+
+The dashboard pulls in five cost-accounting frameworks that have run real labor
+and capital for a century. Every formula is in
+[`tokenpayback/analytics.py`](tokenpayback/analytics.py), every number on the
+dashboard traces back to a source line — no black boxes.
+
+| What you see | Where it comes from | What it answers |
+|---|---|---|
+| **VA / NVA / BVA split** | [Activity-Based Management](https://www.accaglobal.com/gb/en/student/exam-support-resources/professional-exams-study-resources/p5/technical-articles/activity-based-management.html) — Cooper & Kaplan, 1991 | how much of your spend was actually value-added vs pure waste vs necessary overhead |
+| **Drift detector** (yield / rate / efficiency) | [Variance Analysis](https://www.accaglobal.com/gb/en/student/exam-support-resources/fundamentals-exams-study-resources/f5/technical-articles/mat-yield.html) — ACCA / CIMA | week-over-week silent quality regression (model swap, prompt rot, retry bloat) |
+| **Proportional vs Fixed cost split** | [Resource Consumption Accounting](http://www.rcainstitute.org/rcai-3-WhatIsRCA.php) (GPK, 1950s) | per-call vs subscription — different decisions belong to different buckets |
+| **Per-project value stream** | [Lean Value Stream Costing](https://maskell.com/the-fundamentals-of-value-stream-costing-part-1-of-3/) — Maskell | one project = one workflow, with end-to-end cost and ROI |
+| **Tool overlap / cancel candidates** | Subscription utilization × cross-agent overlap | which $20/mo line item you can drop without losing capability |
+
+The point isn't to feel like a CFO. The point is: when your AI bill triples and
+you don't know why, these are the cuts you need to make.
+
+---
+
 ## Roadmap
 
-For v0.3:
+Done in v0.7:
+- [x] Dual-axis classification (`category` + `value_class` VA/NVA/BVA)
+- [x] NVA share + Internal Failure cost callout
+- [x] Drift detector — yield / rate / efficiency variance, week over week
+- [x] Cost split (proportional vs fixed) + per-subscription utilization
+- [x] Per-project value stream rollup
+- [x] Cross-tool redundancy detection
+- [x] Causality score + autonomy rate in the footer
+
+Still on the list:
 - [ ] Sankey diagram: from agent → category → outcome
 - [ ] Time-series of how your category mix shifts week-over-week
 - [ ] Per-tool cost breakdown (which Bash patterns cost you the most?)
 - [ ] Native Mac app via Tauri or pywebview (no more "open browser" feel)
 - [ ] LLM-graded value (replace flat baselines with case-by-case judgment)
+- [ ] Wright's Law forecast (where does this cost line head over 12 months?)
 
 PRs welcome. Open an issue first for anything non-trivial.
 

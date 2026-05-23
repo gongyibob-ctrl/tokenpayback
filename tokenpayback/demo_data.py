@@ -194,9 +194,39 @@ def build_demo() -> dict:
     ]
     base = datetime.now(timezone.utc)
     sessions = []
+    # Bias the loss-maker sessions toward the latest week so the variance signals
+    # show an actual "drift detected" alert — much better demo than flat data.
+    # Indices 20-23 are the loss-makers; place them in days 0-5 (latest week).
+    loser_indices = {20, 21, 22, 23}
     for idx, row in enumerate(fake):
         agent, cat, proj, summary, cost, tool_count, role, mins, rates, quality = row
-        d = base - timedelta(days=idx, hours=random.randint(0, 6))
+        if idx in loser_indices:
+            day_offset = idx - 20  # 0..3 days ago — latest week
+            user_msgs = random.randint(8, 20)  # attended (user fighting with the tool)
+        else:
+            # spread the good sessions across the prior 3-4 weeks so baseline is healthy
+            day_offset = 5 + (idx % 20)  # 5..24 days ago
+            user_msgs = random.randint(1, 4) if idx % 3 == 0 else random.randint(5, 25)
+        d = base - timedelta(days=day_offset, hours=random.randint(0, 6))
+        classification = {
+            "category": cat,
+            "project": proj,
+            "summary": summary,
+            "value_signal": "shipped-code" if cat in ("ship-feature", "bug-investigation", "ops-and-deploy") else "shipped-artifact",
+            "main_artifact": proj,
+            "model": "demo",
+            "equivalent_role": role,
+            "human_minutes_low": mins[0],
+            "human_minutes_mid": mins[1],
+            "human_minutes_high": mins[2],
+            "hourly_rate_usd_low": rates[0],
+            "hourly_rate_usd_mid": rates[1],
+            "hourly_rate_usd_high": rates[2],
+            "replacement_quality": quality,
+        }
+        # Derive value_class from the quality + signal — exercises the back-compat path
+        from .value_class import derive_value_class
+        classification["value_class"] = derive_value_class(classification)
         sessions.append({
             "agent": agent,
             "session_id": f"demo-{idx:04d}",
@@ -204,7 +234,7 @@ def build_demo() -> dict:
             "first_prompt": "(demo)",
             "first_event": d.isoformat(),
             "last_event": d.isoformat(),
-            "user_messages": random.randint(5, 30),
+            "user_messages": user_msgs,
             "tool_counts": {"Bash": int(tool_count * 0.45), "Edit": int(tool_count * 0.2),
                              "Read": int(tool_count * 0.15), "Write": int(tool_count * 0.1),
                              "TaskCreate": int(tool_count * 0.05), "TaskUpdate": int(tool_count * 0.05)},
@@ -216,25 +246,34 @@ def build_demo() -> dict:
             "est_cost_usd": round(cost, 2),
             "file_size": 0,
             "file_path": "(demo)",
-            "classification": {
-                "category": cat,
-                "project": proj,
-                "summary": summary,
-                "value_signal": "shipped-code" if cat in ("ship-feature", "bug-investigation", "ops-and-deploy") else "shipped-artifact",
-                "main_artifact": proj,
-                "model": "demo",
-                "equivalent_role": role,
-                "human_minutes_low": mins[0],
-                "human_minutes_mid": mins[1],
-                "human_minutes_high": mins[2],
-                "hourly_rate_usd_low": rates[0],
-                "hourly_rate_usd_mid": rates[1],
-                "hourly_rate_usd_high": rates[2],
-                "replacement_quality": quality,
-            },
+            "classification": classification,
         })
 
     from .value_model import summarize_by_category, summarize_by_agent, overall_summary
+    from . import analytics as A
+    from .cost import fixed_subscriptions_per_week_usd
+    demo_config = {
+        "hourly_rate_usd": 150,
+        "value_per_pr_usd": 600,
+        "value_per_line_committed_usd": 0.30,
+        "fixed_monthly_subscriptions_usd": {
+            "claude_max": 100,    # well-used (claude-code is the dominant agent)
+            "cursor": 20,         # cursor not in demo agents — low utilization signal
+            "github_copilot": 19, # no parser — surfaces as no-data
+        },
+    }
+    weekly_subs = fixed_subscriptions_per_week_usd(demo_config)
+    cs = A.cost_split(sessions, demo_config, weekly_subs)
+    analytics = {
+        "nva": A.nva_summary(sessions),
+        "variance": A.weekly_variance(sessions),
+        "costSplit": cs,
+        "causality": A.causality_score(cs["proportionalUsd"], cs["fixedWeeklyUsd"]),
+        "valueStream": A.value_stream(sessions, DEMO_TAXONOMY),
+        "redundancy": A.cross_tool_redundancy(sessions),
+        "attended": A.attended_unattended(sessions),
+        "parity": A.cost_parity_highlight(sessions, DEMO_TAXONOMY, demo_config),
+    }
     return {
         "generatedAt": utc_now(),
         "isDemo": True,
@@ -251,6 +290,7 @@ def build_demo() -> dict:
         "byCategory": summarize_by_category(sessions, DEMO_TAXONOMY),
         "byAgent": summarize_by_agent(sessions, DEMO_TAXONOMY),
         "overall": overall_summary(sessions, DEMO_TAXONOMY),
+        "analytics": analytics,
     }
 
 

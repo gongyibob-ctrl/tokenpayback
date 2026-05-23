@@ -45,13 +45,18 @@ def _build_system_prompt(taxonomy: dict, benchmark: dict | None = None) -> str:
     lines.append('  "hourly_rate_usd_low": <int>,')
     lines.append('  "hourly_rate_usd_mid": <int>,')
     lines.append('  "hourly_rate_usd_high": <int>,')
-    lines.append('  "replacement_quality": "<full-replacement|with-edits|draft-only|failed|harmful>"')
+    lines.append('  "replacement_quality": "<full-replacement|with-edits|draft-only|failed|harmful>",')
+    lines.append('  "value_class": "<VA|NVA|BVA>"')
     lines.append('}')
     lines.append('')
     lines.append('Definitions:')
     lines.append('  human_minutes_*: how long a competent professional would need (3 estimates: optimistic, realistic, pessimistic).')
     lines.append('  hourly_rate_usd_*: market USD rate for that role given the user benchmark (3 estimates).')
     lines.append('  replacement_quality: full-replacement=AI output is production-ready; with-edits=mostly right user touched up; draft-only=AI gave a starting point; failed=did not produce usable output; harmful=AI made things worse, required cleanup that took MORE time than the original task.')
+    lines.append('  value_class (Activity-Based Management — Cooper & Kaplan 1991):')
+    lines.append('    VA  = Value-Added — produced something the user would pay for if itemized (shipped code, fixed bug, useful answer, decision made, usable draft).')
+    lines.append('    NVA = Non-Value-Added — burned tokens with no usable output (retry loops, hallucinated content thrown away, agent-introduced bugs to fix). Pure waste.')
+    lines.append('    BVA = Business-Value-Added — necessary overhead that did not directly ship anything (reading docs to gain context, exploration without resolution, scaffolding the user rewrote). Investment, not waste.')
     lines.append('')
     lines.append('Be decisive. Never invent new category ids. Ground rates in real labor markets.')
     return '\n'.join(lines)
@@ -168,7 +173,8 @@ def classify_session(s: dict, taxonomy: dict | None = None, benchmark: dict | No
         print(f"  ! classify {s.get('session_id','')[:8]} failed: {e}", file=sys.stderr)
         return {"category": fallback_id, "project": (s.get("project") or "")[:30],
                 "summary": "(failed to classify)",
-                "value_signal": "no-progress", "main_artifact": "(none)"}
+                "value_signal": "no-progress", "main_artifact": "(none)",
+                "value_class": "NVA"}  # classifier failure is itself NVA cost
     category = result.get("category", "")
     # Coerce to a valid id if taxonomy is provided and the LLM made one up
     if valid_ids and category not in valid_ids:
@@ -193,6 +199,13 @@ def classify_session(s: dict, taxonomy: dict | None = None, benchmark: dict | No
                 out[k] = float(v)
             except (TypeError, ValueError):
                 continue
+    # ABM dual-axis: value_class (VA/NVA/BVA). Honor LLM, else derive from other fields.
+    vc = (result.get("value_class") or "").strip().upper()
+    from .value_class import derive_value_class, ALL_CLASSES
+    if vc in ALL_CLASSES:
+        out["value_class"] = vc
+    else:
+        out["value_class"] = derive_value_class(out)
     return out
 
 

@@ -134,11 +134,36 @@ class CodexParser(BaseParser):
                     if isinstance(msg, str):
                         char_out += len(msg)
 
-        # Rough cost estimate: assume gpt-5/gpt-5-codex pricing, treat chars as ~4/token
-        # input $1.25/M, output $10/M (approximate). Tune via config if needed.
-        tokens_in = char_in / 4
-        tokens_out = char_out / 4
-        est_cost = tokens_in * 1.25e-6 + tokens_out * 10e-6
+                # Reasoning chunks — sometimes huge, billed as output tokens
+                if pt == "reasoning":
+                    text = pl.get("text") or pl.get("content") or ""
+                    if isinstance(text, str):
+                        char_out += len(text)
+
+                # Function call outputs — billed as input on the NEXT turn (cached or not)
+                if pt == "function_call_output":
+                    output = pl.get("output") or ""
+                    if isinstance(output, dict):
+                        output = output.get("content") or output.get("text") or ""
+                    if isinstance(output, str):
+                        char_in += len(output)
+
+                # function_call args — billed as input
+                if pt == "function_call":
+                    args = pl.get("arguments") or ""
+                    if isinstance(args, str):
+                        char_in += len(args)
+
+        # Conversion: ~3 chars/token for English+code (more conservative than 4)
+        # GPT-5 pricing: $1.25/M input, $10/M output (Sept 2025 rates)
+        # Add a floor so tiny sessions still show some cost (the JSONL never
+        # captures system prompts or model-side cache reads — easily 5-10× the
+        # raw char count we see).
+        tokens_in = max(char_in / 3, 0)
+        tokens_out = max(char_out / 3, 0)
+        # Empirical correction factor — observed JSONL undercount vs OpenAI bill
+        ESTIMATE_CORRECTION = 4.0
+        est_cost = (tokens_in * 1.25e-6 + tokens_out * 10e-6) * ESTIMATE_CORRECTION
 
         thread_name = thread_names.get(session_id, "")
         project = thread_name or (cwd or path.parent.name)

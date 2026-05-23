@@ -107,7 +107,105 @@ tbody tr.latest { background: rgba(255, 214, 10, 0.05); }
 .caveat { color: var(--muted); font-size: 12px; margin: 12px 0 0; line-height: 1.6; }
 .caveat code { background: var(--panel-2); padding: 2px 6px; border-radius: 4px; }
 
+.bad-text { color: var(--cost); font-weight: 600; }
+.warn-amount { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ----- Card head with right-aligned annotation ----- */
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 4px; }
+.card-head h2 { margin: 0; }
+
+/* ----- VA / NVA / BVA color system ----- */
+.vc-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px;
+          font-weight: 600; letter-spacing: 0.04em; font-family: ui-monospace, monospace;
+          vertical-align: middle; }
+.vc-tag.vc-VA  { background: rgba(74, 222, 128, 0.16); color: #6ee7a1; border: 1px solid rgba(74,222,128,0.4); }
+.vc-tag.vc-NVA { background: rgba(255, 107, 107, 0.16); color: #ff8b8b; border: 1px solid rgba(255,107,107,0.4); }
+.vc-tag.vc-BVA { background: rgba(255, 214, 10, 0.14); color: #ffd860; border: 1px solid rgba(255,214,10,0.4); }
+
+/* ----- "Where the waste hides" card ----- */
+.waste-card { border-color: rgba(255, 107, 107, 0.25); }
+.vc-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden;
+          border: 1px solid var(--border); margin: 12px 0 16px; background: var(--panel-2); }
+.vc-bar-seg { transition: width 0.3s; min-width: 0.5%; }
+.vc-bar-seg.vc-VA  { background: linear-gradient(180deg, #4ade80, #36b366); }
+.vc-bar-seg.vc-NVA { background: linear-gradient(180deg, #ff6b6b, #d94e4e); }
+.vc-bar-seg.vc-BVA { background: linear-gradient(180deg, #ffd60a, #e6c008); }
+.vc-breakdown { display: flex; flex-direction: column; gap: 10px; }
+.vc-row { display: grid; grid-template-columns: 50px 1fr auto; align-items: center; gap: 14px;
+          padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+.vc-row:last-child { border-bottom: none; }
+.vc-label-main { color: var(--text); }
+.vc-amount { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+
+.health-pill { font-size: 11px; padding: 4px 10px; border-radius: 99px;
+               font-family: ui-monospace, monospace; letter-spacing: 0.03em; white-space: nowrap; }
+.health-pill.health-mature, .health-pill.health-healthy { background: rgba(74,222,128,0.15); color: #6ee7a1; border: 1px solid rgba(74,222,128,0.35); }
+.health-pill.health-greenfield { background: rgba(255,214,10,0.14); color: #ffd860; border: 1px solid rgba(255,214,10,0.35); }
+.health-pill.health-high { background: rgba(255,107,107,0.16); color: #ff8b8b; border: 1px solid rgba(255,107,107,0.4); }
+.health-pill.health-unknown { background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); }
+
+.failure-box { margin-top: 14px; padding: 14px 16px; border-left: 3px solid var(--cost);
+               background: rgba(255, 107, 107, 0.06); border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.55; }
+.failure-box .fb-label { font-family: ui-monospace, monospace; font-size: 11px;
+                         letter-spacing: 0.06em; color: var(--cost); margin-bottom: 6px; font-weight: 600; }
+.failure-box .fb-body { color: var(--text); }
+.failure-box a { color: var(--accent); }
+
+/* ----- Drift detector signals ----- */
+.drift-card { border-color: rgba(255, 214, 10, 0.18); }
+.signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+@media (max-width: 720px) { .signals { grid-template-columns: 1fr; } }
+.signal { background: var(--panel-2); border: 1px solid var(--border); border-left-width: 4px;
+          border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.signal.signal-ok    { border-left-color: var(--value); }
+.signal.signal-warn  { border-left-color: var(--accent); }
+.signal.signal-alert { border-left-color: var(--cost); }
+.signal.signal-insufficient { border-left-color: var(--muted); opacity: 0.7; }
+.signal .sig-label { font-family: ui-monospace, monospace; font-size: 11px;
+                     letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.signal .sig-val   { font-size: 20px; font-weight: 700; letter-spacing: -0.01em;
+                     display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+.signal .sig-arrow { font-size: 16px; font-weight: 600; }
+.signal.signal-alert .sig-arrow, .signal.signal-alert .sig-delta { color: var(--cost); }
+.signal.signal-warn  .sig-arrow, .signal.signal-warn  .sig-delta { color: var(--accent); }
+.signal.signal-ok    .sig-arrow, .signal.signal-ok    .sig-delta { color: var(--value); }
+.signal .sig-delta { font-size: 14px; font-weight: 500; }
+.signal .sig-baseline { font-size: 11px; }
+.signal .sig-why { font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+/* ----- Cost split card ----- */
+.costsplit-card { }
+.split-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 32px; margin-top: 8px; }
+@media (max-width: 720px) { .split-grid { grid-template-columns: 1fr; } }
+.split-stat { display: flex; justify-content: space-between; align-items: baseline;
+              padding: 12px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+.split-stat:last-child { border-bottom: none; }
+.split-stat .label { color: var(--muted); }
+.split-stat .value { font-family: ui-monospace, monospace; font-size: 18px;
+                     font-weight: 600; color: var(--text); }
+.subs-table { font-size: 13px; }
+.subs-table td { padding: 10px 8px; border-bottom: 1px dashed var(--border); vertical-align: top; }
+.subs-table tr:last-child td { border-bottom: none; }
+.verdict-pill { font-size: 10px; padding: 3px 8px; border-radius: 99px;
+                font-family: ui-monospace, monospace; letter-spacing: 0.04em; white-space: nowrap; }
+.verdict-pill.verdict-ok      { background: rgba(74,222,128,0.15); color: #6ee7a1; border: 1px solid rgba(74,222,128,0.35); }
+.verdict-pill.verdict-warn    { background: rgba(255,214,10,0.15); color: #ffd860; border: 1px solid rgba(255,214,10,0.35); }
+.verdict-pill.verdict-cancel-candidate { background: rgba(255,107,107,0.15); color: #ff8b8b; border: 1px solid rgba(255,107,107,0.4); }
+.verdict-pill.verdict-no-data { background: var(--panel-2); color: var(--muted); border: 1px solid var(--border); }
+
+/* ----- Value stream + Redundancy tables ----- */
+.vs-table, .red-table { width: 100%; font-size: 13px; }
+.vs-table th, .red-table th { font-weight: 500; color: var(--muted); font-size: 11px;
+                              text-transform: uppercase; letter-spacing: 0.06em; }
+.vs-table td, .red-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.vs-table tr:last-child td, .red-table tr:last-child td { border-bottom: none; }
+
+.redundancy-card { border-color: rgba(255, 214, 10, 0.22); }
+
+/* ----- Footer meta ----- */
 footer { padding: 32px 36px; text-align: center; color: var(--muted); font-size: 12px; }
+.footer-meta { margin-bottom: 8px; font-family: ui-monospace, monospace; font-size: 11px;
+               color: var(--muted); letter-spacing: 0.03em; }
 
 @media (max-width: 720px) {
   .hero { grid-template-columns: 1fr 1fr; }

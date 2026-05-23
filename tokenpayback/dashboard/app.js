@@ -7,9 +7,10 @@ function fmtMoney(v) {
 }
 
 function fmtROI(r) {
-  if (r == null) return "—";
+  if (r == null || (typeof r === "number" && !isFinite(r))) return "—";
   if (r >= 100) return r.toFixed(0) + "×";
   if (r >= 10) return r.toFixed(1) + "×";
+  if (r < 0) return r.toFixed(2) + "×";
   return r.toFixed(2) + "×";
 }
 
@@ -49,9 +50,14 @@ function renderOverall(data) {
   const o = data.overall;
   if (!o) return;
   document.getElementById("overall-cost").textContent = fmtMoney(o.totalCostUsd);
-  document.getElementById("overall-value").textContent = fmtMoney(o.totalValueUsd);
-  document.getElementById("overall-value-range").textContent =
-    `${fmtMoney(o.totalValueLowUsd)} — ${fmtMoney(o.totalValueHighUsd)}`;
+  // "Saved vs hiring it out" — prefer analytics.parity (cleanest), fall back to overall
+  const parity = data.analytics && data.analytics.parity;
+  const savedUsd = parity ? parity.savedUsd : Math.max(0, (o.totalValueUsd || 0) - (o.totalCostUsd || 0));
+  const humanEquiv = parity ? parity.humanEquivUsd : (o.totalValueUsd || 0);
+  const savedEl = document.getElementById("overall-saved");
+  if (savedEl) savedEl.textContent = fmtMoney(savedUsd);
+  const savedSub = document.getElementById("overall-saved-sub");
+  if (savedSub) savedSub.textContent = `${fmtMoney(humanEquiv)} hired out − ${fmtMoney(o.totalCostUsd)} AI`;
   const hrs = o.humanHoursSaved || 0;
   const days = o.humanDaysSaved || 0;
   document.getElementById("overall-hours").textContent = hrs >= 16
@@ -73,6 +79,205 @@ function renderOverall(data) {
     const b = data.benchmark;
     const el = document.getElementById("benchmark-info");
     if (el) el.textContent = `${b.region} / ${b.seniority}`;
+  }
+}
+
+const VC_LABEL = { VA: "Value-Added", NVA: "Non-Value-Added", BVA: "Business-Value-Added" };
+const VC_BLURB = {
+  VA:  "you'd pay for it — shipped artifact, fixed bug, useful answer",
+  NVA: "burned tokens for nothing — retry / failed / harmful",
+  BVA: "necessary overhead — research, scaffolding, context",
+};
+
+function renderWaste(data) {
+  const nva = data.analytics && data.analytics.nva;
+  if (!nva || !nva.byClass || !nva.byClass.length) return;
+  document.getElementById("waste-section").hidden = false;
+  // Health pill
+  const hp = document.getElementById("nva-health");
+  if (hp && nva.nvaHealthHint) {
+    hp.textContent = nva.nvaHealthHint.label;
+    hp.className = "health-pill health-" + nva.nvaHealthHint.band;
+  }
+  // Stacked bar
+  const total = nva.totalCostUsd || 1;
+  const bar = document.getElementById("vc-bar");
+  bar.innerHTML = nva.byClass.map((c) => {
+    const pct = Math.max(0.5, c.pct);
+    return `<div class="vc-bar-seg vc-${c.class}" style="flex-basis:${pct}%" title="${c.class} ${c.pct.toFixed(1)}% · ${fmtMoney(c.costUsd)}"></div>`;
+  }).join("");
+  // Per-class breakdown rows
+  const bd = document.getElementById("vc-breakdown");
+  bd.innerHTML = nva.byClass.map((c) => `
+    <div class="vc-row">
+      <span class="vc-tag vc-${c.class}">${c.class}</span>
+      <div class="vc-label">
+        <div class="vc-label-main">${VC_LABEL[c.class] || c.class} <span class="muted">— ${VC_BLURB[c.class] || ""}</span></div>
+        <div class="muted" style="font-size:11px">${c.sessionCount} session${c.sessionCount === 1 ? "" : "s"}</div>
+      </div>
+      <div class="vc-amount">${fmtMoney(c.costUsd)} <span class="muted">(${c.pct.toFixed(1)}%)</span></div>
+    </div>
+  `).join("");
+  // Internal failure callout
+  const fb = document.getElementById("failure-box");
+  const fail = nva.internalFailure;
+  if (fail && fail.costUsd > 0) {
+    fb.hidden = false;
+    let harmful = "";
+    if (fail.harmfulCount > 0) {
+      harmful = ` — including <b class="bad-text">${fail.harmfulCount} harmful session${fail.harmfulCount === 1 ? "" : "s"} (${fmtMoney(fail.harmfulCostUsd)})</b> where the agent made things worse`;
+    }
+    fb.innerHTML = `
+      <div class="fb-label">🚨 Internal Failure Cost</div>
+      <div class="fb-body">
+        <b>${fmtMoney(fail.costUsd)}</b> burned across <b>${fail.sessionCount}</b> session${fail.sessionCount === 1 ? "" : "s"}
+        that produced no usable output (${fail.pct.toFixed(1)}% of your spend)${harmful}.
+        From <a href="https://en.wikipedia.org/wiki/Cost_of_poor_quality" target="_blank" rel="noopener">Juran's PAF model</a> —
+        these are the sessions where changing your prompt or tool choice has the biggest payback.
+      </div>
+    `;
+  }
+}
+
+function renderDrift(data) {
+  const v = data.analytics && data.analytics.variance;
+  if (!v || !v.signals || !v.signals.length) return;
+  document.getElementById("drift-section").hidden = false;
+  const weeks = v.weeks || [];
+  const period = weeks.length >= 2
+    ? `${weeks[weeks.length - 1].week} vs baseline of prior ${Math.min(3, weeks.length - 1)} week${weeks.length > 2 ? "s" : ""}`
+    : "needs more data";
+  document.getElementById("drift-period").textContent = period;
+  const fmtSignalVal = (label, val) => {
+    if (val == null) return "—";
+    if (label === "Yield Variance") return (val * 100).toFixed(1) + "%";
+    if (label === "Rate Variance") return fmtMoney(val);
+    if (label === "Efficiency Variance") return Math.round(val).toLocaleString() + " tk";
+    return String(val);
+  };
+  const arrowFor = (sig) => {
+    if (sig.verdict === "insufficient" || sig.deltaPct == null) return "·";
+    if (sig.deltaPct > 0) return "↑";
+    if (sig.deltaPct < 0) return "↓";
+    return "→";
+  };
+  document.getElementById("drift-signals").innerHTML = v.signals.map((s) => {
+    if (s.verdict === "insufficient") {
+      return `<div class="signal signal-insufficient">
+        <div class="sig-label">${s.label}</div>
+        <div class="sig-val muted">—</div>
+        <div class="sig-why muted">${escapeHtml(s.why || "not enough data yet")}</div>
+      </div>`;
+    }
+    const arr = arrowFor(s);
+    const deltaStr = s.deltaPct != null ? `${s.deltaPct > 0 ? "+" : ""}${s.deltaPct.toFixed(1)}%` : "";
+    return `<div class="signal signal-${s.verdict}">
+      <div class="sig-label">${s.label}</div>
+      <div class="sig-val">
+        <span class="sig-current">${fmtSignalVal(s.label, s.latest)}</span>
+        <span class="sig-arrow">${arr}</span>
+        <span class="sig-delta">${deltaStr}</span>
+      </div>
+      <div class="sig-baseline muted">vs baseline ${fmtSignalVal(s.label, s.baseline)}</div>
+      <div class="sig-why">${escapeHtml(s.why)}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderCostSplit(data) {
+  const cs = data.analytics && data.analytics.costSplit;
+  if (!cs) return;
+  document.getElementById("costsplit-section").hidden = false;
+  document.getElementById("split-prop").textContent =
+    `${fmtMoney(cs.proportionalUsd)} (${cs.proportionalPct.toFixed(1)}%)`;
+  document.getElementById("split-fixed").textContent =
+    `${fmtMoney(cs.fixedWeeklyUsd)} (${cs.fixedPct.toFixed(1)}%)`;
+  const ca = data.analytics.causality || {};
+  document.getElementById("split-causality").textContent =
+    ca.score != null ? `${ca.score}%` : "—";
+  document.getElementById("split-causality-hint").textContent = ca.label || "";
+  // Subscriptions
+  const subs = cs.subscriptions || [];
+  const tbody = document.getElementById("subs-tbody");
+  if (!subs.length) {
+    tbody.innerHTML = `<tr><td colspan="3" class="muted">no subscriptions configured</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = subs.map((s) => {
+    const utilStr = s.utilizationPct == null ? "—" : `${s.utilizationPct.toFixed(0)}%`;
+    const days = s.activeDays30d == null ? "—" : `${s.activeDays30d}/30d`;
+    const verdictClass = "verdict-" + s.verdict;
+    return `
+      <tr>
+        <td>
+          <div><b>${escapeHtml(s.name)}</b> <span class="muted">${fmtMoney(s.monthlyUsd)}/mo</span></div>
+          <div class="muted" style="font-size:11px">${escapeHtml(s.hint || "")}</div>
+        </td>
+        <td class="num">${days}<br><span class="muted" style="font-size:10px">${utilStr} util</span></td>
+        <td><span class="verdict-pill ${verdictClass}">${escapeHtml(s.verdict)}</span></td>
+      </tr>`;
+  }).join("");
+}
+
+function renderValueStream(data) {
+  const vs = (data.analytics && data.analytics.valueStream) || [];
+  if (!vs.length) return;
+  document.getElementById("vs-section").hidden = false;
+  document.getElementById("vs-tbody").innerHTML = vs.slice(0, 12).map((v) => {
+    const nvaCell = v.nvaPct == null ? "—" : (v.nvaPct > 30
+      ? `<span class="bad-text">${v.nvaPct.toFixed(0)}%</span>`
+      : `${v.nvaPct.toFixed(0)}%`);
+    return `
+      <tr>
+        <td>${escapeHtml(v.project)}</td>
+        <td class="num">${v.sessionCount}</td>
+        <td><span class="muted" style="font-size:11px">${(v.agents || []).map(escapeHtml).join(" · ")}</span></td>
+        <td class="num">${fmtMoney(v.costUsd)}</td>
+        <td class="num">${fmtMoney(v.valueUsd)}</td>
+        <td class="num ${roiClass(v.roi)}"><b>${fmtROI(v.roi)}</b></td>
+        <td class="num">${nvaCell}</td>
+      </tr>`;
+  }).join("");
+}
+
+function renderRedundancy(data) {
+  const r = data.analytics && data.analytics.redundancy;
+  if (!r || !r.projects || !r.projects.length) return;
+  document.getElementById("redundancy-section").hidden = false;
+  document.getElementById("red-amount").textContent = fmtMoney(r.totalRecoverableUsd);
+  document.getElementById("red-tbody").innerHTML = r.projects.map((p) => {
+    const sec = (p.secondaryAgents || []).map((s) =>
+      `${escapeHtml(s.agent)} (${fmtMoney(s.costUsd)})`
+    ).join(" · ");
+    return `
+      <tr>
+        <td>${escapeHtml(p.project)}</td>
+        <td><b>${escapeHtml(p.primaryAgent)}</b></td>
+        <td class="num">${fmtMoney(p.primaryCostUsd)}</td>
+        <td>${sec}</td>
+        <td class="num warn-amount">${fmtMoney(p.recoverableUsd)}</td>
+      </tr>`;
+  }).join("");
+}
+
+function renderFooterMeta(data) {
+  const a = data.analytics || {};
+  const ca = a.causality;
+  const att = a.attended;
+  const bits = [];
+  if (ca && ca.score != null) {
+    bits.push(`<span title="${escapeHtml(ca.label || '')}">causality ${ca.score}%</span>`);
+  }
+  if (att && att.autonomyRate != null) {
+    bits.push(`<span>autonomy rate ${(att.autonomyRate * 100).toFixed(0)}%</span>`);
+  }
+  if (a.nva && a.nva.byClass) {
+    const nvaSeg = a.nva.byClass.find((c) => c.class === "NVA");
+    if (nvaSeg) bits.push(`<span>NVA share ${nvaSeg.pct.toFixed(1)}%</span>`);
+  }
+  const el = document.getElementById("footer-meta");
+  if (el && bits.length) {
+    el.innerHTML = bits.join(" &nbsp;·&nbsp; ");
   }
 }
 
@@ -222,7 +427,7 @@ function renderActivityHero(data) {
       <div class="a-foot">
         <span>spent <b>${fmtMoney(c.cost_usd)}</b></span>
         <span>value <b>${fmtMoney(c.value_usd)}</b></span>
-        <span class="a-roi ${roiClass(c.roi)}">${c.roi != null ? c.roi.toFixed(1) + "×" : "—"}</span>
+        <span class="a-roi ${roiClass(c.roi)}">${fmtROI(c.roi)}</span>
       </div>
       ${hrs ? `<div class="muted" style="font-size:11px;margin-top:4px">${hrs}h human time · range ${fmtMoney(c.value_low_usd)} — ${fmtMoney(c.value_high_usd)}</div>` : ""}
     </div>
@@ -254,7 +459,7 @@ function renderAgents(data) {
       <td class="num">${a.count}</td>
       <td class="num">${fmtMoney(a.cost_usd)}</td>
       <td class="num">${fmtMoney(a.value_usd)}</td>
-      <td class="num ${roiClass(a.roi)}"><strong>${a.roi != null ? a.roi.toFixed(1) + "×" : "—"}</strong></td>
+      <td class="num ${roiClass(a.roi)}"><strong>${fmtROI(a.roi)}</strong></td>
     </tr>
   `).join("");
 }
@@ -354,19 +559,37 @@ async function main() {
   try {
     const data = await load();
     const weeks = data.weeks || [];
-    if (!weeks.length) throw new Error("no weeks in data.json");
-    const latest = weeks[weeks.length - 1];
     $("#meta").textContent = `generated ${new Date(data.generatedAt).toLocaleString()}`;
+    // Overall + activity work regardless of weeks data
     renderOverall(data);
-    renderHero(latest);
+    renderWaste(data);
+    renderDrift(data);
+    renderCostSplit(data);
+    renderValueStream(data);
+    renderRedundancy(data);
     renderActivityHero(data);
     renderLosers(data);
     renderAgents(data);
-    renderChart(weeks);
-    renderTable(weeks);
     renderSessions(data);
+    renderFooterMeta(data);
+    // Engineering output card only renders when weeks data is present
+    if (weeks.length) {
+      const latest = weeks[weeks.length - 1];
+      renderHero(latest);
+      renderChart(weeks);
+      renderTable(weeks);
+    } else {
+      // Hide the engineering-output card entirely when no GitHub data
+      const wkTable = document.getElementById("weeks-table");
+      if (wkTable) {
+        const card = wkTable.closest(".card");
+        if (card) card.hidden = true;
+      }
+    }
   } catch (e) {
-    document.body.insertAdjacentHTML("beforeend", `<div class="card">error: ${e.message}</div>`);
+    console.error(e);
+    document.body.insertAdjacentHTML("beforeend",
+      `<div class="card" style="border-color:#ff6b6b">render error: ${escapeHtml(e.message || String(e))}<pre style="font-size:11px;overflow:auto">${escapeHtml((e.stack||"").slice(0,1500))}</pre></div>`);
   }
 }
 

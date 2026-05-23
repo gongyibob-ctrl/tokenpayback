@@ -146,6 +146,24 @@ def render_dashboard_json(weeks_data: dict[str, dict], config: dict) -> dict:
                 payload["byAgent"] = summarize_by_agent(sessions)
             except Exception as e:
                 print(f"  ! value model summaries skipped: {e}", file=sys.stderr)
+            # Cost-accounting analytics (ABC / variance / cost split / etc.)
+            try:
+                from . import analytics as A
+                from .cost import fixed_subscriptions_per_week_usd
+                weekly_subs = fixed_subscriptions_per_week_usd(config)
+                cs = A.cost_split(sessions, config, weekly_subs)
+                payload["analytics"] = {
+                    "nva": A.nva_summary(sessions),
+                    "variance": A.weekly_variance(sessions),
+                    "costSplit": cs,
+                    "causality": A.causality_score(cs["proportionalUsd"], cs["fixedWeeklyUsd"]),
+                    "valueStream": A.value_stream(sessions),
+                    "redundancy": A.cross_tool_redundancy(sessions),
+                    "attended": A.attended_unattended(sessions),
+                    "parity": A.cost_parity_highlight(sessions, None, config),
+                }
+            except Exception as e:
+                print(f"  ! analytics step skipped: {e}", file=sys.stderr)
         except Exception as e:
             print(f"  ! could not include sessions: {e}", file=sys.stderr)
     return payload

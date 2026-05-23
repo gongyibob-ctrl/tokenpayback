@@ -91,8 +91,10 @@ def cmd_scan(args: argparse.Namespace) -> int:
                 data["overall"] = overall_summary(data["sessions"], taxonomy)
                 data["taxonomy"] = taxonomy
                 data["benchmark"] = benchmark
-            except Exception:
-                pass
+                if data["sessions"]:
+                    data["analytics"] = _build_analytics(data["sessions"], taxonomy, cfg)
+            except Exception as e:
+                print(f"  ! enrichment step partial: {e}", file=sys.stderr)
             (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
             md = roi_mod.render_markdown(weeks_data, cfg)
             (data_dir / "latest.md").write_text(md)
@@ -100,22 +102,29 @@ def cmd_scan(args: argparse.Namespace) -> int:
         except Exception as e:
             print(f"  ! GitHub ROI step failed: {e}", file=sys.stderr)
             print(f"  (falling back to sessions-only view)", file=sys.stderr)
-            data = _no_github_data(sessions_path, taxonomy, benchmark)
+            data = _no_github_data(sessions_path, taxonomy, benchmark, cfg_for_bench)
             (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
     else:
-        data = _no_github_data(sessions_path, taxonomy, benchmark)
+        data = _no_github_data(sessions_path, taxonomy, benchmark, cfg_for_bench)
         (data_dir / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
     return 0
 
 
-def _no_github_data(sessions_path: Path, taxonomy: dict, benchmark: dict | None = None) -> dict:
+def _no_github_data(sessions_path: Path, taxonomy: dict, benchmark: dict | None = None,
+                    config: dict | None = None) -> dict:
     from .roi import _summarize_sessions
     from .value_model import summarize_by_category, summarize_by_agent, overall_summary
     sessions = json.loads(sessions_path.read_text()) if sessions_path.exists() else []
-    return {
+    cfg = config or {"hourly_rate_usd": 150,
+                     "value_per_pr_usd": 600,
+                     "value_per_line_committed_usd": 0.3,
+                     "fixed_monthly_subscriptions_usd": {}}
+    data = {
         "generatedAt": _now_iso(),
-        "config": {"github_username": "(skipped)", "hourly_rate_usd": 150,
-                   "value_per_pr_usd": 600, "value_per_line_committed_usd": 0.3},
+        "config": {"github_username": "(skipped)",
+                   "hourly_rate_usd": cfg.get("hourly_rate_usd", 150),
+                   "value_per_pr_usd": cfg.get("value_per_pr_usd", 600),
+                   "value_per_line_committed_usd": cfg.get("value_per_line_committed_usd", 0.3)},
         "weeks": [],
         "sessions": sessions,
         "sessionsTotals": _summarize_sessions(sessions) if sessions else {},
@@ -124,6 +133,27 @@ def _no_github_data(sessions_path: Path, taxonomy: dict, benchmark: dict | None 
         "overall": overall_summary(sessions, taxonomy) if sessions else {},
         "taxonomy": taxonomy,
         "benchmark": benchmark or {},
+    }
+    if sessions:
+        data["analytics"] = _build_analytics(sessions, taxonomy, cfg)
+    return data
+
+
+def _build_analytics(sessions: list[dict], taxonomy: dict, config: dict) -> dict:
+    """Compute the cost-accounting KPIs and bundle them under data['analytics']."""
+    from . import analytics as A
+    from .cost import fixed_subscriptions_per_week_usd
+    weekly_subs = fixed_subscriptions_per_week_usd(config)
+    cost_split = A.cost_split(sessions, config, weekly_subs)
+    return {
+        "nva": A.nva_summary(sessions),
+        "variance": A.weekly_variance(sessions),
+        "costSplit": cost_split,
+        "causality": A.causality_score(cost_split["proportionalUsd"], cost_split["fixedWeeklyUsd"]),
+        "valueStream": A.value_stream(sessions, taxonomy),
+        "redundancy": A.cross_tool_redundancy(sessions),
+        "attended": A.attended_unattended(sessions),
+        "parity": A.cost_parity_highlight(sessions, taxonomy, config),
     }
 
 

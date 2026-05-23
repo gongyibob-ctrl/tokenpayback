@@ -133,9 +133,13 @@ def summarize_by_category(sessions: list[dict], taxonomy: dict | None = None) ->
         d["value_usd"] = round(d["value_usd"], 2)
         d["value_high_usd"] = round(d["value_high_usd"], 2)
         d["human_minutes_total"] = round(d["human_minutes_total"], 1)
-        d["roi"] = round(d["value_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
-        d["roi_low"] = round(d["value_low_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
-        d["roi_high"] = round(d["value_high_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
+        # Treat <$0.01 cost as effectively zero — ROI would be meaningless
+        if d["cost_usd"] >= 0.01:
+            d["roi"] = round(d["value_usd"] / d["cost_usd"], 2)
+            d["roi_low"] = round(d["value_low_usd"] / d["cost_usd"], 2)
+            d["roi_high"] = round(d["value_high_usd"] / d["cost_usd"], 2)
+        else:
+            d["roi"] = d["roi_low"] = d["roi_high"] = None
     return sorted(by_cat.values(), key=lambda x: x["cost_usd"], reverse=True)
 
 
@@ -160,9 +164,12 @@ def summarize_by_agent(sessions: list[dict], taxonomy: dict | None = None) -> li
         d["value_usd"] = round(d["value_usd"], 2)
         d["value_high_usd"] = round(d["value_high_usd"], 2)
         d["human_minutes_total"] = round(d["human_minutes_total"], 1)
-        d["roi"] = round(d["value_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
-        d["roi_low"] = round(d["value_low_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
-        d["roi_high"] = round(d["value_high_usd"] / d["cost_usd"], 2) if d["cost_usd"] > 0 else None
+        if d["cost_usd"] >= 0.01:
+            d["roi"] = round(d["value_usd"] / d["cost_usd"], 2)
+            d["roi_low"] = round(d["value_low_usd"] / d["cost_usd"], 2)
+            d["roi_high"] = round(d["value_high_usd"] / d["cost_usd"], 2)
+        else:
+            d["roi"] = d["roi_low"] = d["roi_high"] = None
     return sorted(by_agent.values(), key=lambda x: x["cost_usd"], reverse=True)
 
 
