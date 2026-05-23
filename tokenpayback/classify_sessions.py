@@ -120,12 +120,15 @@ def _classify_anthropic(system: str, user: str, base_url: str, api_key: str, mod
 
 
 def _classify_openai_compatible(system: str, user: str, base_url: str, api_key: str, model: str) -> dict:
+    # Reasoning-family models (gpt-5, o-series) spend most completion tokens on
+    # internal reasoning; budget needs to be 3-4× normal so actual text fits.
+    is_reasoning = ("gpt-5" in model) or ("o1" in model) or ("o3" in model)
     payload = {
         "model": model,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
-        "max_tokens": 400,
+        "max_tokens": 1500 if is_reasoning else 400,
     }
-    if "gpt-5" not in model and "o1" not in model and "o3" not in model:
+    if not is_reasoning:
         payload["temperature"] = 0.1
         payload["response_format"] = {"type": "json_object"}
     resp = requests.post(
