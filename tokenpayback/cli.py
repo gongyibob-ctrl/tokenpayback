@@ -274,7 +274,7 @@ def load_config_with_fallbacks(config_path: Path | None) -> dict:
         "value_per_line_committed_usd": 0.30,
         "github_username": _gh_user_or_blank(),
         "github_repos": [],
-        "fixed_monthly_subscriptions_usd": {"cursor": 20, "github_copilot": 19},
+        "fixed_monthly_subscriptions_usd": {},  # leave empty — user adds their actual subs
         "providers": {"anthropic": {"enabled": True}, "openai": {"enabled": False}},
         "report_dir": "reports",
         "dashboard_data": "data.json",

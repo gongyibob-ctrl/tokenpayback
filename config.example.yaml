@@ -28,10 +28,13 @@ github_repos: []
   # - owner/repo2
 
 # Fixed monthly subscriptions (added flat to cost).
+# Only list subs you ACTUALLY pay for — the dashboard will flag low-utilization
+# ones as cancel candidates, and a placeholder you don't really have produces a
+# false alert.
 fixed_monthly_subscriptions_usd:
-  cursor: 20
-  github_copilot: 19
   claude_max: 100   # if you have Claude.ai subscription
+  # github_copilot: 19
+  # cursor: 20
   # add others
 
 # LLM API providers — read usage from their APIs
