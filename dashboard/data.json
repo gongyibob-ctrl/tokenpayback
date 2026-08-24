@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T02:20:54.037649+00:00",
+  "generatedAt": "2026-08-24T02:23:34.957043+00:00",
   "isDemo": true,
   "config": {
     "github_username": "demo-user",
@@ -103,7 +103,7 @@
   },
   "weeks": [
     {
-      "week": "2026-W31",
+      "week": "2026-W32",
       "cost": {
         "anthropic_usd": 142.3,
         "openai_usd": 18.4,
@@ -124,31 +124,31 @@
             "title": "feat: example PR 0",
             "url": "https://github.com/your-org/your-app/pull/100",
             "repo": "your-org/your-app",
-            "merged_at": "2026-07-27"
+            "merged_at": "2026-08-03"
           },
           {
             "title": "feat: example PR 1",
             "url": "https://github.com/your-org/your-app/pull/101",
             "repo": "your-org/your-app",
-            "merged_at": "2026-07-28"
+            "merged_at": "2026-08-04"
           },
           {
             "title": "feat: example PR 2",
             "url": "https://github.com/your-org/your-app/pull/102",
             "repo": "your-org/your-app",
-            "merged_at": "2026-07-29"
+            "merged_at": "2026-08-05"
           },
           {
             "title": "feat: example PR 3",
             "url": "https://github.com/your-org/your-app/pull/103",
             "repo": "your-org/your-app",
-            "merged_at": "2026-07-30"
+            "merged_at": "2026-08-06"
           },
           {
             "title": "feat: example PR 4",
             "url": "https://github.com/your-org/your-app/pull/104",
             "repo": "your-org/your-app",
-            "merged_at": "2026-07-31"
+            "merged_at": "2026-08-07"
           }
         ],
         "changed_files": 47
@@ -165,7 +165,7 @@
       "roi": 23.21
     },
     {
-      "week": "2026-W32",
+      "week": "2026-W33",
       "cost": {
         "anthropic_usd": 218.75,
         "openai_usd": 22.1,
@@ -186,31 +186,31 @@
             "title": "feat: example PR 0",
             "url": "https://github.com/your-org/your-app/pull/200",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-03"
+            "merged_at": "2026-08-10"
           },
           {
             "title": "feat: example PR 1",
             "url": "https://github.com/your-org/your-app/pull/201",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-04"
+            "merged_at": "2026-08-11"
           },
           {
             "title": "feat: example PR 2",
             "url": "https://github.com/your-org/your-app/pull/202",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-05"
+            "merged_at": "2026-08-12"
           },
           {
             "title": "feat: example PR 3",
             "url": "https://github.com/your-org/your-app/pull/203",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-06"
+            "merged_at": "2026-08-13"
           },
           {
             "title": "feat: example PR 4",
             "url": "https://github.com/your-org/your-app/pull/204",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-07"
+            "merged_at": "2026-08-14"
           }
         ],
         "changed_files": 47
@@ -227,7 +227,7 @@
       "roi": 32.49
     },
     {
-      "week": "2026-W33",
+      "week": "2026-W34",
       "cost": {
         "anthropic_usd": 89.5,
         "openai_usd": 12.3,
@@ -248,31 +248,31 @@
             "title": "feat: example PR 0",
             "url": "https://github.com/your-org/your-app/pull/300",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-10"
+            "merged_at": "2026-08-17"
           },
           {
             "title": "feat: example PR 1",
             "url": "https://github.com/your-org/your-app/pull/301",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-11"
+            "merged_at": "2026-08-18"
           },
           {
             "title": "feat: example PR 2",
             "url": "https://github.com/your-org/your-app/pull/302",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-12"
+            "merged_at": "2026-08-19"
           },
           {
             "title": "feat: example PR 3",
             "url": "https://github.com/your-org/your-app/pull/303",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-13"
+            "merged_at": "2026-08-20"
           },
           {
             "title": "feat: example PR 4",
             "url": "https://github.com/your-org/your-app/pull/304",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-14"
+            "merged_at": "2026-08-21"
           }
         ],
         "changed_files": 47
@@ -289,7 +289,7 @@
       "roi": 14.54
     },
     {
-      "week": "2026-W34",
+      "week": "2026-W35",
       "cost": {
         "anthropic_usd": 264.2,
         "openai_usd": 31.5,
@@ -310,31 +310,31 @@
             "title": "feat: example PR 0",
             "url": "https://github.com/your-org/your-app/pull/400",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-17"
+            "merged_at": "2026-08-24"
           },
           {
             "title": "feat: example PR 1",
             "url": "https://github.com/your-org/your-app/pull/401",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-18"
+            "merged_at": "2026-08-25"
           },
           {
             "title": "feat: example PR 2",
             "url": "https://github.com/your-org/your-app/pull/402",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-19"
+            "merged_at": "2026-08-26"
           },
           {
             "title": "feat: example PR 3",
             "url": "https://github.com/your-org/your-app/pull/403",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-20"
+            "merged_at": "2026-08-27"
           },
           {
             "title": "feat: example PR 4",
             "url": "https://github.com/your-org/your-app/pull/404",
             "repo": "your-org/your-app",
-            "merged_at": "2026-08-21"
+            "merged_at": "2026-08-28"
           }
         ],
         "changed_files": 47
@@ -357,8 +357,8 @@
       "session_id": "demo-0000",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-12T02:20:53.838615+00:00",
-      "last_event": "2026-08-12T02:20:53.838615+00:00",
+      "first_event": "2026-08-19T02:23:34.863421+00:00",
+      "last_event": "2026-08-19T02:23:34.863421+00:00",
       "user_messages": 1,
       "tool_counts": {
         "Bash": 63,
@@ -400,8 +400,8 @@
       "session_id": "demo-0001",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-11T01:20:53.838615+00:00",
-      "last_event": "2026-08-11T01:20:53.838615+00:00",
+      "first_event": "2026-08-18T01:23:34.863421+00:00",
+      "last_event": "2026-08-18T01:23:34.863421+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 39,
@@ -443,8 +443,8 @@
       "session_id": "demo-0002",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-10T01:20:53.838615+00:00",
-      "last_event": "2026-08-10T01:20:53.838615+00:00",
+      "first_event": "2026-08-17T01:23:34.863421+00:00",
+      "last_event": "2026-08-17T01:23:34.863421+00:00",
       "user_messages": 12,
       "tool_counts": {
         "Bash": 19,
@@ -486,8 +486,8 @@
       "session_id": "demo-0003",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-08T21:20:53.838615+00:00",
-      "last_event": "2026-08-08T21:20:53.838615+00:00",
+      "first_event": "2026-08-15T21:23:34.863421+00:00",
+      "last_event": "2026-08-15T21:23:34.863421+00:00",
       "user_messages": 1,
       "tool_counts": {
         "Bash": 12,
@@ -529,8 +529,8 @@
       "session_id": "demo-0004",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-08T02:20:53.838615+00:00",
-      "last_event": "2026-08-08T02:20:53.838615+00:00",
+      "first_event": "2026-08-15T02:23:34.863421+00:00",
+      "last_event": "2026-08-15T02:23:34.863421+00:00",
       "user_messages": 22,
       "tool_counts": {
         "Bash": 13,
@@ -572,8 +572,8 @@
       "session_id": "demo-0005",
       "project": "Competitive scan",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-06T23:20:53.838615+00:00",
-      "last_event": "2026-08-06T23:20:53.838615+00:00",
+      "first_event": "2026-08-13T23:23:34.863421+00:00",
+      "last_event": "2026-08-13T23:23:34.863421+00:00",
       "user_messages": 23,
       "tool_counts": {
         "Bash": 6,
@@ -615,8 +615,8 @@
       "session_id": "demo-0006",
       "project": "v2 roadmap",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-06T02:20:53.838615+00:00",
-      "last_event": "2026-08-06T02:20:53.838615+00:00",
+      "first_event": "2026-08-13T02:23:34.863421+00:00",
+      "last_event": "2026-08-13T02:23:34.863421+00:00",
       "user_messages": 1,
       "tool_counts": {
         "Bash": 2,
@@ -658,8 +658,8 @@
       "session_id": "demo-0007",
       "project": "Investor deck v3",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-05T01:20:53.838615+00:00",
-      "last_event": "2026-08-05T01:20:53.838615+00:00",
+      "first_event": "2026-08-12T01:23:34.863421+00:00",
+      "last_event": "2026-08-12T01:23:34.863421+00:00",
       "user_messages": 7,
       "tool_counts": {
         "Bash": 8,
@@ -701,8 +701,8 @@
       "session_id": "demo-0008",
       "project": "Board update slides",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-03T22:20:53.838615+00:00",
-      "last_event": "2026-08-03T22:20:53.838615+00:00",
+      "first_event": "2026-08-10T22:23:34.863421+00:00",
+      "last_event": "2026-08-10T22:23:34.863421+00:00",
       "user_messages": 12,
       "tool_counts": {
         "Bash": 4,
@@ -744,8 +744,8 @@
       "session_id": "demo-0009",
       "project": "TikTok founder vlog",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-02T22:20:53.838615+00:00",
-      "last_event": "2026-08-02T22:20:53.838615+00:00",
+      "first_event": "2026-08-09T22:23:34.863421+00:00",
+      "last_event": "2026-08-09T22:23:34.863421+00:00",
       "user_messages": 1,
       "tool_counts": {
         "Bash": 9,
@@ -787,8 +787,8 @@
       "session_id": "demo-0010",
       "project": "Demo screencap",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-01T21:20:53.838615+00:00",
-      "last_event": "2026-08-01T21:20:53.838615+00:00",
+      "first_event": "2026-08-08T21:23:34.863421+00:00",
+      "last_event": "2026-08-08T21:23:34.863421+00:00",
       "user_messages": 11,
       "tool_counts": {
         "Bash": 5,
@@ -830,8 +830,8 @@
       "session_id": "demo-0011",
       "project": "Launch email",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-31T21:20:53.838615+00:00",
-      "last_event": "2026-07-31T21:20:53.838615+00:00",
+      "first_event": "2026-08-07T21:23:34.863421+00:00",
+      "last_event": "2026-08-07T21:23:34.863421+00:00",
       "user_messages": 25,
       "tool_counts": {
         "Bash": 3,
@@ -873,8 +873,8 @@
       "session_id": "demo-0012",
       "project": "Landing page hero",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-31T01:20:53.838615+00:00",
-      "last_event": "2026-07-31T01:20:53.838615+00:00",
+      "first_event": "2026-08-07T01:23:34.863421+00:00",
+      "last_event": "2026-08-07T01:23:34.863421+00:00",
       "user_messages": 4,
       "tool_counts": {
         "Bash": 3,
@@ -916,8 +916,8 @@
       "session_id": "demo-0013",
       "project": "Resume tailor for Series A pitch",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-29T22:20:53.838615+00:00",
-      "last_event": "2026-07-29T22:20:53.838615+00:00",
+      "first_event": "2026-08-05T22:23:34.863421+00:00",
+      "last_event": "2026-08-05T22:23:34.863421+00:00",
       "user_messages": 19,
       "tool_counts": {
         "Bash": 4,
@@ -959,8 +959,8 @@
       "session_id": "demo-0014",
       "project": "Board email",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-28T20:20:53.838615+00:00",
-      "last_event": "2026-07-28T20:20:53.838615+00:00",
+      "first_event": "2026-08-04T20:23:34.863421+00:00",
+      "last_event": "2026-08-04T20:23:34.863421+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 2,
@@ -1002,8 +1002,8 @@
       "session_id": "demo-0015",
       "project": "Tokyo trip planning",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-27T20:20:53.838615+00:00",
-      "last_event": "2026-07-27T20:20:53.838615+00:00",
+      "first_event": "2026-08-03T20:23:34.863421+00:00",
+      "last_event": "2026-08-03T20:23:34.863421+00:00",
       "user_messages": 1,
       "tool_counts": {
         "Bash": 5,
@@ -1045,8 +1045,8 @@
       "session_id": "demo-0016",
       "project": "Weekly meal prep",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-26T21:20:53.838615+00:00",
-      "last_event": "2026-07-26T21:20:53.838615+00:00",
+      "first_event": "2026-08-02T21:23:34.863421+00:00",
+      "last_event": "2026-08-02T21:23:34.863421+00:00",
       "user_messages": 10,
       "tool_counts": {
         "Bash": 2,
@@ -1088,8 +1088,8 @@
       "session_id": "demo-0017",
       "project": "General",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-26T00:20:53.838615+00:00",
-      "last_event": "2026-07-26T00:20:53.838615+00:00",
+      "first_event": "2026-08-02T00:23:34.863421+00:00",
+      "last_event": "2026-08-02T00:23:34.863421+00:00",
       "user_messages": 18,
       "tool_counts": {
         "Bash": 1,
@@ -1131,8 +1131,8 @@
       "session_id": "demo-0018",
       "project": "General",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-25T01:20:53.838615+00:00",
-      "last_event": "2026-07-25T01:20:53.838615+00:00",
+      "first_event": "2026-08-01T01:23:34.863421+00:00",
+      "last_event": "2026-08-01T01:23:34.863421+00:00",
       "user_messages": 3,
       "tool_counts": {
         "Bash": 0,
@@ -1174,8 +1174,8 @@
       "session_id": "demo-0019",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-07-23T20:20:53.838615+00:00",
-      "last_event": "2026-07-23T20:20:53.838615+00:00",
+      "first_event": "2026-07-30T20:23:34.863421+00:00",
+      "last_event": "2026-07-30T20:23:34.863421+00:00",
       "user_messages": 11,
       "tool_counts": {
         "Bash": 27,
@@ -1217,8 +1217,8 @@
       "session_id": "demo-0020",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-17T02:20:53.838615+00:00",
-      "last_event": "2026-08-17T02:20:53.838615+00:00",
+      "first_event": "2026-08-24T02:23:34.863421+00:00",
+      "last_event": "2026-08-24T02:23:34.863421+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 39,
@@ -1260,8 +1260,8 @@
       "session_id": "demo-0021",
       "project": "Pitchstack",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-15T23:20:53.838615+00:00",
-      "last_event": "2026-08-15T23:20:53.838615+00:00",
+      "first_event": "2026-08-22T23:23:34.863421+00:00",
+      "last_event": "2026-08-22T23:23:34.863421+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 24,
@@ -1303,8 +1303,8 @@
       "session_id": "demo-0022",
       "project": "Funding tracker",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-15T00:20:53.838615+00:00",
-      "last_event": "2026-08-15T00:20:53.838615+00:00",
+      "first_event": "2026-08-22T00:23:34.863421+00:00",
+      "last_event": "2026-08-22T00:23:34.863421+00:00",
       "user_messages": 9,
       "tool_counts": {
         "Bash": 5,
@@ -1346,8 +1346,8 @@
       "session_id": "demo-0023",
       "project": "Investor deck v3",
       "first_prompt": "(demo)",
-      "first_event": "2026-08-13T22:20:53.838615+00:00",
-      "last_event": "2026-08-13T22:20:53.838615+00:00",
+      "first_event": "2026-08-20T22:23:34.863421+00:00",
+      "last_event": "2026-08-20T22:23:34.863421+00:00",
       "user_messages": 13,
       "tool_counts": {
         "Bash": 10,
@@ -1671,7 +1671,7 @@
       "examples": {
         "VA": [
           {
-            "date": "2026-08-12",
+            "date": "2026-08-19",
             "agent": "claude-code",
             "project": "Pitchstack",
             "summary": "Built magic-link auth + email cooldown for the new pricing page.",
@@ -1680,7 +1680,7 @@
             "category": "ship-feature"
           },
           {
-            "date": "2026-08-11",
+            "date": "2026-08-18",
             "agent": "claude-code",
             "project": "Pitchstack",
             "summary": "Implemented CSV import pipeline with progress events.",
@@ -1689,7 +1689,7 @@
             "category": "ship-feature"
           },
           {
-            "date": "2026-08-10",
+            "date": "2026-08-17",
             "agent": "claude-code",
             "project": "Pitchstack",
             "summary": "Fixed Stripe webhook race that double-charged on retries.",
@@ -1698,7 +1698,7 @@
             "category": "bug-investigation"
           },
           {
-            "date": "2026-08-08",
+            "date": "2026-08-15",
             "agent": "codex",
             "project": "Pitchstack",
             "summary": "Wired GitHub Actions cron + Vercel preview deploys.",
@@ -1707,7 +1707,7 @@
             "category": "ops-and-deploy"
           },
           {
-            "date": "2026-08-08",
+            "date": "2026-08-15",
             "agent": "codex",
             "project": "Pitchstack",
             "summary": "Set up Sentry + Datadog tracing on the API.",
@@ -1718,7 +1718,7 @@
         ],
         "NVA": [
           {
-            "date": "2026-08-17",
+            "date": "2026-08-24",
             "agent": "claude-code",
             "project": "Pitchstack",
             "summary": "Asked agent to refactor auth — it broke session expiry, took 3h to revert.",
@@ -1727,7 +1727,7 @@
             "category": "bug-investigation"
           },
           {
-            "date": "2026-08-15",
+            "date": "2026-08-22",
             "agent": "codex",
             "project": "Pitchstack",
             "summary": "Spent 40 min in loops trying to fix a flaky test; gave up, fixed manually.",
@@ -1736,7 +1736,7 @@
             "category": "ship-feature"
           },
           {
-            "date": "2026-08-15",
+            "date": "2026-08-22",
             "agent": "hermes",
             "project": "Funding tracker",
             "summary": "Asked for VC list — got hallucinated names, had to redo by hand.",
@@ -1747,7 +1747,7 @@
         ],
         "BVA": [
           {
-            "date": "2026-08-06",
+            "date": "2026-08-13",
             "agent": "hermes",
             "project": "v2 roadmap",
             "summary": "Talked through v2 multi-tenant data model tradeoffs.",
@@ -1756,7 +1756,7 @@
             "category": "strategy-talk"
           },
           {
-            "date": "2026-08-13",
+            "date": "2026-08-20",
             "agent": "claude-code",
             "project": "Investor deck v3",
             "summary": "Tried 5 prompts for chart redesign; output worse than original each time.",
@@ -1774,7 +1774,7 @@
     "variance": {
       "weeks": [
         {
-          "week": "2026-W30",
+          "week": "2026-W31",
           "sessionCount": 4,
           "totalCostUsd": 8.8,
           "vaCostUsd": 8.8,
@@ -1787,7 +1787,7 @@
           "tokensPerVaSession": 880000.0
         },
         {
-          "week": "2026-W31",
+          "week": "2026-W32",
           "sessionCount": 7,
           "totalCostUsd": 7.6,
           "vaCostUsd": 7.6,
@@ -1800,7 +1800,7 @@
           "tokensPerVaSession": 434285.0
         },
         {
-          "week": "2026-W32",
+          "week": "2026-W33",
           "sessionCount": 6,
           "totalCostUsd": 15.5,
           "vaCostUsd": 14.7,
@@ -1813,7 +1813,7 @@
           "tokensPerVaSession": 1239999.0
         },
         {
-          "week": "2026-W33",
+          "week": "2026-W34",
           "sessionCount": 6,
           "totalCostUsd": 85.2,
           "vaCostUsd": 72.1,
@@ -1826,7 +1826,7 @@
           "tokensPerVaSession": 11359999.0
         },
         {
-          "week": "2026-W34",
+          "week": "2026-W35",
           "sessionCount": 1,
           "totalCostUsd": 12.4,
           "vaCostUsd": 0.0,
